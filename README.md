@@ -64,7 +64,7 @@ We're using GitHub, and we will pair program whenever possible.
 We're going to meet Thursdays, Sundays, and whenever else possible.
 
 ------------------------------------------
-## Outdated info
+## Info from Project 1
 
 
 ## Information

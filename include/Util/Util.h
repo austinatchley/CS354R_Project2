@@ -1,13 +1,13 @@
 #pragma once
 
-#include <type_traits>
+#include <cstdint>
 
 #include <SDL/SDL_mixer.h>
 #include <SDL/SDL_audio.h>
 
 namespace Util
 {
-    enum class Sound : int
+    enum class Sound : std::size_t
     {
         Ball = 0
     };

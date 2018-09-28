@@ -2,7 +2,6 @@
 
 #include <Ogre.h>
 #include <OgreMath.h>
-#include <OgreApplicationContext.h>
 #include <OgreInput.h>
 #include <OgreRTShaderSystem.h>
 #include <OgreApplicationContext.h>
@@ -13,6 +12,7 @@
 #include "GameObjects/GameObject.h"
 #include "Events/Events.h"
 #include "Events/EventSubscribers.h"
+#include "Util/GameState.h"
 
 #include "SoundManager.h"
 #include "Ball.h"
@@ -30,6 +30,8 @@ using namespace OgreBites;
 
 namespace Game
 {
+    using StateStack = std::vector<Util::GameState>;
+
     class Game
             : public ApplicationContext
             , public InputListener
@@ -54,8 +56,11 @@ namespace Game
         std::unique_ptr<ECS::EventManager> mEventManager;
         SoundManager* mSoundManager;
 
+        StateStack mGameStates;
+
         ///////////////////////////////////////////////////////
         // Game-specific member vars
+        // MOVE THIS TO PLAYSTATE.H
         Ogre::SceneNode* mCamNode;
         Ogre::Viewport* mViewport;
 
