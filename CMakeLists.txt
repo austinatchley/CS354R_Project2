@@ -1,6 +1,5 @@
 cmake_minimum_required (VERSION 3.3.0)
 
-
 set(CMAKE_BUILD_TYPE Release)
 #set(CMAKE_BUILD_TYPE Debug)
 
@@ -10,6 +9,11 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # When in debug mode, we run Address Sanitizer to find memory errors
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fsanitize=address")
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+set(PROJECT_TRDPARTY_DIR 3rdparty/)
+include(cmake/clang-format.cmake)
 
 set(SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Game.cpp
