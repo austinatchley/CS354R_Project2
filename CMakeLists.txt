@@ -22,6 +22,9 @@ set(SRCS
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/PlayState.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/MenuState.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ECS/ECSManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ECS/System.cpp
 )
 
 set(HDRS

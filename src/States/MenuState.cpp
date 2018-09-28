@@ -1,17 +1,11 @@
 #include "MenuState.h"
 
-namespace Game
-{
-    MenuState::MenuState()
-        : GameState(Util::ScreenShare::Shared)
-    {}
+namespace Game {
+MenuState::MenuState() : GameState(Util::ScreenShare::Shared) {}
 
-    void MenuState::update()
-    {
-    }
+void MenuState::update() {}
 
-    bool MenuState::keyPressed(const OgreBites::KeyboardEvent& evt)
-    {
-        return false;
-    }
+bool MenuState::keyPressed(const OgreBites::KeyboardEvent &evt) {
+    return false;
+}
 }

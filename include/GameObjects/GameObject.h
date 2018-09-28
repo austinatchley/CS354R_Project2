@@ -2,11 +2,10 @@
 
 #include <Ogre.h>
 
-#include "ECS/EntityManager.h"
+#include "ECS/Entity.h"
 
-class GameObject
-{
-public:
+class GameObject {
+  public:
     GameObject() {}
     ~GameObject() {}
 };
