@@ -34,12 +34,12 @@ At a high level, we will have a single Game class that drives the game, and each
 
 We will keep track of game state with different State classes stored in a stack of states. The current top of the stack will be shown on the screen. At the state exit, we will pop it off and resume the previous state.
 
-GUI - 5 man hours
-Physics - 20 man hours
-Sound - 5 man hours
-Gameplay - 20 man hours
-Level design - 15 man hours
-Camera control - 5 man hours
+- GUI - 5 man hours
+- Physics - 20 man hours
+- Sound - 5 man hours
+- Gameplay - 20 man hours
+- Level design - 15 man hours
+- Camera control - 5 man hours
 
 If we won't be able to meet the deadline, we will scrap the stretch goals and some of the different game states. Namely, moving the shield to different height slots and having projectiles behind the player. Also, we will scale back the level design in favor of getting the tech up and running.
 
