@@ -12,8 +12,20 @@ class PlayState : public Util::GameState {
     PlayState();
     virtual ~PlayState() {}
 
-    void update() override;
+    void update(const Ogre::FrameEvent& evt) override;
 
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
+
+  private:
+    Root *mRoot;
+    SceneManager *mScnMgr;
+    RTShader::ShaderGenerator *mShadergen;
+
+    Ogre::SceneNode *mCamNode;
+    Ogre::Viewport *mViewport;
+
+    std::vector<Ball> mBalls;
+    std::vector<Ogre::Plane> mWalls;
+
 };
 }

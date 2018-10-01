@@ -49,22 +49,9 @@ class Game : public ApplicationContext, public InputListener {
   private:
     ///////////////////////////////////////////////////////
     // System member vars
-    Root *mRoot;
-    SceneManager *mScnMgr;
-    RTShader::ShaderGenerator *mShadergen;
-
     std::unique_ptr<ECS::EventManager> mEventManager;
     SoundManager *mSoundManager;
 
     StateStack mGameStates;
-
-    ///////////////////////////////////////////////////////
-    // Game-specific member vars
-    // MOVE THIS TO PLAYSTATE.H
-    Ogre::SceneNode *mCamNode;
-    Ogre::Viewport *mViewport;
-
-    std::vector<Ball> mBalls;
-    std::vector<Ogre::Plane> mWalls;
 };
 } // namespace Game
