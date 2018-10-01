@@ -1,7 +1,7 @@
 # Project 2 for CS 354R Game Technology
 
-##Design
-###Game Overview
+## Design
+### Game Overview
 Game mechanics:
 - Defend your escort as it moves across the level
 - Block projectiles by rotating around the escort with the mouse
@@ -28,7 +28,7 @@ Stretch goals:
 - Powerups?
 - Rhythm based?
 
-###Software Architecture
+### Software Architecture
 
 At a high level, we will have a single Game class that drives the game, and each of the game objects will be split into their own class, inheriting from the generic GameObject. The game loop, rendering loop, simulation loop, etc will be contained in the Game class, which will invoke updates on singleton instances of each game system. We will use the EventManager, Event, and EventSubscriber patterns to send events between (entirely decoupled) GameObjects and GameSystems.
 
@@ -43,7 +43,7 @@ Camera control - 5 man hours
 
 If we won't be able to meet the deadline, we will scrap the stretch goals and some of the different game states. Namely, moving the shield to different height slots and having projectiles behind the player. Also, we will scale back the level design in favor of getting the tech up and running.
 
-###Division of Labor
+### Division of Labor
 - GUI
     - Todd
 - Physics
