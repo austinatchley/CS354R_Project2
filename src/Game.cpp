@@ -28,7 +28,7 @@ void Game::setup() {
     mSoundManager = new SoundManager();
     mEventManager->connect<Util::PlaySoundEvent>(mSoundManager);
 
-    //mGameStates.emplace_back(MenuState());
+    pushState(PlayState(mEventManager.get(), mRoot, getRenderWindow()));
 }
 
 bool Game::keyPressed(const KeyboardEvent &evt) {
@@ -40,6 +40,24 @@ bool Game::keyPressed(const KeyboardEvent &evt) {
     return mGameStates.back().keyPressed(evt);
 }
 
+bool Game::mousePressed(const MouseButtonEvent &evt) {
+    if (mGameStates.empty())
+    {
+        return false;
+    }
+
+    return mGameStates.back().mousePressed(evt);
+}
+
+bool Game::mouseMoved(const MouseMotionEvent &evt) {
+    if (mGameStates.empty())
+    {
+        return false;
+    }
+
+    return mGameStates.back().mouseMoved(evt);
+}
+
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
     if (mGameStates.empty())
     {
@@ -49,28 +67,23 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
     // Tell the EventManager to dispatch the events in the queue
     mEventManager->update();
 
-    // Traverse the stack of states and update the appropriate ones
-    auto backIt = mGameStates.end() - 1;
-    while (backIt->mScreenShare != Util::ScreenShare::Full && // stop on the first Full
-            backIt != mGameStates.begin())
-    {
-        --backIt;
-    }
+    mGameStates.back().update(evt); 
 
-    // If there are no Full states, we are in an invalid state
-    if (backIt == mGameStates.begin())
-    {
+    return true;
+}
+
+void Game::pushState(Util::GameState&& state) {
+    mGameStates.push_back(std::move(state));
+}
+
+Util::GameState Game::popState() {
+    if (mGameStates.empty()) {
         throw Ogre::Exception(Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE, "The state stack is invalid", "");
     }
 
-    // Update the appropriate states from the bottom up
-    while (backIt != mGameStates.end())
-    {
-        backIt->update(evt);
-        ++backIt;
-    }
-
-    return true;
+    Util::GameState state = mGameStates.back();
+    mGameStates.pop_back();
+    return state;
 }
 
 } // namespace Game

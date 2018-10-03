@@ -14,9 +14,11 @@ class GameState {
 
     virtual ~GameState() {}
 
-    virtual void update(const Ogre::FrameEvent& evt) = 0;
+    virtual void update(const Ogre::FrameEvent& evt) {}
 
-    virtual bool keyPressed(const OgreBites::KeyboardEvent &evt) = 0;
+    virtual bool keyPressed(const OgreBites::KeyboardEvent &evt) { return false; }
+    virtual bool mousePressed(const OgreBites::MouseButtonEvent &evt) { return false; }
+    virtual bool mouseMoved(const OgreBites::MouseMotionEvent &evt) { return false; }
 
     ScreenShare mScreenShare;
 };

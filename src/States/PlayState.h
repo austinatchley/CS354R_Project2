@@ -45,6 +45,8 @@ class PlayState : public Util::GameState {
     void update(const Ogre::FrameEvent& evt) override;
 
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
+    bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
+    bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
 
   private:
     Root *mRoot;

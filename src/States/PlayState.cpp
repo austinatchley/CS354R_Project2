@@ -190,4 +190,28 @@ bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     
     return false;
 }
+
+bool PlayState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
+    static const Real mag = Math::HALF_PI / 2.f;
+    static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
+    static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
+    static const Ogre::Vector3 upVec = Ogre::Vector3(0.f, mag, 0.f);
+    static const Ogre::Vector3 downVec = Ogre::Vector3(0.f, -mag, 0.f);
+    static const Ogre::Vector3 backVec = Ogre::Vector3(0.f, 0.f, mag);
+    static const Ogre::Vector3 forVec = Ogre::Vector3(0.f, 0.f, -mag);
+
+    if (evt.type == OgreBites::MOUSEMOTION) {
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::RotateEntityEvent(mCamNode, (upVec * evt.x) + (rightVec * evt.y)));
+
+        return true;
+    }
+
+    return false;
+}
+
+bool PlayState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
+    return false;
+}
+
 }

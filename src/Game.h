@@ -17,6 +17,9 @@
 #include "Util/GameState.h"
 #include "GameObjects/GameObject.h"
 
+#include "States/PlayState.h"
+#include "States/MenuState.h"
+
 #include "Ball.h"
 #include "SoundManager.h"
 
@@ -31,13 +34,18 @@ class Game : public ApplicationContext, public InputListener {
     Game();
     virtual ~Game();
 
+    void pushState(Util::GameState&& state);
+    Util::GameState popState();
+    
+  private:
     void setup();
 
-    bool keyPressed(const KeyboardEvent &evt);
+    bool keyPressed(const KeyboardEvent &evt) override;
+    bool mousePressed(const MouseButtonEvent &evt) override;
+    bool mouseMoved(const MouseMotionEvent &evt) override;
 
-    bool frameRenderingQueued(const Ogre::FrameEvent &evt);
+    bool frameRenderingQueued(const Ogre::FrameEvent &evt) override;
 
-  private:
     ///////////////////////////////////////////////////////
     // System member vars
     std::unique_ptr<ECS::EventManager> mEventManager;
