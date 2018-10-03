@@ -18,6 +18,7 @@ include(cmake/clang-format.cmake)
 set(SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Ball.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/PlayState.cpp
@@ -30,6 +31,7 @@ set(SRCS
 set(HDRS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Game.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Ball.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.h
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/PlayState.h

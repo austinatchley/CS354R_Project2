@@ -4,21 +4,22 @@
 
 #include <Ogre.h>
 
-#include "GameObjects/GameObject.h"
-
 #include "ECS/EventManager.h"
+
+#include "Util/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
 
 namespace Game {
-class Ball : public GameObject {
+class Ball : public Util::GameObject {
   public:
-    Ball(Ogre::SceneManager *scnMgr, float radius, const Ogre::String &material,
-         const Ogre::Vector3 &velocity);
+    Ball(Ogre::SceneManager *scnMgr, 
+           const Ogre::String &material,
+           float scale,
+           const Ogre::Vector3 &velocity);
 
     ~Ball() {}
 
-    Ogre::SceneNode *getNode();
     const Ogre::Vector3 &getVelocity();
     void setVelocity(const Ogre::Vector3 &newVel);
 
@@ -26,9 +27,7 @@ class Ball : public GameObject {
               ECS::EventManager *eventManager, const Ogre::Real dt);
 
   private:
-    Ogre::SceneNode *mNode;
     Ogre::Real mRadius;
-    Ogre::String mMaterial;
     Ogre::Vector3 mVelocity;
 };
 }

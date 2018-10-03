@@ -12,7 +12,7 @@
 #include "ECS/EventManager.h"
 #include "ECS/System.h"
 
-#include "GameObjects/GameObject.h"
+#include "Util/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
 #include "Util/GameState.h"

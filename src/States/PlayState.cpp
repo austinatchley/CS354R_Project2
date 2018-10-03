@@ -76,7 +76,7 @@ PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
                           Math::RangeRandom(-20.0, 20.0),
                           Math::RangeRandom(-20.0, 20.0));
 
-        Ball ball(mScnMgr, BALL_RADIUS, "Examples/SphereMappedRustySteel", vel);
+        Ball ball(mScnMgr, "Examples/SphereMappedRustySteel", BALL_RADIUS, vel);
 
         mBalls.push_back(ball);
 
