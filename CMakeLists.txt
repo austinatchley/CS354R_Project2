@@ -38,7 +38,6 @@ set(HDRS
 
 project(Project2)
 
-# specify which version and components you need
 find_package(OGRE 1.11 REQUIRED COMPONENTS Bites RTShaderSystem)
 
 # copy resource.cfg next to our binaries where OGRE looks for it
@@ -46,7 +45,7 @@ file(COPY ${OGRE_CONFIG_DIR}/resources.cfg DESTINATION ${CMAKE_BINARY_DIR})
 
 add_executable(Project2 ${HDRS} ${SRCS})
 
-find_package(SDL2) 
+find_package(SDL2 REQUIRED) 
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES) # remove the whitespace in the path on the lab machines
 
 find_package(SDL2_mixer QUIET) 
@@ -54,11 +53,16 @@ if (NOT SDL2MIXER_FOUND) # this is for the lab machines, where find_package does
     set(SDL2MIXER_LIBRARIES "/usr/lib/x86_64-linux-gnu/libSDL2_mixer-2.0.so.0")
 endif (NOT SDL2MIXER_FOUND)
 
+find_package(Bullet 2.86)
+#set (BULLET_INCLUDE_DIR "/lusr/opt/bullet-2.79/include")
+#set (BULLET_LIBRARIES "/lusr/opt/bullet-2.79/lib")
+
 # Everything in the include directory can be #include'd from cpp and h files
 # without using relative paths
 target_include_directories(
     Project2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
+    ${BULLET_INCLUDE_DIR}
 )
 
 target_link_libraries(Project2
@@ -66,4 +70,5 @@ target_link_libraries(Project2
     ${OIS_LIBRARIES}
     ${SDL2_LIBRARIES}
     ${SDL2MIXER_LIBRARIES}
+    ${BULLET_LIBRARIES}
 )

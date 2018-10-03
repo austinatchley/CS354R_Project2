@@ -5,16 +5,16 @@
 #include <SDL/SDL_mixer.h>
 
 #include "ECS/EventManager.h"
-#include "Events/EventSubscribers.h"
+#include "Util/Events/EventSubscribers.h"
 
 namespace Game {
-class SoundManager : public PlaySoundSubscriber {
+class SoundManager : public Util::PlaySoundSubscriber {
   public:
     SoundManager();
     ~SoundManager() {}
 
     virtual void receive(ECS::EventManager *eventManager,
-                         const PlaySoundEvent &event) override;
+                         const Util::PlaySoundEvent &event) override;
 
     void playBallHit();
 

@@ -13,7 +13,7 @@ SoundManager::SoundManager() {
 }
 
 void SoundManager::receive(ECS::EventManager *eventManager,
-                           const PlaySoundEvent &event) {
+                           const Util::PlaySoundEvent &event) {
     switch (event.sound) {
     case Util::Sound::Ball:
         playBallHit();

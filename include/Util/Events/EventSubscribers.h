@@ -3,6 +3,7 @@
 #include "ECS/EventManager.h"
 #include "Events.h"
 
+namespace Util {
 class TransformEntitySubscriber
     : public ECS::EventSubscriber<TransformEntityEvent> {
   public:
@@ -44,3 +45,4 @@ class PlaySoundSubscriber : public ECS::EventSubscriber<PlaySoundEvent> {
         (void)event.sound;
     }
 };
+}

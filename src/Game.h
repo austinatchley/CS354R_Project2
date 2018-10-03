@@ -12,22 +12,13 @@
 #include "ECS/EventManager.h"
 #include "ECS/System.h"
 
-#include "Events/EventSubscribers.h"
-#include "Events/Events.h"
-#include "GameObjects/GameObject.h"
+#include "Util/Events/EventSubscribers.h"
+#include "Util/Events/Events.h"
 #include "Util/GameState.h"
+#include "GameObjects/GameObject.h"
 
 #include "Ball.h"
 #include "SoundManager.h"
-
-#define NUM_BALLS 10
-#define BALL_RADIUS 5.f
-
-#define WALL_SIZE 25.f
-
-#define LIGHT_INTENSITY 1.0
-#define AMBIENT_LIGHT                                                          \
-    Ogre::ColourValue(LIGHT_INTENSITY, LIGHT_INTENSITY, LIGHT_INTENSITY)
 
 using namespace Ogre;
 using namespace OgreBites;

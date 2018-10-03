@@ -1,9 +1,15 @@
 #include "PlayState.h"
 
+using namespace Ogre;
+using namespace OgreBites;
+
 namespace Game {
-PlayState::PlayState() : GameState(Util::ScreenShare::Full) {
+PlayState::PlayState(ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow)
+    : GameState(Util::ScreenShare::Full)
+    , mEventManager(eventManager)
+    , mRoot(root)
+    , mRenderWindow(renderWindow) {
     // get a pointer to the already created root
-    mRoot = getRoot();
     mScnMgr = mRoot->createSceneManager();
 
     // register our scene with the RTSS
@@ -58,7 +64,7 @@ PlayState::PlayState() : GameState(Util::ScreenShare::Full) {
     mCamNode->setPosition(0, 0, 60);
 
     // and tell it to render into the main window
-    mViewport = getRenderWindow()->addViewport(cam);
+    mViewport = mRenderWindow->addViewport(cam);
     mViewport->setBackgroundColour(Ogre::ColourValue(0.1f, 0.1f, 0.15f));
 
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
@@ -78,8 +84,8 @@ PlayState::PlayState() : GameState(Util::ScreenShare::Full) {
         const Vector3 pos(Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
                           Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
                           Math::RangeRandom(-WALL_SIZE, WALL_SIZE));
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(ball.getNode(), pos));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(ball.getNode(), pos));
     }
 
     //////////////////////////////////////////////////////////////////
@@ -111,15 +117,13 @@ PlayState::PlayState() : GameState(Util::ScreenShare::Full) {
     }
 }
 
-void PlayState::update() {
+void PlayState::update(const Ogre::FrameEvent& evt) {
     const Real dt = evt.timeSinceLastFrame;
 
     // Check each ball for collisions
     for (int i = 0; i < mBalls.size(); ++i) {
-        mBalls[i].move(mWalls, mEventManager.get(), dt);
+        mBalls[i].move(mWalls, mEventManager, dt);
     }
-
-    return true;
 }
 
 bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {
@@ -133,51 +137,51 @@ bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {
 
     switch (evt.keysym.sym) {
     case OgreBites::SDLK_ESCAPE: // Exit the game
-        getRoot()->queueEndRendering();
+        mRoot->queueEndRendering();
         break;
 
     case 'w':
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(mCamNode, forVec * 5.f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(mCamNode, forVec * 5.f));
         break;
     case 's':
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(mCamNode, backVec * 5.f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(mCamNode, backVec * 5.f));
         break;
     case 'a':
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(mCamNode, leftVec * 5.f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(mCamNode, leftVec * 5.f));
         break;
     case 'd':
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(mCamNode, rightVec * 5.f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(mCamNode, rightVec * 5.f));
         break;
 
     case OgreBites::SDLK_PAGEUP:
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(mCamNode, upVec * 5.f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(mCamNode, upVec * 5.f));
         break;
     case OgreBites::SDLK_PAGEDOWN: // For some reason the 'End' key seems to
                                    // trigger this keybinding
-        mEventManager->event<TransformEntityEvent>(
-            new TranslateEntityEvent(mCamNode, downVec * 5.f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::TranslateEntityEvent(mCamNode, downVec * 5.f));
         break;
 
     case OgreBites::SDLK_UP:
-        mEventManager->event<TransformEntityEvent>(
-            new RotateEntityEvent(mCamNode, rightVec * 0.25f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::RotateEntityEvent(mCamNode, rightVec * 0.25f));
         break;
     case OgreBites::SDLK_DOWN:
-        mEventManager->event<TransformEntityEvent>(
-            new RotateEntityEvent(mCamNode, leftVec * 0.25f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::RotateEntityEvent(mCamNode, leftVec * 0.25f));
         break;
     case OgreBites::SDLK_LEFT:
-        mEventManager->event<TransformEntityEvent>(
-            new RotateEntityEvent(mCamNode, upVec * 0.25f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::RotateEntityEvent(mCamNode, upVec * 0.25f));
         break;
     case OgreBites::SDLK_RIGHT:
-        mEventManager->event<TransformEntityEvent>(
-            new RotateEntityEvent(mCamNode, downVec * 0.25f));
+        mEventManager->event<Util::TransformEntityEvent>(
+            new Util::RotateEntityEvent(mCamNode, downVec * 0.25f));
         break;
 
     default:

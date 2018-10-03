@@ -46,8 +46,8 @@ void Ball::move(const std::vector<Ogre::Plane> &walls,
             deltaPos += norm * std::numeric_limits<float>::epsilon();
 
             // Play the wall hit sound
-            eventManager->event<PlaySoundEvent>(
-                new PlaySoundEvent(Util::Sound::Ball));
+            eventManager->event<Util::PlaySoundEvent>(
+                new Util::PlaySoundEvent(Util::Sound::Ball));
         }
     }
 

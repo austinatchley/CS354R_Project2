@@ -7,8 +7,8 @@
 #include "GameObjects/GameObject.h"
 
 #include "ECS/EventManager.h"
-#include "Events/EventSubscribers.h"
-#include "Events/Events.h"
+#include "Util/Events/EventSubscribers.h"
+#include "Util/Events/Events.h"
 
 namespace Game {
 class Ball : public GameObject {

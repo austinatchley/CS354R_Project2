@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "Util/Util.h"
+#include "States/MenuState.h"
 
 #include <limits>
 
@@ -25,9 +26,9 @@ void Game::setup() {
     //////////////////////////////////////////////////////////////////
     // Sound Manager
     mSoundManager = new SoundManager();
-    mEventManager->connect<PlaySoundEvent>(mSoundManager);
+    mEventManager->connect<Util::PlaySoundEvent>(mSoundManager);
 
-    mGameStates.push_back(MenuState());
+    //mGameStates.emplace_back(MenuState());
 }
 
 bool Game::keyPressed(const KeyboardEvent &evt) {
@@ -48,19 +49,21 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
     // Tell the EventManager to dispatch the events in the queue
     mEventManager->update();
 
+    // Traverse the stack of states and update the appropriate ones
     auto backIt = mGameStates.end() - 1;
-
-    while (backIt->mScreenShare != Util::ScreenShare::Full &&
+    while (backIt->mScreenShare != Util::ScreenShare::Full && // stop on the first Full
             backIt != mGameStates.begin())
     {
         --backIt;
     }
 
+    // If there are no Full states, we are in an invalid state
     if (backIt == mGameStates.begin())
     {
-        throw Ogre::Exception(ERR_INVALID_STATE, "The state stack is invalid", "");
+        throw Ogre::Exception(Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE, "The state stack is invalid", "");
     }
 
+    // Update the appropriate states from the bottom up
     while (backIt != mGameStates.end())
     {
         backIt->update(evt);

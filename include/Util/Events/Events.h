@@ -5,6 +5,7 @@
 #include "ECS/EventManager.h"
 #include "Util/Util.h"
 
+namespace Util {
 class TestEvent : public ECS::BaseEvent {
   public:
     TestEvent(int pi, char pc) : i(pi), c(pc) {}
@@ -43,3 +44,4 @@ class PlaySoundEvent : ECS::BaseEvent {
 
     Util::Sound sound;
 };
+}

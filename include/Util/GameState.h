@@ -14,7 +14,7 @@ class GameState {
 
     virtual ~GameState() {}
 
-    virtual void update() = 0;
+    virtual void update(const Ogre::FrameEvent& evt) = 0;
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent &evt) = 0;
 
