@@ -1,7 +1,7 @@
 #include "Game.h"
 
-#include "Util/Util.h"
 #include "States/MenuState.h"
+#include "Util/Util.h"
 
 #include <limits>
 
@@ -32,8 +32,7 @@ void Game::setup() {
 }
 
 bool Game::keyPressed(const KeyboardEvent &evt) {
-    if (mGameStates.empty())
-    {
+    if (mGameStates.empty()) {
         return false;
     }
 
@@ -41,8 +40,7 @@ bool Game::keyPressed(const KeyboardEvent &evt) {
 }
 
 bool Game::mousePressed(const MouseButtonEvent &evt) {
-    if (mGameStates.empty())
-    {
+    if (mGameStates.empty()) {
         return false;
     }
 
@@ -50,8 +48,7 @@ bool Game::mousePressed(const MouseButtonEvent &evt) {
 }
 
 bool Game::mouseMoved(const MouseMotionEvent &evt) {
-    if (mGameStates.empty())
-    {
+    if (mGameStates.empty()) {
         return false;
     }
 
@@ -59,26 +56,27 @@ bool Game::mouseMoved(const MouseMotionEvent &evt) {
 }
 
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
-    if (mGameStates.empty())
-    {
+    if (mGameStates.empty()) {
         return false;
     }
 
     // Tell the EventManager to dispatch the events in the queue
     mEventManager->update();
 
-    mGameStates.back().update(evt); 
+    mGameStates.back().update(evt);
 
     return true;
 }
 
-void Game::pushState(Util::GameState&& state) {
+void Game::pushState(Util::GameState &&state) {
     mGameStates.push_back(std::move(state));
 }
 
 Util::GameState Game::popState() {
     if (mGameStates.empty()) {
-        throw Ogre::Exception(Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE, "The state stack is invalid", "");
+        throw Ogre::Exception(
+            Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE,
+            "The state stack is invalid", "");
     }
 
     Util::GameState state = mGameStates.back();

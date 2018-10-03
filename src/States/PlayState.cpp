@@ -4,18 +4,17 @@ using namespace Ogre;
 using namespace OgreBites;
 
 namespace Game {
-PlayState::PlayState(ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow)
-    : GameState(Util::ScreenShare::Full)
-    , mEventManager(eventManager)
-    , mRoot(root)
-    , mRenderWindow(renderWindow) {
+PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
+                     Ogre::RenderWindow *renderWindow)
+    : GameState(Util::ScreenShare::Full), mEventManager(eventManager),
+      mRoot(root), mRenderWindow(renderWindow) {
     // get a pointer to the already created root
     mScnMgr = mRoot->createSceneManager();
 
     // register our scene with the RTSS
     mShadergen = RTShader::ShaderGenerator::getSingletonPtr();
     mShadergen->addSceneManager(mScnMgr);
-    
+
     //////////////////////////////////////////////////////////////////
     // Lighting
     mScnMgr->setShadowTechnique(ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
@@ -117,7 +116,7 @@ PlayState::PlayState(ECS::EventManager* eventManager, Root* root, Ogre::RenderWi
     }
 }
 
-void PlayState::update(const Ogre::FrameEvent& evt) {
+void PlayState::update(const Ogre::FrameEvent &evt) {
     const Real dt = evt.timeSinceLastFrame;
 
     // Check each ball for collisions
@@ -187,7 +186,7 @@ bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     default:
         return false;
     }
-    
+
     return false;
 }
 
@@ -202,7 +201,8 @@ bool PlayState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
 
     if (evt.type == OgreBites::MOUSEMOTION) {
         mEventManager->event<Util::TransformEntityEvent>(
-            new Util::RotateEntityEvent(mCamNode, (upVec * evt.x) + (rightVec * evt.y)));
+            new Util::RotateEntityEvent(mCamNode,
+                                        (upVec * evt.x) + (rightVec * evt.y)));
 
         return true;
     }
@@ -213,5 +213,4 @@ bool PlayState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
 bool PlayState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
     return false;
 }
-
 }

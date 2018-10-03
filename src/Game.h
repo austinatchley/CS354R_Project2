@@ -12,13 +12,13 @@
 #include "ECS/EventManager.h"
 #include "ECS/System.h"
 
+#include "GameObjects/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
 #include "Util/GameState.h"
-#include "GameObjects/GameObject.h"
 
-#include "States/PlayState.h"
 #include "States/MenuState.h"
+#include "States/PlayState.h"
 
 #include "Ball.h"
 #include "SoundManager.h"
@@ -34,9 +34,9 @@ class Game : public ApplicationContext, public InputListener {
     Game();
     virtual ~Game();
 
-    void pushState(Util::GameState&& state);
+    void pushState(Util::GameState &&state);
     Util::GameState popState();
-    
+
   private:
     void setup();
 

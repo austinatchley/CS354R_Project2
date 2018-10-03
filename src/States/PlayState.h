@@ -12,10 +12,10 @@
 #include "ECS/EventManager.h"
 #include "ECS/System.h"
 
+#include "GameObjects/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
 #include "Util/GameState.h"
-#include "GameObjects/GameObject.h"
 
 #include "../Ball.h"
 #include "../SoundManager.h"
@@ -39,10 +39,11 @@ namespace Game {
 // This should handle all game-specific logic
 class PlayState : public Util::GameState {
   public:
-    PlayState(ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow);
+    PlayState(ECS::EventManager *eventManager, Root *root,
+              Ogre::RenderWindow *renderWindow);
     virtual ~PlayState() {}
 
-    void update(const Ogre::FrameEvent& evt) override;
+    void update(const Ogre::FrameEvent &evt) override;
 
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
     bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
@@ -52,7 +53,7 @@ class PlayState : public Util::GameState {
     Root *mRoot;
     SceneManager *mScnMgr;
     RTShader::ShaderGenerator *mShadergen;
-    Ogre::RenderWindow* mRenderWindow;
+    Ogre::RenderWindow *mRenderWindow;
 
     Ogre::SceneNode *mCamNode;
     Ogre::Viewport *mViewport;
@@ -60,6 +61,6 @@ class PlayState : public Util::GameState {
     std::vector<Ball> mBalls;
     std::vector<Ogre::Plane> mWalls;
 
-    ECS::EventManager* mEventManager;
+    ECS::EventManager *mEventManager;
 };
 }
