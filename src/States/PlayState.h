@@ -20,6 +20,8 @@
 #include "../Ball.h"
 #include "../SoundManager.h"
 
+#include "btBulletDynamicsCommon.h"
+
 #include "Util/GameState.h"
 
 #define NUM_BALLS 10
@@ -41,7 +43,7 @@ class PlayState : public Util::GameState {
   public:
     PlayState(ECS::EventManager *eventManager, Root *root,
               Ogre::RenderWindow *renderWindow);
-    virtual ~PlayState() {}
+    virtual ~PlayState();
 
     void update(const Ogre::FrameEvent &evt) override;
 
@@ -60,6 +62,13 @@ class PlayState : public Util::GameState {
 
     std::vector<Ball> mBalls;
     std::vector<Ogre::Plane> mWalls;
+
+    // Bullet
+    btDefaultCollisionConfiguration* mCollisionConfig; 
+    btCollisionDispatcher* mDispatcher; 
+    btBroadphaseInterface* mOverlappingPairCache; 
+    btSequentialImpulseConstraintSolver* mSolver;
+    btDiscreteDynamicsWorld* mDynamicsWorld;
 
     ECS::EventManager *mEventManager;
 };

@@ -113,7 +113,26 @@ PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
         planeNode->attachObject(planeEntity);
 
         mWalls.push_back(plane);
+
+        mCollisionConfig = new btDefaultCollisionConfiguration();
+        mDispatcher = new btCollisionDispatcher(mCollisionConfig);
+        mOverlappingPairCache = new btDbvtBroadphase();
+        mSolver = new btSequentialImpulseConstraintSolver();
+
+        mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher,
+                mOverlappingPairCache,
+                mSolver,
+                mCollisionConfig);
+
+        mDynamicsWorld->setGravity(btVector3(0, -10, 0));
     }
+}
+
+PlayState::~PlayState() {
+    delete mDynamicsWorld;
+    delete mSolver;
+    delete mOverlappingPairCache;
+    delete mDispatcher;
 }
 
 void PlayState::update(const Ogre::FrameEvent &evt) {
