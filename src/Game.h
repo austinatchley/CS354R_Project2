@@ -12,9 +12,9 @@
 #include "ECS/EventManager.h"
 #include "ECS/System.h"
 
-#include "Util/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
+#include "Util/GameObject.h"
 #include "Util/State.h"
 
 #include "States/MenuState.h"
@@ -27,7 +27,7 @@ using namespace Ogre;
 using namespace OgreBites;
 
 namespace Game {
-using StateStack = std::vector<Util::State*>;
+using StateStack = std::vector<Util::State *>;
 
 class Game : public ApplicationContext, public InputListener {
   public:

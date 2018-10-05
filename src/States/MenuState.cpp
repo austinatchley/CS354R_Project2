@@ -3,9 +3,7 @@
 namespace Game {
 MenuState::MenuState() : State(Util::ScreenShare::Shared) {}
 
-void MenuState::setup() {
-
-}
+void MenuState::setup() {}
 
 void MenuState::update(const Ogre::FrameEvent &evt) {}
 

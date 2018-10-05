@@ -6,8 +6,8 @@ using namespace OgreBites;
 namespace Game {
 PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
                      Ogre::RenderWindow *renderWindow)
-    : State(Util::ScreenShare::Full), mEventManager(eventManager),
-      mRoot(root), mRenderWindow(renderWindow) {}
+    : State(Util::ScreenShare::Full), mEventManager(eventManager), mRoot(root),
+      mRenderWindow(renderWindow) {}
 
 void PlayState::setup() {
     // get a pointer to the already created root
@@ -114,18 +114,16 @@ void PlayState::setup() {
             mScnMgr->getRootSceneNode()->createChildSceneNode(name);
         planeNode->attachObject(planeEntity);
 
-        mWalls.push_back(plane); 
+        mWalls.push_back(plane);
     }
-        
+
     mCollisionConfig = new btDefaultCollisionConfiguration();
     mDispatcher = new btCollisionDispatcher(mCollisionConfig);
     mOverlappingPairCache = new btDbvtBroadphase();
     mSolver = new btSequentialImpulseConstraintSolver();
 
-    mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher,
-            mOverlappingPairCache,
-            mSolver,
-            mCollisionConfig);
+    mDynamicsWorld = new btDiscreteDynamicsWorld(
+        mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
     mDynamicsWorld->setGravity(btVector3(0, -10, 0));
 }

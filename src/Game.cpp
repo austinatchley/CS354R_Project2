@@ -12,7 +12,7 @@ namespace Game {
 Game::Game() : ApplicationContext("Project2") {}
 
 Game::~Game() {
-    for (auto* state : mStates) {
+    for (auto *state : mStates) {
         delete state;
     }
 }
@@ -86,7 +86,7 @@ void Game::popState() {
             "The state stack is invalid", "");
     }
 
-    Util::State* state = mStates.back();
+    Util::State *state = mStates.back();
     mStates.pop_back();
 
     delete state;

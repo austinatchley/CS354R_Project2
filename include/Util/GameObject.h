@@ -8,23 +8,23 @@
 namespace Util {
 class GameObject {
   public:
-    GameObject(Ogre::SceneManager* scnMgr, Ogre::SceneManager::PrefabType prefab, const Ogre::String& material, float scale = 100.f)
-    {
-        Ogre::Entity *entity =
-            scnMgr->createEntity(prefab);
+    GameObject(Ogre::SceneManager *scnMgr,
+               Ogre::SceneManager::PrefabType prefab,
+               const Ogre::String &material, float scale = 100.f) {
+        Ogre::Entity *entity = scnMgr->createEntity(prefab);
 
         GameObject(scnMgr, entity, material, scale);
     }
 
-    GameObject(Ogre::SceneManager* scnMgr, const Ogre::String& meshName, const Ogre::String& material, float scale = 100.f)
-    {
-        Ogre::Entity *entity =
-            scnMgr->createEntity(meshName);
+    GameObject(Ogre::SceneManager *scnMgr, const Ogre::String &meshName,
+               const Ogre::String &material, float scale = 100.f) {
+        Ogre::Entity *entity = scnMgr->createEntity(meshName);
 
         GameObject(scnMgr, entity, material, scale);
     }
 
-    GameObject(Ogre::SceneManager *scnMgr, Ogre::Entity* entity, const Ogre::String& material, float scale = 100.f)
+    GameObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
+               const Ogre::String &material, float scale = 100.f)
         : mMaterial(material) {
         entity->setCastShadows(true);
 
@@ -40,12 +40,10 @@ class GameObject {
 
         mNode = scnMgr->getRootSceneNode()->createChildSceneNode();
 
-        if (!mNode)
-        {
+        if (!mNode) {
             throw Ogre::Exception(
                 Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE,
                 "Node is nullptr", "");
-
         }
 
         mNode->setScale(scale / 100.f, scale / 100.f, scale / 100.f);

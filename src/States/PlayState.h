@@ -12,9 +12,9 @@
 #include "ECS/EventManager.h"
 #include "ECS/System.h"
 
-#include "Util/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
+#include "Util/GameObject.h"
 #include "Util/State.h"
 
 #include "../Ball.h"
@@ -66,11 +66,11 @@ class PlayState : public Util::State {
     std::vector<Ogre::Plane> mWalls;
 
     // Bullet
-    btDefaultCollisionConfiguration* mCollisionConfig; 
-    btCollisionDispatcher* mDispatcher; 
-    btBroadphaseInterface* mOverlappingPairCache; 
-    btSequentialImpulseConstraintSolver* mSolver;
-    btDiscreteDynamicsWorld* mDynamicsWorld;
+    btDefaultCollisionConfiguration *mCollisionConfig;
+    btCollisionDispatcher *mDispatcher;
+    btBroadphaseInterface *mOverlappingPairCache;
+    btSequentialImpulseConstraintSolver *mSolver;
+    btDiscreteDynamicsWorld *mDynamicsWorld;
 
     ECS::EventManager *mEventManager;
 };
