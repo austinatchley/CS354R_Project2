@@ -57,9 +57,10 @@ endif (SDL_FOUND)
 message(STATUS "sdl2 lib: " ${SDL2_LIBRARY})
 message(STATUS "sdl2 include: " ${SDL2_INCLUDE_DIR})
 
-find_package(SDL2_mixer REQUIRED) 
+find_package(SDL2_mixer QUIET) 
 if (NOT SDL2MIXER_FOUND) # this is for the lab machines, where find_package doesn't work for sdl_mixer
-    set(SDL2MIXER_LIBRARIES "/usr/lib/x86_64-linux-gnu/libSDL2_mixer-2.0.so.0")
+    set(SDL2MIXER_LIBRARY "/usr/lib/x86_64-linux-gnu/libSDL2_mixer-2.0.so.0")
+    set(SDL2MIXER_INCLUDE_DIR "/usr/")
 endif (NOT SDL2MIXER_FOUND)
 
 find_package(Bullet 2.86)
