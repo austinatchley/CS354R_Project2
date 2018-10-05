@@ -2,11 +2,11 @@
 
 #include <OgreInput.h>
 
-#include "Util/GameState.h"
+#include "Util/State.h"
 
 namespace Game {
 // The game state where you interact with the menu
-class MenuState : public Util::GameState {
+class MenuState : public Util::State {
   public:
     MenuState();
     virtual ~MenuState() {}

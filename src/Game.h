@@ -15,7 +15,7 @@
 #include "Util/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
-#include "Util/GameState.h"
+#include "Util/State.h"
 
 #include "States/MenuState.h"
 #include "States/PlayState.h"
@@ -27,14 +27,14 @@ using namespace Ogre;
 using namespace OgreBites;
 
 namespace Game {
-using StateStack = std::vector<Util::GameState*>;
+using StateStack = std::vector<Util::State*>;
 
 class Game : public ApplicationContext, public InputListener {
   public:
     Game();
     virtual ~Game();
 
-    void pushState(Util::GameState *state);
+    void pushState(Util::State *state);
     void popState();
 
   private:
@@ -51,6 +51,6 @@ class Game : public ApplicationContext, public InputListener {
     std::unique_ptr<ECS::EventManager> mEventManager;
     SoundManager *mSoundManager;
 
-    StateStack mGameStates;
+    StateStack mStates;
 };
 } // namespace Game

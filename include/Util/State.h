@@ -7,12 +7,12 @@
 namespace Util {
 enum class ScreenShare : std::size_t { Transparent = 0, Shared, Full };
 
-class GameState {
+class State {
   public:
-    GameState(ScreenShare screenShare = ScreenShare::Transparent)
+    State(ScreenShare screenShare = ScreenShare::Transparent)
         : mScreenShare(screenShare) {}
 
-    virtual ~GameState() {}
+    virtual ~State() {}
 
     virtual void setup() {}
 

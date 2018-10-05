@@ -15,14 +15,14 @@
 #include "Util/GameObject.h"
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
-#include "Util/GameState.h"
+#include "Util/State.h"
 
 #include "../Ball.h"
 #include "../SoundManager.h"
 
 #include "btBulletDynamicsCommon.h"
 
-#include "Util/GameState.h"
+#include "Util/State.h"
 
 #define NUM_BALLS 10
 #define BALL_RADIUS 5.f
@@ -39,7 +39,7 @@ using namespace OgreBites;
 namespace Game {
 // The game state where you actually play the game
 // This should handle all game-specific logic
-class PlayState : public Util::GameState {
+class PlayState : public Util::State {
   public:
     PlayState(ECS::EventManager *eventManager, Root *root,
               Ogre::RenderWindow *renderWindow);

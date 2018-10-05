@@ -6,7 +6,7 @@ using namespace OgreBites;
 namespace Game {
 PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
                      Ogre::RenderWindow *renderWindow)
-    : GameState(Util::ScreenShare::Full), mEventManager(eventManager),
+    : State(Util::ScreenShare::Full), mEventManager(eventManager),
       mRoot(root), mRenderWindow(renderWindow) {}
 
 void PlayState::setup() {
