@@ -1,15 +1,15 @@
-#include "PlayState.h"
+#include "GameState.h"
 
 using namespace Ogre;
 using namespace OgreBites;
 
 namespace Game {
-PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
+GameState::GameState(ECS::EventManager *eventManager, Root *root,
                      Ogre::RenderWindow *renderWindow)
     : State(Util::ScreenShare::Full), mEventManager(eventManager), mRoot(root),
       mRenderWindow(renderWindow) {}
 
-void PlayState::setup() {
+void GameState::setup() {
     // get a pointer to the already created root
     mScnMgr = mRoot->createSceneManager();
 
@@ -128,7 +128,7 @@ void PlayState::setup() {
     mDynamicsWorld->setGravity(btVector3(0, -10, 0));
 }
 
-PlayState::~PlayState() {
+GameState::~GameState() {
     delete mDynamicsWorld;
     delete mSolver;
     delete mOverlappingPairCache;
@@ -136,12 +136,12 @@ PlayState::~PlayState() {
     delete mCollisionConfig;
 }
 
-void PlayState::update(const Ogre::FrameEvent &evt) {
+void GameState::update(const Ogre::FrameEvent &evt) {
     const Real dt = evt.timeSinceLastFrame;
     std::cout << "update with dt " << dt << std::endl;
 }
 
-bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {
+bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     static const Real mag = Math::HALF_PI / 2.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
@@ -206,7 +206,7 @@ bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     return false;
 }
 
-bool PlayState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
+bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Real mag = Math::HALF_PI / 2.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
@@ -226,7 +226,7 @@ bool PlayState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     return false;
 }
 
-bool PlayState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
     return false;
 }
 }

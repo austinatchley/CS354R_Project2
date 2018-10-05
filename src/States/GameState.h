@@ -39,11 +39,11 @@ using namespace OgreBites;
 namespace Game {
 // The game state where you actually play the game
 // This should handle all game-specific logic
-class PlayState : public Util::State {
+class GameState : public Util::State {
   public:
-    PlayState(ECS::EventManager *eventManager, Root *root,
+    GameState(ECS::EventManager *eventManager, Root *root,
               Ogre::RenderWindow *renderWindow);
-    virtual ~PlayState();
+    virtual ~GameState();
 
     void setup() override;
 

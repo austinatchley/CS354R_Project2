@@ -17,8 +17,8 @@
 #include "Util/GameObject.h"
 #include "Util/State.h"
 
+#include "States/GameState.h"
 #include "States/MenuState.h"
-#include "States/PlayState.h"
 
 #include "Ball.h"
 #include "SoundManager.h"

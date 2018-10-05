@@ -32,7 +32,7 @@ void Game::setup() {
     mSoundManager = new SoundManager();
     mEventManager->connect<Util::PlaySoundEvent>(mSoundManager);
 
-    pushState(new PlayState(mEventManager.get(), mRoot, getRenderWindow()));
+    pushState(new GameState(mEventManager.get(), mRoot, getRenderWindow()));
 }
 
 bool Game::keyPressed(const KeyboardEvent &evt) {

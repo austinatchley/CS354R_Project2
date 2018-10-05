@@ -23,7 +23,7 @@ set(SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/PlayState.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/GameState.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/MenuState.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ECS/ECSManager.cpp
@@ -36,7 +36,7 @@ set(HDRS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/PlayState.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/GameState.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/MenuState.h
 )
 
