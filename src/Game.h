@@ -27,15 +27,15 @@ using namespace Ogre;
 using namespace OgreBites;
 
 namespace Game {
-using StateStack = std::vector<Util::GameState>;
+using StateStack = std::vector<Util::GameState*>;
 
 class Game : public ApplicationContext, public InputListener {
   public:
     Game();
     virtual ~Game();
 
-    void pushState(Util::GameState &&state);
-    Util::GameState popState();
+    void pushState(Util::GameState *state);
+    void popState();
 
   private:
     void setup();

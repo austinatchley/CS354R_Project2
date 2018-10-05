@@ -11,7 +11,11 @@ using namespace OgreBites;
 namespace Game {
 Game::Game() : ApplicationContext("Project2") {}
 
-Game::~Game() {}
+Game::~Game() {
+    for (auto* state : mGameStates) {
+        delete state;
+    }
+}
 
 void Game::setup() {
     //////////////////////////////////////////////////////////////////
@@ -28,7 +32,7 @@ void Game::setup() {
     mSoundManager = new SoundManager();
     mEventManager->connect<Util::PlaySoundEvent>(mSoundManager);
 
-    pushState(PlayState(mEventManager.get(), mRoot, getRenderWindow()));
+    pushState(new PlayState(mEventManager.get(), mRoot, getRenderWindow()));
 }
 
 bool Game::keyPressed(const KeyboardEvent &evt) {
@@ -36,7 +40,7 @@ bool Game::keyPressed(const KeyboardEvent &evt) {
         return false;
     }
 
-    return mGameStates.back().keyPressed(evt);
+    return mGameStates.back()->keyPressed(evt);
 }
 
 bool Game::mousePressed(const MouseButtonEvent &evt) {
@@ -44,7 +48,7 @@ bool Game::mousePressed(const MouseButtonEvent &evt) {
         return false;
     }
 
-    return mGameStates.back().mousePressed(evt);
+    return mGameStates.back()->mousePressed(evt);
 }
 
 bool Game::mouseMoved(const MouseMotionEvent &evt) {
@@ -52,7 +56,7 @@ bool Game::mouseMoved(const MouseMotionEvent &evt) {
         return false;
     }
 
-    return mGameStates.back().mouseMoved(evt);
+    return mGameStates.back()->mouseMoved(evt);
 }
 
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
@@ -63,25 +67,29 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
     // Tell the EventManager to dispatch the events in the queue
     mEventManager->update();
 
-    mGameStates.back().update(evt);
+    // Update the current event
+    mGameStates.back()->update(evt);
 
     return true;
 }
 
-void Game::pushState(Util::GameState &&state) {
-    mGameStates.push_back(std::move(state));
+void Game::pushState(Util::GameState *state) {
+    mGameStates.push_back(state);
+
+    state->setup();
 }
 
-Util::GameState Game::popState() {
+void Game::popState() {
     if (mGameStates.empty()) {
         throw Ogre::Exception(
             Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE,
             "The state stack is invalid", "");
     }
 
-    Util::GameState state = mGameStates.back();
+    Util::GameState* state = mGameStates.back();
     mGameStates.pop_back();
-    return state;
+
+    delete state;
 }
 
 } // namespace Game

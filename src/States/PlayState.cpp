@@ -7,7 +7,9 @@ namespace Game {
 PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
                      Ogre::RenderWindow *renderWindow)
     : GameState(Util::ScreenShare::Full), mEventManager(eventManager),
-      mRoot(root), mRenderWindow(renderWindow) {
+      mRoot(root), mRenderWindow(renderWindow) {}
+
+void PlayState::setup() {
     // get a pointer to the already created root
     mScnMgr = mRoot->createSceneManager();
 
@@ -112,20 +114,20 @@ PlayState::PlayState(ECS::EventManager *eventManager, Root *root,
             mScnMgr->getRootSceneNode()->createChildSceneNode(name);
         planeNode->attachObject(planeEntity);
 
-        mWalls.push_back(plane);
-
-        mCollisionConfig = new btDefaultCollisionConfiguration();
-        mDispatcher = new btCollisionDispatcher(mCollisionConfig);
-        mOverlappingPairCache = new btDbvtBroadphase();
-        mSolver = new btSequentialImpulseConstraintSolver();
-
-        mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher,
-                mOverlappingPairCache,
-                mSolver,
-                mCollisionConfig);
-
-        mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+        mWalls.push_back(plane); 
     }
+        
+    mCollisionConfig = new btDefaultCollisionConfiguration();
+    mDispatcher = new btCollisionDispatcher(mCollisionConfig);
+    mOverlappingPairCache = new btDbvtBroadphase();
+    mSolver = new btSequentialImpulseConstraintSolver();
+
+    mDynamicsWorld = new btDiscreteDynamicsWorld(mDispatcher,
+            mOverlappingPairCache,
+            mSolver,
+            mCollisionConfig);
+
+    mDynamicsWorld->setGravity(btVector3(0, -10, 0));
 }
 
 PlayState::~PlayState() {
@@ -133,15 +135,12 @@ PlayState::~PlayState() {
     delete mSolver;
     delete mOverlappingPairCache;
     delete mDispatcher;
+    delete mCollisionConfig;
 }
 
 void PlayState::update(const Ogre::FrameEvent &evt) {
     const Real dt = evt.timeSinceLastFrame;
-
-    // Check each ball for collisions
-    for (int i = 0; i < mBalls.size(); ++i) {
-        mBalls[i].move(mWalls, mEventManager, dt);
-    }
+    std::cout << "update with dt " << dt << std::endl;
 }
 
 bool PlayState::keyPressed(const OgreBites::KeyboardEvent &evt) {

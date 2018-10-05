@@ -7,8 +7,10 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(CMAKE_PREFIX_PATH "/lusr/opt/bullet-2.86/;${CMAKE_PREFIX_PATH}")
+
 # When in debug mode, we run Address Sanitizer to find memory errors
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -fsanitize=address")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -64,7 +66,8 @@ find_package(Bullet 2.86)
 target_include_directories(
     Project2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    ${BULLET_INCLUDE_DIR}
+    #${BULLET_INCLUDE_DIR}
+    /usr/include/bullet
 )
 
 target_link_libraries(Project2

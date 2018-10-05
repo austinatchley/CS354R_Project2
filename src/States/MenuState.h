@@ -11,6 +11,8 @@ class MenuState : public Util::GameState {
     MenuState();
     virtual ~MenuState() {}
 
+    void setup() override;
+
     void update(const Ogre::FrameEvent &evt) override;
 
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;

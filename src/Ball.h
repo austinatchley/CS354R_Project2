@@ -23,9 +23,6 @@ class Ball : public Util::GameObject {
     const Ogre::Vector3 &getVelocity();
     void setVelocity(const Ogre::Vector3 &newVel);
 
-    void move(const std::vector<Ogre::Plane> &walls,
-              ECS::EventManager *eventManager, const Ogre::Real dt);
-
   private:
     Ogre::Real mRadius;
     Ogre::Vector3 mVelocity;

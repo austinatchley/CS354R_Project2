@@ -32,7 +32,21 @@ class GameObject {
             entity->setMaterialName(material);
         }
 
+        if (!scnMgr) {
+            throw Ogre::Exception(
+                Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE,
+                "Scene Manager is nullptr", "");
+        }
+
         mNode = scnMgr->getRootSceneNode()->createChildSceneNode();
+
+        if (!mNode)
+        {
+            throw Ogre::Exception(
+                Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE,
+                "Node is nullptr", "");
+
+        }
 
         mNode->setScale(scale / 100.f, scale / 100.f, scale / 100.f);
 

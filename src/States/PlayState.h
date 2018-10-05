@@ -45,6 +45,8 @@ class PlayState : public Util::GameState {
               Ogre::RenderWindow *renderWindow);
     virtual ~PlayState();
 
+    void setup() override;
+
     void update(const Ogre::FrameEvent &evt) override;
 
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
