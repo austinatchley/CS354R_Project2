@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_PREFIX_PATH "/lusr/opt/bullet-2.86/;${CMAKE_PREFIX_PATH}")
+set(CMAKE_PREFIX_PATH "/lusr/opt/bullet-2.86/;/usr/lib/;${CMAKE_PREFIX_PATH}")
 
 # When in debug mode, we run Address Sanitizer to find memory errors
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
@@ -50,9 +50,14 @@ file(COPY ${OGRE_CONFIG_DIR}/resources.cfg DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(Project2 ${HDRS} ${SRCS})
 
 find_package(SDL2 REQUIRED) 
-string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES) # remove the whitespace in the path on the lab machines
+if (SDL_FOUND)
+    string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES) # remove the whitespace in the path on the lab machines
+endif (SDL_FOUND)
 
-find_package(SDL2_mixer QUIET) 
+message(STATUS "sdl2 lib: " ${SDL2_LIBRARY})
+message(STATUS "sdl2 include: " ${SDL2_INCLUDE_DIR})
+
+find_package(SDL2_mixer REQUIRED) 
 if (NOT SDL2MIXER_FOUND) # this is for the lab machines, where find_package doesn't work for sdl_mixer
     set(SDL2MIXER_LIBRARIES "/usr/lib/x86_64-linux-gnu/libSDL2_mixer-2.0.so.0")
 endif (NOT SDL2MIXER_FOUND)
@@ -63,17 +68,18 @@ find_package(Bullet 2.86)
 
 # Everything in the include directory can be #include'd from cpp and h files
 # without using relative paths
-target_include_directories(
-    Project2 PUBLIC
+target_include_directories(Project2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    #${BULLET_INCLUDE_DIR}
+    ${BULLET_INCLUDE_DIR}
+    ${SDL2MIXER_INCLUDE_DIR}
+    ${SDL2_INCLUDE_DIR}
     /usr/include/bullet
 )
 
-target_link_libraries(Project2
+target_link_libraries(Project2 PUBLIC
     ${OGRE_LIBRARIES}
     ${OIS_LIBRARIES}
-    ${SDL2_LIBRARIES}
-    ${SDL2MIXER_LIBRARIES}
+    ${SDL2_LIBRARY}
+    ${SDL2MIXER_LIBRARY}
     ${BULLET_LIBRARIES}
 )
