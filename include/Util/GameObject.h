@@ -3,6 +3,8 @@
 #include <Ogre.h>
 #include <OgreSceneManager.h>
 
+#include <Physics/BulletContactCallback.h>
+
 #include "ECS/Entity.h"
 
 namespace Util {
@@ -28,9 +30,7 @@ class GameObject {
         : mMaterial(material) {
         entity->setCastShadows(true);
 
-        if (!material.empty()) {
-            entity->setMaterialName(material);
-        }
+        entity->setMaterialName(material);
 
         if (!scnMgr) {
             throw Ogre::Exception(
@@ -57,6 +57,25 @@ class GameObject {
 
   protected:
     Ogre::SceneNode *mNode;
+    Ogre::Entity *mEntity;
+
+    Ogre::SceneManager* mScnMgr;
+
     Ogre::String mMaterial;
+    Ogre::String mName;
+
+    btRigidBody* mBody;
+    btTransform mTransform;
+    btVector3 mInertia;
+
+    btScalar mMass;
+    btScalar mRestitution;
+    btScalar mFriction;
+
+    bool mKinematic;
+    bool mNeedsUpdates;
+
+    Physics::CollisionContext* mContext;
+    Physics::BulletContactCallback* mCCallback;
 };
 }
