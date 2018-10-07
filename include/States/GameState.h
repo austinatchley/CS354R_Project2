@@ -6,6 +6,8 @@
 #include <OgreMath.h>
 #include <OgreRTShaderSystem.h>
 
+#include "btBulletDynamicsCommon.h"
+
 #include "ECS/Component.h"
 #include "ECS/ECSManager.h"
 #include "ECS/Entity.h"
@@ -14,15 +16,12 @@
 
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
-#include "Util/GameObject.h"
-#include "Util/State.h"
 
-#include "../Ball.h"
+#include "../GameObjects/Ball.h"
+
 #include "../SoundManager.h"
 
-#include "btBulletDynamicsCommon.h"
-
-#include "Util/State.h"
+#include "State.h"
 
 #define NUM_BALLS 10
 #define BALL_RADIUS 5.f
@@ -39,7 +38,7 @@ using namespace OgreBites;
 namespace Game {
 // The game state where you actually play the game
 // This should handle all game-specific logic
-class GameState : public Util::State {
+class GameState : public State {
   public:
     GameState(ECS::EventManager *eventManager, Root *root,
               Ogre::RenderWindow *renderWindow);
@@ -53,6 +52,10 @@ class GameState : public Util::State {
     bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
     bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
 
+    void addObject(GameObject* obj);
+
+    using GameID = std::size_t;
+
   private:
     Root *mRoot;
     SceneManager *mScnMgr;
@@ -62,8 +65,7 @@ class GameState : public Util::State {
     Ogre::SceneNode *mCamNode;
     Ogre::Viewport *mViewport;
 
-    std::vector<Ball> mBalls;
-    std::vector<Ogre::Plane> mWalls;
+    std::vector<GameObject*> mObjects;
 
     // Bullet
     btDefaultCollisionConfiguration *mCollisionConfig;

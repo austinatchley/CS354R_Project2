@@ -14,27 +14,27 @@
 
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
-#include "Util/GameObject.h"
-#include "Util/State.h"
 
+#include "States/State.h"
 #include "States/GameState.h"
 #include "States/MenuState.h"
 
-#include "Ball.h"
+#include "GameObjects/Ball.h"
+
 #include "SoundManager.h"
 
 using namespace Ogre;
 using namespace OgreBites;
 
 namespace Game {
-using StateStack = std::vector<Util::State *>;
+using StateStack = std::vector<State *>;
 
 class Game : public ApplicationContext, public InputListener {
   public:
     Game();
     virtual ~Game();
 
-    void pushState(Util::State *state);
+    void pushState(State *state);
     void popState();
 
   private:

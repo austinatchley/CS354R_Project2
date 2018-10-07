@@ -4,7 +4,7 @@
 
 #include <OgreInput.h>
 
-namespace Util {
+namespace Game {
 enum class ScreenShare : std::size_t { Transparent = 0, Shared, Full };
 
 class State {

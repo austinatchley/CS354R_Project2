@@ -5,6 +5,7 @@
 #include <SDL/SDL_mixer.h>
 
 #include "ECS/EventManager.h"
+
 #include "Util/Events/EventSubscribers.h"
 
 namespace Game {

@@ -8,21 +8,18 @@
 
 #include "Util/Events/EventSubscribers.h"
 #include "Util/Events/Events.h"
-#include "Util/GameObject.h"
+
+#include "GameObject.h"
 
 namespace Game {
-class Ball : public Util::GameObject {
+class Ball : public GameObject {
   public:
     Ball(Ogre::SceneManager *scnMgr, const Ogre::String &material, float scale,
          const Ogre::Vector3 &velocity);
 
     ~Ball() {}
 
-    const Ogre::Vector3 &getVelocity();
-    void setVelocity(const Ogre::Vector3 &newVel);
-
   private:
-    Ogre::Real mRadius;
-    Ogre::Vector3 mVelocity;
+    // member vars
 };
 }

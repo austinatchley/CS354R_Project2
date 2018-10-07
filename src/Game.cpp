@@ -73,7 +73,7 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
     return true;
 }
 
-void Game::pushState(Util::State *state) {
+void Game::pushState(State *state) {
     mStates.push_back(state);
 
     state->setup();
@@ -86,7 +86,7 @@ void Game::popState() {
             "The state stack is invalid", "");
     }
 
-    Util::State *state = mStates.back();
+    State *state = mStates.back();
     mStates.pop_back();
 
     delete state;

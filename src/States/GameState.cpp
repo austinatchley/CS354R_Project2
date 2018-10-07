@@ -206,6 +206,10 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     return false;
 }
 
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
+    return false;
+}
+
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Real mag = Math::HALF_PI / 2.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
@@ -226,7 +230,7 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     return false;
 }
 
-bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
-    return false;
+void GameState::addObject(GameObject* obj) {
+    mObjects.push_back(obj);
 }
 }

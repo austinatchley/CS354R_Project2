@@ -19,25 +19,17 @@ include(cmake/clang-format.cmake)
 
 set(SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Game.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Ball.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/GameObject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Ball.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Paddle.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/GameState.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/MenuState.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ECS/ECSManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ECS/System.cpp
-)
-
-set(HDRS
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Game.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Ball.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/GameState.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/MenuState.h
 )
 
 project(Project2)
@@ -47,7 +39,7 @@ find_package(OGRE 1.11 REQUIRED COMPONENTS Bites RTShaderSystem)
 # copy resource.cfg next to our binaries where OGRE looks for it
 file(COPY ${OGRE_CONFIG_DIR}/resources.cfg DESTINATION ${CMAKE_BINARY_DIR})
 
-add_executable(Project2 ${HDRS} ${SRCS})
+add_executable(Project2 ${SRCS})
 
 find_package(SDL2 REQUIRED) 
 if (SDL_FOUND)

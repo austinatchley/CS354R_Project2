@@ -7,25 +7,34 @@
 
 #include "ECS/Entity.h"
 
+#include "States/State.h"
+
 namespace Util {
-class GameObject {
+class GenericObject {
   public:
-    GameObject(Ogre::SceneManager *scnMgr,
+    GenericObject(Ogre::SceneManager *scnMgr,
                Ogre::SceneManager::PrefabType prefab,
                const Ogre::String &material, float scale = 100.f) {
         Ogre::Entity *entity = scnMgr->createEntity(prefab);
 
-        GameObject(scnMgr, entity, material, scale);
+        GenericObject(scnMgr, entity, material, scale);
     }
 
-    GameObject(Ogre::SceneManager *scnMgr, const Ogre::String &meshName,
+    GenericObject(Ogre::SceneManager *scnMgr, const Ogre::String &meshName,
                const Ogre::String &material, float scale = 100.f) {
         Ogre::Entity *entity = scnMgr->createEntity(meshName);
 
-        GameObject(scnMgr, entity, material, scale);
+        GenericObject(scnMgr, entity, material, scale);
     }
 
-    GameObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
+    ~GenericObject() {}
+
+    virtual void update(float dt) {}
+
+    Ogre::SceneNode *getNode() { return mNode; }
+
+  protected:
+    GenericObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
                const Ogre::String &material, float scale = 100.f)
         : mMaterial(material) {
         entity->setCastShadows(true);
@@ -49,13 +58,10 @@ class GameObject {
         mNode->setScale(scale / 100.f, scale / 100.f, scale / 100.f);
 
         mNode->attachObject(entity);
+
+        mLastTime = 0.f;
     }
 
-    ~GameObject() {}
-
-    Ogre::SceneNode *getNode() { return mNode; }
-
-  protected:
     Ogre::SceneNode *mNode;
     Ogre::Entity *mEntity;
 
@@ -64,6 +70,8 @@ class GameObject {
     Ogre::String mMaterial;
     Ogre::String mName;
 
+    btCollisionShape* mShape;
+    btMotionState* mMotionState;
     btRigidBody* mBody;
     btTransform mTransform;
     btVector3 mInertia;
@@ -74,6 +82,8 @@ class GameObject {
 
     bool mKinematic;
     bool mNeedsUpdates;
+
+    float mLastTime;
 
     Physics::CollisionContext* mContext;
     Physics::BulletContactCallback* mCCallback;
