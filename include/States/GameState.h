@@ -1,5 +1,20 @@
 #pragma once
 
+#include "State.h"
+
+#include <GameObjects/GameObject.h>
+
+#include <ECS/Component.h>
+#include <ECS/ECSManager.h>
+#include <ECS/Entity.h>
+#include <ECS/EventManager.h>
+#include <ECS/System.h>
+
+#include <Util/Events/EventSubscribers.h>
+#include <Util/Events/Events.h>
+
+#include <SoundManager.h>
+
 #include <Ogre.h>
 #include <OgreApplicationContext.h>
 #include <OgreInput.h>
@@ -7,21 +22,6 @@
 #include <OgreRTShaderSystem.h>
 
 #include "btBulletDynamicsCommon.h"
-
-#include "ECS/Component.h"
-#include "ECS/ECSManager.h"
-#include "ECS/Entity.h"
-#include "ECS/EventManager.h"
-#include "ECS/System.h"
-
-#include "Util/Events/EventSubscribers.h"
-#include "Util/Events/Events.h"
-
-#include "../GameObjects/Ball.h"
-
-#include "../SoundManager.h"
-
-#include "State.h"
 
 #define NUM_BALLS 10
 #define BALL_RADIUS 5.f
@@ -52,9 +52,7 @@ class GameState : public State {
     bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
     bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
 
-    void addObject(GameObject* obj);
-
-    using GameID = std::size_t;
+    std::size_t addObject(GameObject* obj);
 
   private:
     Root *mRoot;

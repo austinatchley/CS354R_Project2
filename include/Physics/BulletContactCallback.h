@@ -3,7 +3,7 @@
 #include <btBulletDynamicsCommon.h>
 
 namespace Util {
-    class GameObject;
+class GenericObject;
 }
 
 namespace Physics {
@@ -14,7 +14,7 @@ struct CollisionContext
     const btCollisionObject* body;
     const btCollisionObject* lastBody;
     
-    Util::GameObject* obj;
+    Util::GenericObject* obj;
 
     float dist;
     float velNormal;
@@ -86,7 +86,7 @@ struct BulletContactCallback
             ctxt.body = colObj0;
         }
 
-        ctxt.obj = static_cast<Util::GameObject*>(ctxt.body->getUserPointer());
+        ctxt.obj = static_cast<Util::GenericObject*>(ctxt.body->getUserPointer());
         ctxt.normal = cp.m_normalWorldOnB;
         ctxt.velocity = body.getLinearVelocity();
         ctxt.velNormal = ctxt.normal.dot(ctxt.velocity);

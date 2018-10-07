@@ -1,0 +1,5 @@
+<map id="Game::GameObject" name="Game::GameObject">
+<area shape="rect" id="node3" href="$class_game_1_1_ball.html" title="Game::Ball" alt="" coords="5,155,95,181"/>
+<area shape="rect" id="node4" href="$class_game_1_1_paddle.html" title="Game::Paddle" alt="" coords="119,155,229,181"/>
+<area shape="rect" id="node2" href="$class_util_1_1_generic_object.html" title="Util::GenericObject" alt="" coords="42,5,181,32"/>
+</map>

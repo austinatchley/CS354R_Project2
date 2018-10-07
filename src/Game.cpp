@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include "States/MenuState.h"
 #include "Util/Util.h"
 
 #include <limits>

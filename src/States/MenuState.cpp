@@ -1,7 +1,7 @@
-#include "MenuState.h"
+#include <States/MenuState.h>
 
 namespace Game {
-MenuState::MenuState() : State(Util::ScreenShare::Shared) {}
+MenuState::MenuState() : State(ScreenShare::Shared) {}
 
 void MenuState::setup() {}
 

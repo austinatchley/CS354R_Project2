@@ -21,10 +21,12 @@ set(SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SoundManager.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/GenericObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/GameObject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Ball.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Paddle.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/States/State.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/GameState.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/MenuState.cpp
 

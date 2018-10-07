@@ -1,6 +1,23 @@
 #include "GameObjects/GameObject.h"
 
+#include <States/GameState.h>
+
 namespace Game {
+GameObject::GameObject(Ogre::SceneManager *scnMgr,
+           Ogre::SceneManager::PrefabType prefab,
+           const Ogre::String &material, float scale = 100.f)
+    : GenericObject(scnMgr, prefab, material, scale) {}
+ 
+GameObject::GameObject(Ogre::SceneManager *scnMgr,
+           const Ogre::String &meshName,
+           const Ogre::String &material, float scale = 100.f)
+    : GenericObject(scnMgr, meshName, material, scale) {}
+ 
+GameObject::GameObject(Ogre::SceneManager *scnMgr,
+           Ogre::Entity *entity,
+           const Ogre::String &material, float scale = 100.f)
+    : GenericObject(scnMgr, entity, material, scale) {}
+ 
 void GameObject::addToGame(GameState* gameState) {
     //updateTransform();
 

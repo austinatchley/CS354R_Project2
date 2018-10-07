@@ -1,27 +1,10 @@
 #pragma once
 
-#include <Ogre.h>
-#include <OgreApplicationContext.h>
-#include <OgreInput.h>
-#include <OgreMath.h>
-#include <OgreRTShaderSystem.h>
+#include <States/State.h>
+#include <States/GameState.h>
+#include <States/MenuState.h>
 
-#include "ECS/Component.h"
-#include "ECS/ECSManager.h"
-#include "ECS/Entity.h"
-#include "ECS/EventManager.h"
-#include "ECS/System.h"
-
-#include "Util/Events/EventSubscribers.h"
-#include "Util/Events/Events.h"
-
-#include "States/State.h"
-#include "States/GameState.h"
-#include "States/MenuState.h"
-
-#include "GameObjects/Ball.h"
-
-#include "SoundManager.h"
+#include <GameObjects/GameObject.h>
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -39,6 +22,7 @@ class Game : public ApplicationContext, public InputListener {
 
   private:
     void setup();
+
 
     bool keyPressed(const KeyboardEvent &evt) override;
     bool mousePressed(const MouseButtonEvent &evt) override;

@@ -1,4 +1,4 @@
-#include "Paddle.h"
+#include <GameObjects/Paddle.h>
 
 namespace Game {
 Paddle::Paddle(Ogre::SceneManager *scnMgr,

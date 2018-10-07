@@ -1,4 +1,6 @@
-#include "GameState.h"
+#include <States/GameState.h>
+
+#include <GameObjects/Ball.h>
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -6,7 +8,7 @@ using namespace OgreBites;
 namespace Game {
 GameState::GameState(ECS::EventManager *eventManager, Root *root,
                      Ogre::RenderWindow *renderWindow)
-    : State(Util::ScreenShare::Full), mEventManager(eventManager), mRoot(root),
+    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root),
       mRenderWindow(renderWindow) {}
 
 void GameState::setup() {
@@ -73,6 +75,7 @@ void GameState::setup() {
 
     //////////////////////////////////////////////////////////////////
     // Balls
+    /*
     for (int i = 0; i < NUM_BALLS; ++i) {
         const Vector3 vel(Math::RangeRandom(-20.0, 20.0),
                           Math::RangeRandom(-20.0, 20.0),
@@ -88,9 +91,11 @@ void GameState::setup() {
         mEventManager->event<Util::TransformEntityEvent>(
             new Util::TranslateEntityEvent(ball.getNode(), pos));
     }
+    */
 
     //////////////////////////////////////////////////////////////////
     // Planes
+    /*
     static const std::unordered_map<String, Vector3> planeNameToAxis = {
         {"left", Vector3::UNIT_X},   {"right", Vector3::NEGATIVE_UNIT_X},
         {"ground", Vector3::UNIT_Y}, {"ceil", Vector3::NEGATIVE_UNIT_Y},
@@ -116,6 +121,7 @@ void GameState::setup() {
 
         mWalls.push_back(plane);
     }
+    */
 
     mCollisionConfig = new btDefaultCollisionConfiguration();
     mDispatcher = new btCollisionDispatcher(mCollisionConfig);
@@ -230,7 +236,8 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     return false;
 }
 
-void GameState::addObject(GameObject* obj) {
+std::size_t GameState::addObject(GameObject* obj) {
     mObjects.push_back(obj);
+    return mObjects.size();
 }
 }

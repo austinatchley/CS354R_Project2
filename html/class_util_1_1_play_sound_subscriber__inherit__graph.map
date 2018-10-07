@@ -1,0 +1,5 @@
+<map id="Util::PlaySoundSubscriber" name="Util::PlaySoundSubscriber">
+<area shape="rect" id="node4" href="$class_game_1_1_sound_manager.html" title="Game::SoundManager" alt="" coords="19,244,181,271"/>
+<area shape="rect" id="node2" href="$class_e_c_s_1_1_event_subscriber.html" title="ECS::EventSubscriber\l\&lt; PlaySoundEvent \&gt;" alt="" coords="21,80,179,121"/>
+<area shape="rect" id="node3" href="$class_e_c_s_1_1_base_event_subscriber.html" title="ECS::BaseEventSubscriber" alt="" coords="5,5,195,32"/>
+</map>

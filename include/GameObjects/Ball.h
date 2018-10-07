@@ -4,20 +4,19 @@
 
 #include <Ogre.h>
 
-#include "ECS/EventManager.h"
+#include <ECS/EventManager.h>
 
-#include "Util/Events/EventSubscribers.h"
-#include "Util/Events/Events.h"
+#include <Util/Events/EventSubscribers.h>
+#include <Util/Events/Events.h>
 
 #include "GameObject.h"
 
 namespace Game {
 class Ball : public GameObject {
   public:
-    Ball(Ogre::SceneManager *scnMgr, const Ogre::String &material, float scale,
-         const Ogre::Vector3 &velocity);
+    Ball(Ogre::SceneManager *scnMgr, const Ogre::String &material, float scale);
 
-    ~Ball() {}
+    ~Ball();
 
   private:
     // member vars
