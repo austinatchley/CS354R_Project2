@@ -18,6 +18,8 @@ class Ball : public GameObject {
 
     ~Ball();
 
+    void handleCollision() override;
+
   private:
     // member vars
 };

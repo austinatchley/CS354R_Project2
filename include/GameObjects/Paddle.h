@@ -18,5 +18,7 @@ class Paddle : public GameObject {
            float scale);
 
     ~Paddle() {}
+
+    void handleCollision() override;
 };
 }

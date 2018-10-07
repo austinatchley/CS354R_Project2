@@ -19,8 +19,6 @@ GameObject::GameObject(Ogre::SceneManager *scnMgr,
     : GenericObject(scnMgr, entity, material, scale) {}
  
 void GameObject::addToGame(GameState* gameState) {
-    //updateTransform();
-
     if (mMass != 0.f) {
         mShape->calculateLocalInertia(mMass, mInertia);
     }
@@ -34,10 +32,13 @@ void GameObject::addToGame(GameState* gameState) {
 
     if (mKinematic) {
         mBody->setCollisionFlags(mBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
-        mBody->setActivationState(DISABLE_DEACTIVATION);
+
+        // For some reason this doesn't link correctly
+        //mBody->setActivationState(DISABLE_DEACTIVATION);
     }
 
     mGameID = gameState->addObject(this);
+    mUpdate = true;
 }
 
 void GameObject::update(float dt) {
@@ -50,10 +51,20 @@ void GameObject::update(float dt) {
             (mLastTime > -0.5 ||
             (mContext->lastBody != mContext->body && mLastTime > 0.1)))
     {
-        // Handle the collision here
+        // The derived GameObject class should implement its own in handleCollision
+        handleCollision();
         mLastTime = 0.f;
     }
 
     mContext->hit = false;
+    mUpdate = false;
+}
+
+bool GameObject::shouldUpdate() {
+    return mUpdate;
+}
+
+void GameObject::handleCollision() {
+
 }
 }

@@ -8,6 +8,9 @@
 #include <OgreSceneManager.h>
 
 #include "btBulletDynamicsCommon.h"
+#include "btBulletCollisionCommon.h"
+
+#include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 
 namespace Game {
 class GameState;
@@ -24,6 +27,9 @@ class GameObject : public Util::GenericObject {
     void addToGame(GameState* gameState);
 
     virtual void update(float dt);
+    virtual bool shouldUpdate();
+
+    virtual void handleCollision();
 
   protected:
     GameObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
@@ -31,5 +37,7 @@ class GameObject : public Util::GenericObject {
  
     std::size_t mGameID;
     btDiscreteDynamicsWorld *mWorld;
+
+    bool mUpdate;
 };
 }

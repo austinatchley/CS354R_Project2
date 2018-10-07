@@ -8,4 +8,8 @@ Ball::Ball(Ogre::SceneManager *scnMgr,
       {}
 
 Ball::~Ball() {}
+
+void Ball::handleCollision() {
+    // Implement the ball specific collision handler here
+}
 } // namespace Game

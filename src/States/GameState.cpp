@@ -81,15 +81,13 @@ void GameState::setup() {
                           Math::RangeRandom(-20.0, 20.0),
                           Math::RangeRandom(-20.0, 20.0));
 
-        Ball ball(mScnMgr, "Examples/SphereMappedRustySteel", BALL_RADIUS, vel);
+        Ball ball(mScnMgr, "Examples/SphereMappedRustySteel", BALL_RADIUS);
 
-        mBalls.push_back(ball);
+        mObjects.push_back(ball);
 
         const Vector3 pos(Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
                           Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
                           Math::RangeRandom(-WALL_SIZE, WALL_SIZE));
-        mEventManager->event<Util::TransformEntityEvent>(
-            new Util::TranslateEntityEvent(ball.getNode(), pos));
     }
     */
 
@@ -144,7 +142,15 @@ GameState::~GameState() {
 
 void GameState::update(const Ogre::FrameEvent &evt) {
     const Real dt = evt.timeSinceLastFrame;
-    std::cout << "update with dt " << dt << std::endl;
+
+    mDynamicsWorld->stepSimulation(dt);
+
+    for (int i = 0; i < mObjects.size(); ++i) {
+        GameObject* obj = mObjects[i];
+        if (obj->shouldUpdate()) {
+            obj->update(dt);
+        }
+    }
 }
 
 bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
