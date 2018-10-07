@@ -17,11 +17,11 @@ class GameState;
 
 class GameObject : public Util::GenericObject {
   public:
-    GameObject(Ogre::SceneManager *scnMgr,
+    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
                Ogre::SceneManager::PrefabType prefab,
                const Ogre::String &material, float scale);
         
-    GameObject(Ogre::SceneManager *scnMgr, const Ogre::String &meshName,
+    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &meshName,
                const Ogre::String &material, float scale);
  
     void addToGame(GameState* gameState);
@@ -32,7 +32,7 @@ class GameObject : public Util::GenericObject {
     virtual void handleCollision();
 
   protected:
-    GameObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
+    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,
                const Ogre::String &material, float scale);
  
     std::size_t mGameID;

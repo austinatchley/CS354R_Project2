@@ -14,7 +14,7 @@
 namespace Game {
 class Ball : public GameObject {
   public:
-    Ball(Ogre::SceneManager *scnMgr, const Ogre::String &material, float scale);
+    Ball(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &material, float scale);
 
     ~Ball();
 

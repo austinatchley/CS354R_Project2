@@ -3,20 +3,20 @@
 #include <States/GameState.h>
 
 namespace Game {
-GameObject::GameObject(Ogre::SceneManager *scnMgr,
+GameObject::GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
            Ogre::SceneManager::PrefabType prefab,
            const Ogre::String &material, float scale = 100.f)
-    : GenericObject(scnMgr, prefab, material, scale) {}
+    : GenericObject(scnMgr, eventManager, prefab, material, scale) {}
  
-GameObject::GameObject(Ogre::SceneManager *scnMgr,
+GameObject::GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
            const Ogre::String &meshName,
            const Ogre::String &material, float scale = 100.f)
-    : GenericObject(scnMgr, meshName, material, scale) {}
+    : GenericObject(scnMgr, eventManager, meshName, material, scale) {}
  
-GameObject::GameObject(Ogre::SceneManager *scnMgr,
+GameObject::GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
            Ogre::Entity *entity,
            const Ogre::String &material, float scale = 100.f)
-    : GenericObject(scnMgr, entity, material, scale) {}
+    : GenericObject(scnMgr, eventManager, entity, material, scale) {}
  
 void GameObject::addToGame(GameState* gameState) {
     if (mMass != 0.f) {

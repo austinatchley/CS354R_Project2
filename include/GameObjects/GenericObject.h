@@ -2,17 +2,19 @@
 
 #include <Physics/BulletContactCallback.h>
 
+#include <ECS/EventManager.h>
+
 #include <Ogre.h>
 #include <OgreSceneManager.h>
 
 namespace Util {
 class GenericObject {
   public:
-    GenericObject(Ogre::SceneManager *scnMgr,
+    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
                Ogre::SceneManager::PrefabType prefab,
                const Ogre::String &material, float scale);
         
-    GenericObject(Ogre::SceneManager *scnMgr, const Ogre::String &meshName,
+    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &meshName,
                const Ogre::String &material, float scale);
         
     ~GenericObject();
@@ -22,7 +24,7 @@ class GenericObject {
     Ogre::SceneNode *getNode();
 
   protected:
-    GenericObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
+    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,
                const Ogre::String &material, float scale);
         
     Ogre::SceneNode *mNode;
@@ -32,6 +34,8 @@ class GenericObject {
 
     Ogre::String mMaterial;
     Ogre::String mName;
+
+    ECS::EventManager* mEventManager;
 
     btCollisionShape* mShape;
     btMotionState* mMotionState;

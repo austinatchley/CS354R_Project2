@@ -1,10 +1,10 @@
 #include <GameObjects/Paddle.h>
 
 namespace Game {
-Paddle::Paddle(Ogre::SceneManager *scnMgr,
+Paddle::Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
                const Ogre::String &material = "Examples/SphereMappedRustySteel",
                float scale = 1.f)
-    : GameObject(scnMgr, Ogre::SceneManager::PT_PLANE, material, scale) {}
+    : GameObject(scnMgr, eventManager, Ogre::SceneManager::PT_PLANE, material, scale) {}
 
 void Paddle::handleCollision() {
 

@@ -1,19 +1,19 @@
 #include <GameObjects/GenericObject.h>
 
 namespace Util {
-GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
+GenericObject::GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
            Ogre::SceneManager::PrefabType prefab,
            const Ogre::String &material, float scale = 100.f) {
     Ogre::Entity *entity = scnMgr->createEntity(prefab);
 
-    GenericObject(scnMgr, entity, material, scale);
+    GenericObject(scnMgr, eventManager, entity, material, scale);
 }
 
-GenericObject::GenericObject(Ogre::SceneManager *scnMgr, const Ogre::String &meshName,
+GenericObject::GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &meshName,
            const Ogre::String &material, float scale = 100.f) {
     Ogre::Entity *entity = scnMgr->createEntity(meshName);
 
-    GenericObject(scnMgr, entity, material, scale);
+    GenericObject(scnMgr, eventManager, entity, material, scale);
 }
 
 GenericObject::~GenericObject() {}
@@ -22,9 +22,9 @@ void GenericObject::update(float dt) {}
 
 Ogre::SceneNode *GenericObject::getNode() { return mNode; }
 
-GenericObject::GenericObject(Ogre::SceneManager *scnMgr, Ogre::Entity *entity,
+GenericObject::GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,
            const Ogre::String &material, float scale = 100.f)
-    : mMaterial(material) {
+    : mMaterial(material) , mEventManager(eventManager) {
     entity->setCastShadows(true);
 
     entity->setMaterialName(material);
