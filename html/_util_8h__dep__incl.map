@@ -1,9 +1,0 @@
-<map id="include/Util/Util.h" name="include/Util/Util.h">
-<area shape="rect" id="node2" href="$_events_8h.html" title="include/Util/Events\l/Events.h" alt="" coords="96,80,234,121"/>
-<area shape="rect" id="node3" href="$_event_subscribers_8h.html" title="include/Util/Events\l/EventSubscribers.h" alt="" coords="148,169,294,211"/>
-<area shape="rect" id="node4" href="$_game_state_8h.html" title="include/States/GameState.h" alt="" coords="66,348,262,375"/>
-<area shape="rect" id="node6" href="$_ball_8h.html" title="include/GameObjects\l/Ball.h" alt="" coords="29,259,184,300"/>
-<area shape="rect" id="node8" href="$_paddle_8h.html" title="include/GameObjects\l/Paddle.h" alt="" coords="461,259,616,300"/>
-<area shape="rect" id="node7" href="$_sound_manager_8h.html" title="include/SoundManager.h" alt="" coords="258,266,437,293"/>
-<area shape="rect" id="node5" href="$_game_8h.html" title="include/Game.h" alt="" coords="104,423,223,449"/>
-</map>

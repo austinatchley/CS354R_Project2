@@ -1,6 +1,0 @@
-<map id="include/GameObjects/GameObject.h" name="include/GameObjects/GameObject.h">
-<area shape="rect" id="node2" href="$_ball_8h.html" title="include/GameObjects\l/Ball.h" alt="" coords="26,95,181,136"/>
-<area shape="rect" id="node5" href="$_paddle_8h.html" title="include/GameObjects\l/Paddle.h" alt="" coords="205,95,359,136"/>
-<area shape="rect" id="node3" href="$_game_state_8h.html" title="include/States/GameState.h" alt="" coords="5,184,201,211"/>
-<area shape="rect" id="node4" href="$_game_8h.html" title="include/Game.h" alt="" coords="44,259,163,285"/>
-</map>

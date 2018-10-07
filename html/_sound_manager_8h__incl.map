@@ -1,9 +1,0 @@
-<map id="include/SoundManager.h" name="include/SoundManager.h">
-<area shape="rect" id="node5" href="$_event_manager_8h.html" title="ECS/EventManager.h" alt="" coords="574,229,733,256"/>
-<area shape="rect" id="node19" href="$_event_subscribers_8h.html" title="Util/Events/EventSubscribers.h" alt="" coords="853,80,1065,107"/>
-<area shape="rect" id="node7" href="$_component_8h.html" title="Component.h" alt="" coords="392,379,499,405"/>
-<area shape="rect" id="node11" href="$_entity_8h.html" title="Entity.h" alt="" coords="502,453,570,480"/>
-<area shape="rect" id="node13" href="$_system_8h.html" title="System.h" alt="" coords="406,304,485,331"/>
-<area shape="rect" id="node20" href="$_events_8h.html" title="Events.h" alt="" coords="921,155,997,181"/>
-<area shape="rect" id="node21" href="$_util_8h.html" title="Util/Util.h" alt="" coords="1007,229,1084,256"/>
-</map>

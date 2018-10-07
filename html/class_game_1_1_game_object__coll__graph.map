@@ -1,5 +1,0 @@
-<map id="Game::GameObject" name="Game::GameObject">
-<area shape="rect" id="node2" href="$class_util_1_1_generic_object.html" title="Util::GenericObject" alt="" coords="192,5,331,32"/>
-<area shape="rect" id="node3" href="$struct_physics_1_1_collision_context.html" title="Physics::CollisionContext" alt="" coords="173,102,352,129"/>
-<area shape="rect" id="node4" href="$struct_physics_1_1_bullet_contact_callback.html" title="Physics::BulletContactCallback" alt="" coords="294,199,506,225"/>
-</map>

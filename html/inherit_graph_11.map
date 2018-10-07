@@ -1,6 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_util_1_1_generic_object.html" title="Util::GenericObject" alt="" coords="5,31,144,57"/>
-<area shape="rect" id="node2" href="$class_game_1_1_game_object.html" title="Game::GameObject" alt="" coords="192,31,336,57"/>
-<area shape="rect" id="node3" href="$class_game_1_1_ball.html" title="Game::Ball" alt="" coords="395,5,484,32"/>
-<area shape="rect" id="node4" href="$class_game_1_1_paddle.html" title="Game::Paddle" alt="" coords="384,56,495,83"/>
-</map>

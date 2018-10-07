@@ -1,5 +1,0 @@
-<map id="Util::TransformEntityEvent" name="Util::TransformEntityEvent">
-<area shape="rect" id="node3" href="$classUtil_1_1RotateEntityEvent.html" title="Util::RotateEntityEvent" alt="" coords="5,155,167,181"/>
-<area shape="rect" id="node4" href="$classUtil_1_1TranslateEntityEvent.html" title="Util::TranslateEntityEvent" alt="" coords="191,155,370,181"/>
-<area shape="rect" id="node2" href="$classECS_1_1BaseEvent.html" title="ECS::BaseEvent" alt="" coords="121,5,245,32"/>
-</map>
