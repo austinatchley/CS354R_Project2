@@ -34,8 +34,10 @@ void GameObject::addToGame(GameState* gameState) {
         mBody->setCollisionFlags(mBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
 
         // For some reason this doesn't link correctly
-        //mBody->setActivationState(DISABLE_DEACTIVATION);
+        mBody->setActivationState(DISABLE_DEACTIVATION);
     }
+
+    mBody->setWorldTransform(mTransform);
 
     mGameID = gameState->addObject(this);
     mUpdate = true;

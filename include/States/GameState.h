@@ -23,6 +23,9 @@
 
 #include "btBulletDynamicsCommon.h"
 
+//#include <CEGUI/CEGUI.h>
+//#include <CEGUI/RendererModules/Ogre/Renderer.h>
+
 #define NUM_BALLS 10
 #define BALL_RADIUS 5.f
 
@@ -72,6 +75,11 @@ class GameState : public State {
     btSequentialImpulseConstraintSolver *mSolver;
     btDiscreteDynamicsWorld *mDynamicsWorld;
 
+    // ECS
     ECS::EventManager *mEventManager;
+
+    // CEGUI
+    //CEGUI::OgreRenderer *mRenderer;
+    //CEGUI::Window* mGUIRoot;
 };
 }
