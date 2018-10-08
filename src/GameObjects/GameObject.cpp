@@ -23,6 +23,13 @@ void GameObject::addToGame(GameState* gameState) {
         mShape->calculateLocalInertia(mMass, mInertia);
     }
 
+    if (mKinematic) {
+        mMotionState = new Physics::OgreKinematicMotionState(mTransform, mNode);
+    }
+    else {
+        mMotionState = new Physics::OgreMotionState(mTransform, mNode);
+    }
+
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mMass, mMotionState, mShape, mInertia);
     rbInfo.m_restitution = mRestitution;
     rbInfo.m_friction = mFriction;
@@ -59,7 +66,6 @@ void GameObject::update(float dt) {
     }
 
     mMotionState->setWorldTransform(mTransform);
-    mBody->setWorldTransform(mTransform);
 
     mContext->hit = false;
     mUpdate = false;
@@ -70,12 +76,14 @@ bool GameObject::shouldUpdate() {
 }
 
 void GameObject::handleCollision() {
-
 }
 
 void GameObject::setTransform(const btTransform& newTransform) {
     mTransform = newTransform;
     mUpdate = true;
 
+    if (mKinematic) {
+        mMotionState->setKinematicTransform(mTransform);
+    }
 }
 }

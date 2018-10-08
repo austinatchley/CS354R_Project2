@@ -9,10 +9,8 @@ namespace Physics {
 class OgreMotionState
     : public btMotionState {
 public:    
-    OgreMotionState(Ogre::SceneNode* node)
-        : mNode(node) {
-        mTrans.setIdentity();
-    }
+    OgreMotionState(const btTransform& trans, Ogre::SceneNode* node)
+        : mNode(node), mTrans(trans) {}
 
     virtual ~OgreMotionState() {}
 
@@ -21,6 +19,10 @@ public:
     }
 
     inline virtual void setWorldTransform(const btTransform& trans) {
+        if (!mNode) {
+            return;
+        }
+
         mTrans = trans;
 
         btQuaternion orientation = mTrans.getRotation();
@@ -41,6 +43,9 @@ public:
                 orientation.z()
             ));
     }
+
+    // Use the OgreKinematicMotionState instead if you are trying to use this
+    virtual void setKinematicTransform(btTransform& trans) { assert(false); }
 
 protected:
     Ogre::SceneNode* mNode;

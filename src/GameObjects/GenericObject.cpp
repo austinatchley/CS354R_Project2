@@ -51,6 +51,4 @@ void GenericObject::update(float dt) {}
 void GenericObject::setTransform(const btTransform& newTransform) {}
 
 Ogre::SceneNode *GenericObject::getNode() { return mNode; }
-
-
 }

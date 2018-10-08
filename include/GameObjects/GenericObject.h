@@ -2,6 +2,7 @@
 
 #include <Physics/BulletContactCallback.h>
 #include <Physics/OgreMotionState.h>
+#include <Physics/OgreKinematicMotionState.h>
 
 #include <ECS/EventManager.h>
 

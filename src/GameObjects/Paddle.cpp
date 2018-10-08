@@ -15,8 +15,6 @@ Paddle::Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
 
     mInertia.setZero();
 
-    mMotionState = new Physics::OgreMotionState(mNode);
-
     mKinematic = true;
 }
 
