@@ -3,21 +3,22 @@
 namespace Game {
 Paddle::Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
                const Ogre::String &material = "Examples/SphereMappedRustySteel",
-               float scale = 1.f)
+               float scale = 1.f,
+               const Ogre::Vector3& pos = Ogre::Vector3::ZERO)
     : GameObject(scnMgr, eventManager, Ogre::SceneManager::PT_PLANE, material, scale) {
-    	// define shape, rigid body (a type of btCollisionObject), and set its position
-    	mShape = new btBoxShape(btVector3(1, 3, 1));
-    	mBody = new btRigidBody();
-    	mBody = setCollisionShape(mShape);
-    	mTransform.setIdentity();
-    	// playerPos is a D3DXVECTOR3 that holds camera position
-    	mTransform.setOrigin(btVector3(playerPos.x, playerPos.y, playerPos.z));
-    	mBody->setWorldTransform(mTransform);
-    	//mPlayerObject->forceActivationState(DISABLE_DEACTIVATION); //unneeded? Object will always respond to forces
-    	mWorld->addCollisionObject(mBody);
-    }
+    mShape = new btBoxShape(btVector3(1, 3, 1));
 
-Paddle::~Paddle() {}
+    mTransform.setIdentity();
+    mTransform.setOrigin(btVector3(pos.x, pos.y, pos.z));
+
+    mMass = 0.f;
+
+    mInertia.setZero();
+
+    mMotionState = new Physics::OgreMotionState(mNode);
+
+    mKinematic = true;
+}
 
 void Paddle::handleCollision() {
 	//if collide with ball, bounce it

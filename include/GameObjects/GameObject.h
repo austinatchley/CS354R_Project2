@@ -24,13 +24,15 @@ class GameObject : public Util::GenericObject {
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &meshName,
                const Ogre::String &material, float scale);
  
-    void addToGame(GameState* gameState);
+    // From GenericObject
+    virtual void update(float dt) override;
+    virtual void setTransform(const btTransform& newTransform) override;
 
-    virtual void update(float dt);
     bool shouldUpdate();
 
     virtual void handleCollision();
 
+    void addToGame(GameState* gameState);
 
   protected:
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,

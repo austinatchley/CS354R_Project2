@@ -16,15 +16,9 @@ GenericObject::GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* even
     GenericObject(scnMgr, eventManager, entity, material, scale);
 }
 
-GenericObject::~GenericObject() {}
-
-void GenericObject::update(float dt) {}
-
-Ogre::SceneNode *GenericObject::getNode() { return mNode; }
-
 GenericObject::GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,
            const Ogre::String &material, float scale = 100.f)
-    : mMaterial(material) , mEventManager(eventManager) {
+    : mMaterial(material) , mEventManager(eventManager), mKinematic(false), mStatic(false) {
     entity->setCastShadows(true);
 
     entity->setMaterialName(material);
@@ -49,4 +43,14 @@ GenericObject::GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* even
 
     mLastTime = 0.f;
 }
+
+GenericObject::~GenericObject() {}
+
+void GenericObject::update(float dt) {}
+
+void GenericObject::setTransform(const btTransform& newTransform) {}
+
+Ogre::SceneNode *GenericObject::getNode() { return mNode; }
+
+
 }

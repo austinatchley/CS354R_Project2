@@ -11,7 +11,5 @@ Ground::Ground(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
       	mKinematic = false;
       }
 
-Ground::~Ground() {}
-
 //void Ground::handleCollision() {}
 }

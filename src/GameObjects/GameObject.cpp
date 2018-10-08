@@ -58,6 +58,9 @@ void GameObject::update(float dt) {
         mLastTime = 0.f;
     }
 
+    mMotionState->setWorldTransform(mTransform);
+    mBody->setWorldTransform(mTransform);
+
     mContext->hit = false;
     mUpdate = false;
 }
@@ -67,6 +70,12 @@ bool GameObject::shouldUpdate() {
 }
 
 void GameObject::handleCollision() {
+
+}
+
+void GameObject::setTransform(const btTransform& newTransform) {
+    mTransform = newTransform;
+    mUpdate = true;
 
 }
 }

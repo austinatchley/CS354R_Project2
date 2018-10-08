@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-
+#include <OgreVector3.h>
 #include <Ogre.h>
 
 #include <ECS/EventManager.h>
@@ -14,7 +13,7 @@
 namespace Game {
 class Ball : public GameObject {
   public:
-    Ball(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &material, float scale);
+    Ball(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &material, float scale, const Ogre::Vector3& pos);
 
     ~Ball();
 

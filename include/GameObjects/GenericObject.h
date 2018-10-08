@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Physics/BulletContactCallback.h>
+#include <Physics/OgreMotionState.h>
 
 #include <ECS/EventManager.h>
 
@@ -21,6 +22,8 @@ class GenericObject {
 
     virtual void update(float dt);
 
+    virtual void setTransform(const btTransform& newTransform);
+
     Ogre::SceneNode *getNode();
 
   protected:
@@ -38,7 +41,7 @@ class GenericObject {
     ECS::EventManager* mEventManager;
 
     btCollisionShape* mShape;
-    btMotionState* mMotionState;
+    Physics::OgreMotionState* mMotionState;
     btRigidBody* mBody;
     btTransform mTransform;
     btVector3 mInertia;
@@ -48,7 +51,7 @@ class GenericObject {
     btScalar mFriction;
 
     bool mKinematic;
-    bool mNeedsUpdates;
+    bool mStatic;
 
     float mLastTime;
 
