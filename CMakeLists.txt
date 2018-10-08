@@ -60,12 +60,25 @@ endif (NOT SDL2MIXER_FOUND)
 #message(STATUS ${BULLET_LIBRARIES})
 #message(STATUS ${BULLET_INCLUDE_DIR})
 
+#set(CMAKE_PREFIX_PATH "/lusr/opt/cegui-0.8.7/lib/pkgconfig;${CMAKE_PREFIX_PATH}")
+find_package(CEGUI REQUIRED OgreRenderer)
+message(STATUS ${CEGUI_FOUND})
+message(STATUS ${CEGUI_INCLUDE_DIR})
+message(STATUS ${CEGUI_LIBRARIES})
+
+message(STATUS ${CEGUI_OgreRenderer_FOUND})
+message(STATUS ${CEGUI_OgreRenderer_INCLUDE_DIR})
+message(STATUS ${CEGUI_OgreRenderer_LIBRARIES})
+
 # Everything in the include directory can be #include'd from cpp and h files
 # without using relative paths
 target_include_directories(Project2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
     ${SDL2MIXER_INCLUDE_DIR}
     ${SDL2_INCLUDE_DIR}
+    #${CEGUI_INCLUDE_DIR}
+    #${CEGUI_OgreRenderer_INCLUDE_DIR}
+
     #${BULLET_INCLUDE_DIR}
     /lusr/opt/bullet-2.86/include/bullet
 )
@@ -75,6 +88,9 @@ target_link_libraries(Project2 PUBLIC
     ${OIS_LIBRARIES}
     ${SDL2_LIBRARY}
     ${SDL2MIXER_LIBRARY}
+    #${CEGUI_LIBRARIES}
+    #${CEGUI_OgreRenderer_LIBRARIES}
+
     #${BULLET_LIBRARIES}
 
     # THIS IS BAD BUT IT WON'T WORK ANY OTHER WAY

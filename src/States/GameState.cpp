@@ -121,6 +121,7 @@ void GameState::setup() {
     }
     */
 
+    // Bullet init
     mCollisionConfig = new btDefaultCollisionConfiguration();
     mDispatcher = new btCollisionDispatcher(mCollisionConfig);
     mOverlappingPairCache = new btDbvtBroadphase();
@@ -130,6 +131,25 @@ void GameState::setup() {
         mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
     mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+
+    /*
+    // CEGUI init
+    mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
+
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
+	CEGUI::Font::setDefaultResourceGroup("Fonts");
+	CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+	CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+	CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+
+    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+    CEGUI::System::getSingleton().getDefaultGUIContext().setDefaultFont("DejaVuSans-10");
+    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
+
+    mGUIRoot = CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "_MasterRoot" );
+
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
+    */
 }
 
 GameState::~GameState() {
