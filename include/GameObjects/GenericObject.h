@@ -1,8 +1,8 @@
 #pragma once
 
 #include <Physics/BulletContactCallback.h>
-#include <Physics/OgreMotionState.h>
 #include <Physics/OgreKinematicMotionState.h>
+#include <Physics/OgreMotionState.h>
 
 #include <ECS/EventManager.h>
 
@@ -12,38 +12,40 @@
 namespace Util {
 class GenericObject {
   public:
-    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
-               Ogre::SceneManager::PrefabType prefab,
-               const Ogre::String &material, float scale);
-        
-    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &meshName,
-               const Ogre::String &material, float scale);
-        
+    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+                  Ogre::SceneManager::PrefabType prefab,
+                  const Ogre::String &material, float scale);
+
+    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+                  const Ogre::String &meshName, const Ogre::String &material,
+                  float scale);
+
     ~GenericObject();
 
     virtual void update(float dt);
 
-    virtual void setTransform(const btTransform& newTransform);
+    virtual void setTransform(const btTransform &newTransform);
 
     Ogre::SceneNode *getNode();
 
   protected:
-    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,
-               const Ogre::String &material, float scale);
-        
+    GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+                  Ogre::Entity *entity, const Ogre::String &material,
+                  float scale);
+
     Ogre::SceneNode *mNode;
     Ogre::Entity *mEntity;
 
-    Ogre::SceneManager* mScnMgr;
+    Ogre::SceneManager *mScnMgr;
 
     Ogre::String mMaterial;
     Ogre::String mName;
 
-    ECS::EventManager* mEventManager;
+    ECS::EventManager *mEventManager;
 
-    btCollisionShape* mShape;
-    Physics::OgreMotionState* mMotionState;
-    btRigidBody* mBody;
+    btCollisionShape *mShape;
+    Physics::OgreMotionState *mMotionState;
+    btRigidBody *mBody;
     btTransform mTransform;
     btVector3 mInertia;
 
@@ -56,7 +58,7 @@ class GenericObject {
 
     float mLastTime;
 
-    Physics::CollisionContext* mContext;
-    Physics::BulletContactCallback* mCCallback;
+    Physics::CollisionContext *mContext;
+    Physics::BulletContactCallback *mCCallback;
 };
 }

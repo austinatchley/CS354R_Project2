@@ -7,8 +7,8 @@
 #include <Ogre.h>
 #include <OgreSceneManager.h>
 
-#include "btBulletDynamicsCommon.h"
 #include "btBulletCollisionCommon.h"
+#include "btBulletDynamicsCommon.h"
 
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 
@@ -17,27 +17,28 @@ class GameState;
 
 class GameObject : public Util::GenericObject {
   public:
-    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager,
+    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                Ogre::SceneManager::PrefabType prefab,
                const Ogre::String &material, float scale);
-        
-    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, const Ogre::String &meshName,
-               const Ogre::String &material, float scale);
- 
+
+    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+               const Ogre::String &meshName, const Ogre::String &material,
+               float scale);
+
     // From GenericObject
     virtual void update(float dt) override;
-    virtual void setTransform(const btTransform& newTransform) override;
+    virtual void setTransform(const btTransform &newTransform) override;
 
     bool shouldUpdate();
 
     virtual void handleCollision();
 
-    void addToGame(GameState* gameState);
+    void addToGame(GameState *gameState);
 
   protected:
-    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,
-               const Ogre::String &material, float scale);
- 
+    GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+               Ogre::Entity *entity, const Ogre::String &material, float scale);
+
     std::size_t mGameID;
     btDiscreteDynamicsWorld *mWorld;
 

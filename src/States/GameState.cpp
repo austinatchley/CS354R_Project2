@@ -139,16 +139,17 @@ void GameState::setup() {
     mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
 
     CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
-	CEGUI::Font::setDefaultResourceGroup("Fonts");
-	CEGUI::Scheme::setDefaultResourceGroup("Schemes");
-	CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
-	CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+        CEGUI::Font::setDefaultResourceGroup("Fonts");
+        CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+        CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+        CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
 
     CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
     CEGUI::System::getSingleton().getDefaultGUIContext().setDefaultFont("DejaVuSans-10");
     CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
 
-    mGUIRoot = CEGUI::WindowManager::getSingleton().createWindow( "DefaultWindow", "_MasterRoot" );
+    mGUIRoot = CEGUI::WindowManager::getSingleton().createWindow(
+    "DefaultWindow", "_MasterRoot" );
 
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
     */
@@ -168,7 +169,7 @@ void GameState::update(const Ogre::FrameEvent &evt) {
     mDynamicsWorld->stepSimulation(dt);
 
     for (int i = 0; i < mObjects.size(); ++i) {
-        GameObject* obj = mObjects[i];
+        GameObject *obj = mObjects[i];
         if (obj->shouldUpdate()) {
             obj->update(dt);
         }
@@ -264,7 +265,7 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     return false;
 }
 
-std::size_t GameState::addObject(GameObject* obj) {
+std::size_t GameState::addObject(GameObject *obj) {
     mObjects.push_back(obj);
     return mObjects.size();
 }

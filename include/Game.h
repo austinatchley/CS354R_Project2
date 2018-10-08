@@ -1,8 +1,8 @@
 #pragma once
 
-#include <States/State.h>
 #include <States/GameState.h>
 #include <States/MenuState.h>
+#include <States/State.h>
 
 #include <GameObjects/GameObject.h>
 
@@ -22,7 +22,6 @@ class Game : public ApplicationContext, public InputListener {
 
   private:
     void setup();
-
 
     bool keyPressed(const KeyboardEvent &evt) override;
     bool mousePressed(const MouseButtonEvent &evt) override;

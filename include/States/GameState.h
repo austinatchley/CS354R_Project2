@@ -55,7 +55,7 @@ class GameState : public State {
     bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
     bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
 
-    std::size_t addObject(GameObject* obj);
+    std::size_t addObject(GameObject *obj);
 
   private:
     Root *mRoot;
@@ -66,7 +66,7 @@ class GameState : public State {
     Ogre::SceneNode *mCamNode;
     Ogre::Viewport *mViewport;
 
-    std::vector<GameObject*> mObjects;
+    std::vector<GameObject *> mObjects;
 
     // Bullet
     btDefaultCollisionConfiguration *mCollisionConfig;
@@ -79,7 +79,7 @@ class GameState : public State {
     ECS::EventManager *mEventManager;
 
     // CEGUI
-    //CEGUI::OgreRenderer *mRenderer;
-    //CEGUI::Window* mGUIRoot;
+    // CEGUI::OgreRenderer *mRenderer;
+    // CEGUI::Window* mGUIRoot;
 };
 }

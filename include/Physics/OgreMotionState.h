@@ -2,23 +2,22 @@
 
 #include <Ogre.h>
 
-#include <btBulletDynamicsCommon.h>
 #include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
 
 namespace Physics {
-class OgreMotionState
-    : public btMotionState {
-public:    
-    OgreMotionState(const btTransform& trans, Ogre::SceneNode* node)
+class OgreMotionState : public btMotionState {
+  public:
+    OgreMotionState(const btTransform &trans, Ogre::SceneNode *node)
         : mNode(node), mTrans(trans) {}
 
     virtual ~OgreMotionState() {}
 
-    inline virtual void getWorldTransform(btTransform& trans) const {
+    inline virtual void getWorldTransform(btTransform &trans) const {
         trans = mTrans;
     }
 
-    inline virtual void setWorldTransform(const btTransform& trans) {
+    inline virtual void setWorldTransform(const btTransform &trans) {
         if (!mNode) {
             return;
         }
@@ -29,26 +28,18 @@ public:
         btVector3 position = mTrans.getOrigin();
 
         mNode->setPosition(
-                Ogre::Vector3(
-                    position.x(),
-                    position.y(),
-                    position.z()
-               ));
+            Ogre::Vector3(position.x(), position.y(), position.z()));
 
-        mNode->setOrientation(
-            Ogre::Quaternion(
-                orientation.w(),
-                orientation.x(),
-                orientation.y(),
-                orientation.z()
-            ));
+        mNode->setOrientation(Ogre::Quaternion(orientation.w(), orientation.x(),
+                                               orientation.y(),
+                                               orientation.z()));
     }
 
     // Use the OgreKinematicMotionState instead if you are trying to use this
-    virtual void setKinematicTransform(btTransform& trans) { assert(false); }
+    virtual void setKinematicTransform(btTransform &trans) { assert(false); }
 
-protected:
-    Ogre::SceneNode* mNode;
+  protected:
+    Ogre::SceneNode *mNode;
     btTransform mTrans;
 };
 }
