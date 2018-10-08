@@ -37,6 +37,8 @@ void GameObject::addToGame(GameState* gameState) {
         mBody->setActivationState(DISABLE_DEACTIVATION);
     }
 
+    mBody->setWorldTransform(mTransform);
+
     mGameID = gameState->addObject(this);
     mUpdate = true;
 }
