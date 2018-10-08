@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_PREFIX_PATH "/lusr/opt/bullet-2.86/;/usr/lib/;${CMAKE_PREFIX_PATH}")
-
 # When in debug mode, we run Address Sanitizer to find memory errors
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -g -fsanitize=address")
 
@@ -57,18 +55,19 @@ if (NOT SDL2MIXER_FOUND) # this is for the lab machines, where find_package does
     set(SDL2MIXER_INCLUDE_DIR "/usr/")
 endif (NOT SDL2MIXER_FOUND)
 
-find_package(Bullet 2.86)
-#set (BULLET_INCLUDE_DIR "/lusr/opt/bullet-2.79/include")
-#set (BULLET_LIBRARIES "/lusr/opt/bullet-2.79/lib")
+#set(CMAKE_PREFIX_PATH "/lusr/opt/bullet-2.86/;")
+#find_package(Bullet REQUIRED PATHS /lusr/opt/bullet-2.86)
+#message(STATUS ${BULLET_LIBRARIES})
+#message(STATUS ${BULLET_INCLUDE_DIR})
 
 # Everything in the include directory can be #include'd from cpp and h files
 # without using relative paths
 target_include_directories(Project2 PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/
-    ${BULLET_INCLUDE_DIR}
     ${SDL2MIXER_INCLUDE_DIR}
     ${SDL2_INCLUDE_DIR}
-    /usr/include/bullet
+    #${BULLET_INCLUDE_DIR}
+    /lusr/opt/bullet-2.86/include/bullet
 )
 
 target_link_libraries(Project2 PUBLIC
@@ -76,5 +75,11 @@ target_link_libraries(Project2 PUBLIC
     ${OIS_LIBRARIES}
     ${SDL2_LIBRARY}
     ${SDL2MIXER_LIBRARY}
-    ${BULLET_LIBRARIES}
+    #${BULLET_LIBRARIES}
+
+    # THIS IS BAD BUT IT WON'T WORK ANY OTHER WAY
+    # the find_package is broken, even when setting prefix_path
+    /lusr/opt/bullet-2.86/lib/libBulletDynamics.a
+    /lusr/opt/bullet-2.86/lib/libBulletCollision.a
+    /lusr/opt/bullet-2.86/lib/libLinearMath.a
 )
