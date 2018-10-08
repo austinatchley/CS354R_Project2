@@ -27,9 +27,10 @@ class GameObject : public Util::GenericObject {
     void addToGame(GameState* gameState);
 
     virtual void update(float dt);
-    virtual bool shouldUpdate();
+    bool shouldUpdate();
 
     virtual void handleCollision();
+
 
   protected:
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager* eventManager, Ogre::Entity *entity,

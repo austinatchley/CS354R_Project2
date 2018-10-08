@@ -5,6 +5,8 @@
 using namespace Ogre;
 using namespace OgreBites;
 
+constexpr float gravity = -9.8f;
+
 namespace Game {
 GameState::GameState(ECS::EventManager *eventManager, Root *root,
                      Ogre::RenderWindow *renderWindow)
@@ -129,7 +131,8 @@ void GameState::setup() {
     mDynamicsWorld = new btDiscreteDynamicsWorld(
         mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
-    mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+    // set world constants
+    mDynamicsWorld->setGravity(btVector3(0.0f, gravity, 0.0f));
 }
 
 GameState::~GameState() {
