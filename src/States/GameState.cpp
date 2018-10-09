@@ -4,18 +4,17 @@
 #include <GameObjects/Ground.h>
 #include <GameObjects/Paddle.h>
 
+
 #include <functional>
 
 using namespace Ogre;
 using namespace OgreBites;
 
-constexpr float gravity = -9.8f;
-
 namespace Game {
 GameState::GameState(ECS::EventManager *eventManager, Root *root,
-                     Ogre::RenderWindow *renderWindow)
-    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root),
-      mRenderWindow(renderWindow) {}
+                     Ogre::RenderWindow *renderWindow, OgreBites::TrayManager* trayMgr)
+    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root), 
+      mRenderWindow(renderWindow), mTrayMgr(trayMgr) {}
 
 void GameState::setup() {
     // get a pointer to the already created root
@@ -24,6 +23,12 @@ void GameState::setup() {
     // register our scene with the RTSS
     mShadergen = RTShader::ShaderGenerator::getSingletonPtr();
     mShadergen->addSceneManager(mScnMgr);
+
+    /* *** UNDER GUI CONSTRUCTION *** */ 
+
+	//Exit Button
+
+    /* *** END CONSTRUCTION *** */
 
     //////////////////////////////////////////////////////////////////
     // Lighting
@@ -37,7 +42,6 @@ void GameState::setup() {
     light->setType(Light::LT_SPOTLIGHT);
     light->setSpotlightRange(Degree(0), Degree(90));
 
-    // this should be pulled out into a util function for calculating correct
     // attenuation constants
     light->setAttenuation(WALL_SIZE * 24.f, 1.f, 4.5f / (WALL_SIZE * 24.f),
                           75.f / (WALL_SIZE * WALL_SIZE * 576.f));
@@ -47,7 +51,6 @@ void GameState::setup() {
     mainLightNode->attachObject(light);
     mainLightNode->setPosition(0, WALL_SIZE - 1.f, 0);
     mainLightNode->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Y);
-
     Light *pointLight = mScnMgr->createLight("PointLight");
     pointLight->setType(Light::LT_POINT);
     pointLight->setDiffuseColour(0.85, 0.1, 0.1);
@@ -78,6 +81,12 @@ void GameState::setup() {
 
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
                         Real(mViewport->getActualHeight()));
+
+    Button* b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
+
+    score = 0;
+    mTrayMgr->createTextBox (TL_BOTTOMRIGHT, "Score", ""+score, 0.1f, 0.1f);
+
 
     //////////////////////////////////////////////////////////////////
     // Balls
@@ -115,7 +124,7 @@ void GameState::setup() {
             WALL_SIZE * 2.f, WALL_SIZE * 2.f, 20, 20, true, 1, 5, 5,
             norm.perpendicular());
 
-        Entity *planeEntity = mScnMgr->createEntity(name);
+        Entity *planeEntity = mScnMgr->createEntityGameState(name);
         planeEntity->setCastShadows(false);
         planeEntity->setMaterialName("Examples/BeachStones");
 
@@ -136,9 +145,9 @@ void GameState::setup() {
     mDynamicsWorld = new btDiscreteDynamicsWorld(
         mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
-    mDynamicsWorld->setGravity(btVector3(0, gravity, 0));
+    mDynamicsWorld->setGravity(btVector3(0, -10, 0));
 
-    /*
+    /*GameState
     // CEGUI init
     mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
 
@@ -264,9 +273,18 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     return false;
 }
 
-bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
-    return false;
-}
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent& evt)
+    {
+        if (mTrayMgr->mousePressed(evt)) return true;
+        /* normal mouse processing here... */
+        return true;
+    }
+bool GameState::mouseReleased(const OgreBites::MouseButtonEvent& evt)
+    {
+        if (mTrayMgr->mouseReleased(evt)) return true;
+        /* normal mouse processing here... */
+        return true;
+    }
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Real mag = Math::HALF_PI / 2.f;
@@ -285,8 +303,15 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
         return true;
     }
 
+    if (mTrayMgr->mouseMoved(evt)) return true;
+
     return false;
 }
+void GameState::buttonHit(OgreBites::Button *button)
+    {
+        if(button->getName() == "DemoButton")
+            mRoot->queueEndRendering();
+    }
 
 std::size_t GameState::addObject(GameObject *obj) {
     mObjects.push_back(obj);
