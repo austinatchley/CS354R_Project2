@@ -76,11 +76,11 @@ void GameState::setup() {
     Camera *cam = mScnMgr->createCamera("camera");
     cam->setNearClipDistance(0.1);
     cam->setAutoAspectRatio(true);
+
     cam->lookAt(Ogre::Vector3::ZERO);
 
     mCamNode->attachObject(cam);
     mCamNode->setPosition(0, 0, 60);
-
     // and tell it to render into the main window
     mViewport = mRenderWindow->addViewport(cam);
     mViewport->setBackgroundColour(Ogre::ColourValue(0.1f, 0.1f, 0.15f));
@@ -218,7 +218,7 @@ void GameState::update(const Ogre::FrameEvent &evt) {
 }
 
 bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
-    static const Real mag = Math::HALF_PI / 2.f;
+    static const Real mag = Math::HALF_PI / 200.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
     static const Ogre::Vector3 upVec = Ogre::Vector3(0.f, mag, 0.f);
@@ -296,7 +296,7 @@ bool GameState::mouseReleased(const OgreBites::MouseButtonEvent &evt) {
 }
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
-    static const Real mag = 1.f;
+    static const Real mag = Ogre::Math::PI / 20.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
     static const Ogre::Vector3 upVec = Ogre::Vector3(0.f, mag, 0.f);
@@ -305,7 +305,6 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Ogre::Vector3 forVec = Ogre::Vector3(0.f, 0.f, -mag);
 
     if (evt.type == OgreBites::MOUSEMOTION) {
-        // auto camera = mScnMgr->getSceneNode("camera");
         mEventManager->event<Util::RotateCameraEvent>(
             new Util::RotateCameraEvent(mCamNode, (leftVec * evt.xrel) +
                                                       (downVec * evt.yrel),
