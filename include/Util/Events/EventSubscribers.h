@@ -56,20 +56,21 @@ class RotateCameraSubscriber : public ECS::EventSubscriber<RotateCameraEvent> {
         auto node = event.node;
         auto lookAt = event.lookAt;
 
-        auto yaw = rotate.x;
-        auto pitch = rotate.y;
+        auto yaw = Ogre::Radian(rotate.x);
+        auto pitch = Ogre::Radian(rotate.y);
 
         auto orientation = node->getOrientation();
 
-        const auto prevYaw = Ogre::Degree(orientation.getYaw());
-        const auto prevPitch = Ogre::Degree(orientation.getPitch());
+        const Ogre::Radian prevYaw = orientation.getYaw();
+        const Ogre::Radian prevPitch = orientation.getPitch();
 
         node->setPosition(lookAt);
         node->setOrientation(Ogre::Quaternion::IDENTITY);
 
         std::cout << "yaw " << yaw << ", pitch " << pitch << std::endl;
-        node->yaw(Ogre::Degree(yaw) + prevYaw);
-        node->pitch(Ogre::Degree(pitch) + prevPitch);
+        std::cout << "prevyaw " << prevYaw << ", prevpitch " << prevPitch << std::endl;
+        node->yaw(-1 * yaw + prevYaw);
+        node->pitch(-1 * pitch + prevPitch);
 
         node->translate(0.f, 0.f, 100.f,
                         Ogre::SceneNode::TransformSpace::TS_LOCAL);
