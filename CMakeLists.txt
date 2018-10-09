@@ -24,6 +24,7 @@ set(SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Ball.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Paddle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Ground.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/GameObjects/Camera.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/State.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/States/GameState.cpp
