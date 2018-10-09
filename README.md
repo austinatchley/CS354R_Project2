@@ -57,3 +57,14 @@ If we won't be able to meet the deadline, we will scrap the stretch goals and so
 
 We're using GitHub, and we will pair program whenever possible.
 We're going to meet Thursdays, Sundays, and whenever else possible.
+
+### Week 2 Update:
+
+GUI: Currently initialized, but is not displaying on the rendered window, code should be good to go when display issue is found. (Behind)
+Physics: Objects are not being acted upon by forces thus we can't move on to gameplay (very behind)
+Sound: Working as Intended. (Done)
+Level Design: Wasn't needed for demo, time constraints have made it so design is being severely cut if not nonexistant. (N/A)
+Gameplay: Nonexistant until physics is working.
+Cameral Control: Working as intended. (Done)
+
+Notes: The rendering loop is now contained in each individual state with the game class calling the update method on the active state. Workload is the same.
