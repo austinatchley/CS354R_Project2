@@ -45,7 +45,8 @@ namespace Game {
 class GameState : public State {
   public:
     GameState(ECS::EventManager *eventManager, Root *root,
-              Ogre::RenderWindow *renderWindow, OgreBites::TrayManager* trayMgr);
+              Ogre::RenderWindow *renderWindow,
+              OgreBites::TrayManager *trayMgr);
     virtual ~GameState();
 
     void setup() override;
@@ -55,7 +56,7 @@ class GameState : public State {
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
     bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
     bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
-    bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
+    bool mouseReleased(const OgreBites::MouseButtonEvent &evt) override;
     void buttonHit(OgreBites::Button *button) override;
 
     std::size_t addObject(GameObject *obj);
@@ -81,8 +82,8 @@ class GameState : public State {
     // ECS
     ECS::EventManager *mEventManager;
 
-    //GUI
-    OgreBites::TrayManager* mTrayMgr;
+    // GUI
+    OgreBites::TrayManager *mTrayMgr;
     int score;
 };
 }

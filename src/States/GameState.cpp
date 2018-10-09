@@ -12,8 +12,9 @@ using namespace OgreBites;
 
 namespace Game {
 GameState::GameState(ECS::EventManager *eventManager, Root *root,
-                     Ogre::RenderWindow *renderWindow, OgreBites::TrayManager* trayMgr)
-    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root), 
+                     Ogre::RenderWindow *renderWindow,
+                     OgreBites::TrayManager *trayMgr)
+    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root),
       mRenderWindow(renderWindow), mTrayMgr(trayMgr) {}
 
 void GameState::setup() {
@@ -29,9 +30,9 @@ void GameState::setup() {
     mShadergen = RTShader::ShaderGenerator::getSingletonPtr();
     mShadergen->addSceneManager(mScnMgr);
 
-    /* *** UNDER GUI CONSTRUCTION *** */ 
+    /* *** UNDER GUI CONSTRUCTION *** */
 
-	//Exit Button
+    // Exit Button
 
     /* *** END CONSTRUCTION *** */
 
@@ -87,11 +88,10 @@ void GameState::setup() {
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
                         Real(mViewport->getActualHeight()));
 
-    Button* b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
+    Button *b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
 
     score = 0;
-    mTrayMgr->createTextBox (TL_BOTTOMRIGHT, "Score", ""+score, 0.1f, 0.1f);
-
+    mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", "" + score, 0.1f, 0.1f);
 
     //////////////////////////////////////////////////////////////////
     // Balls
@@ -280,18 +280,18 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     return false;
 }
 
-bool GameState::mousePressed(const OgreBites::MouseButtonEvent& evt)
-    {
-        if (mTrayMgr->mousePressed(evt)) return true;
-        /* normal mouse processing here... */
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
+    if (mTrayMgr->mousePressed(evt))
         return true;
-    }
-bool GameState::mouseReleased(const OgreBites::MouseButtonEvent& evt)
-    {
-        if (mTrayMgr->mouseReleased(evt)) return true;
-        /* normal mouse processing here... */
+    /* normal mouse processing here... */
+    return true;
+}
+bool GameState::mouseReleased(const OgreBites::MouseButtonEvent &evt) {
+    if (mTrayMgr->mouseReleased(evt))
         return true;
-    }
+    /* normal mouse processing here... */
+    return true;
+}
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Real mag = 1.f;
@@ -312,15 +312,15 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
         return true;
     }
 
-    if (mTrayMgr->mouseMoved(evt)) return true;
+    if (mTrayMgr->mouseMoved(evt))
+        return true;
 
     return false;
 }
-void GameState::buttonHit(OgreBites::Button *button)
-    {
-        if(button->getName() == "DemoButton")
-            mRoot->queueEndRendering();
-    }
+void GameState::buttonHit(OgreBites::Button *button) {
+    if (button->getName() == "DemoButton")
+        mRoot->queueEndRendering();
+}
 
 std::size_t GameState::addObject(GameObject *obj) {
     mObjects.push_back(obj);

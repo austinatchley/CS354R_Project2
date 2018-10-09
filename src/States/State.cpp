@@ -15,6 +15,8 @@ bool State::mousePressed(const OgreBites::MouseButtonEvent &evt) {
     return false;
 }
 bool State::mouseMoved(const OgreBites::MouseMotionEvent &evt) { return false; }
-bool State::mouseReleased(const OgreBites::MouseButtonEvent& evt) { return false; }
+bool State::mouseReleased(const OgreBites::MouseButtonEvent &evt) {
+    return false;
+}
 void State::buttonHit(OgreBites::Button *button) {}
 }

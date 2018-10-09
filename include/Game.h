@@ -1,9 +1,9 @@
 #pragma once
 
+#include <OgreTrays.h>
 #include <States/GameState.h>
 #include <States/MenuState.h>
 #include <States/State.h>
-#include <OgreTrays.h>
 
 #include <GameObjects/GameObject.h>
 
@@ -13,7 +13,9 @@ using namespace OgreBites;
 namespace Game {
 using StateStack = std::vector<State *>;
 
-class Game : public ApplicationContext, public InputListener, public TrayListener {
+class Game : public ApplicationContext,
+             public InputListener,
+             public TrayListener {
   public:
     Game();
     virtual ~Game();
@@ -27,7 +29,7 @@ class Game : public ApplicationContext, public InputListener, public TrayListene
     bool keyPressed(const KeyboardEvent &evt) override;
     bool mousePressed(const MouseButtonEvent &evt) override;
     bool mouseMoved(const MouseMotionEvent &evt) override;
-    bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
+    bool mouseReleased(const OgreBites::MouseButtonEvent &evt) override;
     void buttonHit(OgreBites::Button *button) override;
 
     bool frameRenderingQueued(const Ogre::FrameEvent &evt) override;
@@ -39,6 +41,6 @@ class Game : public ApplicationContext, public InputListener, public TrayListene
 
     StateStack mStates;
 
-    OgreBites::TrayManager* mTrayMgr;
+    OgreBites::TrayManager *mTrayMgr;
 };
 } // namespace Game
