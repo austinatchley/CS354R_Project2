@@ -19,11 +19,11 @@ static int Mix_PlayChannel_Sound(Sound s, Mix_Chunk *mc, int i) {
     return Mix_PlayChannel(static_cast<int>(s), mc, i);
 }
 
-static Ogre::Vector3 makeOgreVector(const btVector3& btVector) {
-	return Ogre::Vector3(btVector.x, btVector.z, btVector.y);
+static Ogre::Vector3 makeOgreVector3(const btVector3 &btVector) {
+    return Ogre::Vector3(btVector.x(), btVector.z(), btVector.y());
 }
 
-static btVector3 makeBulletVector(const Ogre::Vector3& ogreVector) {
-	return btVector3(ogreVector.x, ogreVector.z, ogreVector.y);
+static btVector3 makeBulletVector3(const Ogre::Vector3 &ogreVector) {
+    return btVector3(ogreVector.x, ogreVector.z, ogreVector.y);
 }
 }

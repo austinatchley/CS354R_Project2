@@ -1,6 +1,7 @@
 #include <States/GameState.h>
 
 #include <GameObjects/Ball.h>
+#include <GameObjects/Ground.h>
 #include <GameObjects/Paddle.h>
 
 #include <functional>
@@ -137,10 +138,6 @@ void GameState::setup() {
 
     mDynamicsWorld->setGravity(btVector3(0, gravity, 0));
 
-    // create ground
-    GameObject* ground = new Ground(mScnMgr, mEventManager);
-    ground->addObject(this);
-
     /*
     // CEGUI init
     mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
@@ -160,6 +157,10 @@ void GameState::setup() {
 
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
     */
+
+    // create ground
+    Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
+    ground->addToGame(this);
 
     Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
                           "Examples/SphereMappedRustySteel", BALL_RADIUS,
