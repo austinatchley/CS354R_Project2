@@ -30,7 +30,7 @@
 #define NUM_BALLS 10
 #define BALL_RADIUS 5.f
 
-#define WALL_SIZE 25.f
+#define PADDLE_SCALE 5.f
 
 #define LIGHT_INTENSITY 1.0
 #define AMBIENT_LIGHT                                                          \

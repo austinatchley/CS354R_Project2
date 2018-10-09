@@ -49,13 +49,13 @@ void GameState::setup() {
     light->setSpotlightRange(Degree(0), Degree(90));
 
     // attenuation constants
-    light->setAttenuation(WALL_SIZE * 24.f, 1.f, 4.5f / (WALL_SIZE * 24.f),
-                          75.f / (WALL_SIZE * WALL_SIZE * 576.f));
+    light->setAttenuation(25.f * 24.f, 1.f, 4.5f / (25.f * 24.f),
+                          75.f / (25.f * 25.f * 576.f));
 
     Ogre::SceneNode *mainLightNode =
         mScnMgr->getRootSceneNode()->createChildSceneNode("MainLight");
     mainLightNode->attachObject(light);
-    mainLightNode->setPosition(0, WALL_SIZE - 1.f, 0);
+    mainLightNode->setPosition(0, 25.f - 1.f, 0);
     mainLightNode->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Y);
     Light *pointLight = mScnMgr->createLight("PointLight");
     pointLight->setType(Light::LT_POINT);
@@ -66,7 +66,7 @@ void GameState::setup() {
     SceneNode *pointLightNode =
         mScnMgr->getRootSceneNode()->createChildSceneNode();
     pointLightNode->attachObject(pointLight);
-    pointLightNode->setPosition(Vector3(0, WALL_SIZE - 1.f, -WALL_SIZE + 1.f));
+    pointLightNode->setPosition(Vector3(0, 25.f - 1.f, -25.f + 1.f));
 
     //////////////////////////////////////////////////////////////////
     // Camera
@@ -173,19 +173,21 @@ void GameState::setup() {
     */
 
     // create ground
-    // Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
-    // ground->addToGame(this);
+    Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
+    ground->addToGame(this);
 
-    // create ball
+    btTransform ballTrans;
+    ballTrans.setOrigin(btVector3(0, 0, 20));
     Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
                           "Examples/SphereMappedRustySteel", BALL_RADIUS,
-                          btTransform::getIdentity());
+                          ballTrans);
     ball->addToGame(this);
 
-    // create paddle
+    btTransform paddleTrans;
+    paddleTrans.setOrigin(btVector3(0, 10, 20));
     Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
-                                "Examples/SphereMappedRustySteel", BALL_RADIUS,
-                                btTransform::getIdentity());
+                                "Examples/SphereMappedRustySteel", PADDLE_SCALE,
+                                paddleTrans);
     paddle->addToGame(this);
 }
 
@@ -208,7 +210,7 @@ void GameState::update(const Ogre::FrameEvent &evt) {
 
     for (int i = 0; i < mObjects.size(); ++i) {
         GameObject *obj = mObjects[i];
-
+      
         if (obj->shouldUpdate()) {
             obj->update(dt);
         }

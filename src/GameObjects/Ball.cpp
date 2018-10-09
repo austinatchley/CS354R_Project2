@@ -16,15 +16,16 @@ Ball::Ball(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
 
     mMass = 2 * Ogre::Math::PI / 3 * Ogre::Math::Pow(scale, 3);
 
-    mInertia.setZero();
+    mInertia = btVector3(1,1,1);
 }
 
 Ball::~Ball() {}
 
 void Ball::handleCollision() {
     // Implement the ball specific collision handler here
-
     mEventManager->event<Util::PlaySoundEvent>(
         new Util::PlaySoundEvent(Util::Sound::Ball));
+
+    //mBody.applyCentralImpulse(btVector3(Ogre));
 }
 } // namespace Game

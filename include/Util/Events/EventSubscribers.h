@@ -67,7 +67,7 @@ class RotateCameraSubscriber : public ECS::EventSubscriber<RotateCameraEvent> {
         node->setPosition(lookAt);
         node->setOrientation(Ogre::Quaternion::IDENTITY);
 
-        std::cout << "yaw " << yaw << ", pitch " << pitch << std::endl;
+        //std::cout << "yaw " << yaw << ", pitch " << pitch << std::endl;
         node->yaw(Ogre::Degree(yaw) + prevYaw);
         node->pitch(Ogre::Degree(pitch) + prevPitch);
 

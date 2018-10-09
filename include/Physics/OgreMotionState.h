@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include <Util/Util.h>
+
 #include <Ogre.h>
 
 #include <btBulletCollisionCommon.h>
@@ -30,7 +32,7 @@ class OgreMotionState : public btMotionState {
         btVector3 position = mTrans.getOrigin();
 
         mNode->setPosition(
-            Ogre::Vector3(position.x(), position.y(), position.z()));
+            Util::makeOgreVector3(position));
 
         mNode->setOrientation(Ogre::Quaternion(orientation.w(), orientation.x(),
                                                orientation.y(),
