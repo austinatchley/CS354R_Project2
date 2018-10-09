@@ -38,7 +38,19 @@ class TranslateEntityEvent : public TransformEntityEvent {
         : TransformEntityEvent(n, t, Ogre::Vector3::ZERO) {}
 };
 
-class PlaySoundEvent : ECS::BaseEvent {
+class RotateCameraEvent : public ECS::BaseEvent {
+  public:
+    RotateCameraEvent(Ogre::SceneNode *n, const Ogre::Vector3 &r,
+                      const Ogre::Vector3 &l)
+        : node(n), rotate(r), lookAt(l) {}
+    ~RotateCameraEvent() {}
+
+    Ogre::SceneNode *node;
+    Ogre::Vector3 rotate;
+    Ogre::Vector3 lookAt;
+};
+
+class PlaySoundEvent : public ECS::BaseEvent {
   public:
     PlaySoundEvent(Util::Sound s) : sound(s) {}
 

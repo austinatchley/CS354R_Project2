@@ -4,7 +4,8 @@
 #include <GameObjects/Ground.h>
 #include <GameObjects/Paddle.h>
 
-#include <functional>
+#include <Util/Events/EventSubscribers.h>
+#include <Util/Events/Events.h>
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -18,6 +19,11 @@ GameState::GameState(ECS::EventManager *eventManager, Root *root,
       mRenderWindow(renderWindow) {}
 
 void GameState::setup() {
+    // Create an EventSubscriber for camera rotation
+    Util::RotateCameraSubscriber *rotateCameraSub =
+        new Util::RotateCameraSubscriber();
+    mEventManager->connect<Util::RotateCameraEvent>(rotateCameraSub);
+
     // get a pointer to the already created root
     mScnMgr = mRoot->createSceneManager();
 
@@ -79,54 +85,6 @@ void GameState::setup() {
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
                         Real(mViewport->getActualHeight()));
 
-    //////////////////////////////////////////////////////////////////
-    // Balls
-    /*
-    for (int i = 0; i < NUM_BALLS; ++i) {
-        const Vector3 vel(Math::RangeRandom(-20.0, 20.0),
-                          Math::RangeRandom(-20.0, 20.0),
-                          Math::RangeRandom(-20.0, 20.0));
-
-        Ball ball(mScnMgr, "Examples/SphereMappedRustySteel", BALL_RADIUS);
-
-        mObjects.push_back(ball);
-
-        const Vector3 pos(Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
-                          Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
-                          Math::RangeRandom(-WALL_SIZE, WALL_SIZE));
-    }
-    */
-
-    //////////////////////////////////////////////////////////////////
-    // Planes
-    /*
-    static const std::unordered_map<String, Vector3> planeNameToAxis = {
-        {"left", Vector3::UNIT_X},   {"right", Vector3::NEGATIVE_UNIT_X},
-        {"ground", Vector3::UNIT_Y}, {"ceil", Vector3::NEGATIVE_UNIT_Y},
-        {"back", Vector3::UNIT_Z},   {"front", Vector3::NEGATIVE_UNIT_Z}};
-
-    for (const auto entry : planeNameToAxis) {
-        auto name = entry.first;
-        auto norm = entry.second;
-
-        Plane plane(norm, -WALL_SIZE);
-        MeshManager::getSingleton().createPlane(
-            name, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane,
-            WALL_SIZE * 2.f, WALL_SIZE * 2.f, 20, 20, true, 1, 5, 5,
-            norm.perpendicular());
-
-        Entity *planeEntity = mScnMgr->createEntity(name);
-        planeEntity->setCastShadows(false);
-        planeEntity->setMaterialName("Examples/BeachStones");
-
-        SceneNode *planeNode =
-            mScnMgr->getRootSceneNode()->createChildSceneNode(name);
-        planeNode->attachObject(planeEntity);
-
-        mWalls.push_back(plane);
-    }
-    */
-
     // Bullet init
     mCollisionConfig = new btDefaultCollisionConfiguration();
     mDispatcher = new btCollisionDispatcher(mCollisionConfig);
@@ -138,35 +96,17 @@ void GameState::setup() {
 
     mDynamicsWorld->setGravity(btVector3(0, gravity, 0));
 
-    /*
-    // CEGUI init
-    mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
-
-    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
-        CEGUI::Font::setDefaultResourceGroup("Fonts");
-        CEGUI::Scheme::setDefaultResourceGroup("Schemes");
-        CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
-        CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
-
-    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
-    CEGUI::System::getSingleton().getDefaultGUIContext().setDefaultFont("DejaVuSans-10");
-    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
-
-    mGUIRoot = CEGUI::WindowManager::getSingleton().createWindow(
-    "DefaultWindow", "_MasterRoot" );
-
-    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
-    */
-
     // create ground
-    Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
-    ground->addToGame(this);
+    // Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
+    // ground->addToGame(this);
 
+    // create ball
     Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
                           "Examples/SphereMappedRustySteel", BALL_RADIUS,
                           btTransform::getIdentity());
     ball->addToGame(this);
 
+    // create paddle
     Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
                                 "Examples/SphereMappedRustySteel", BALL_RADIUS,
                                 btTransform::getIdentity());
@@ -188,6 +128,8 @@ GameState::~GameState() {
 void GameState::update(const Ogre::FrameEvent &evt) {
     const Real dt = evt.timeSinceLastFrame;
 
+    std::cout << "update begin" << std::endl;
+
     mDynamicsWorld->stepSimulation(dt);
 
     for (int i = 0; i < mObjects.size(); ++i) {
@@ -197,6 +139,8 @@ void GameState::update(const Ogre::FrameEvent &evt) {
             obj->update(dt);
         }
     }
+
+    std::cout << "update end" << std::endl;
 }
 
 bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
@@ -269,7 +213,7 @@ bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
 }
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
-    static const Real mag = Math::HALF_PI / 2.f;
+    static const Real mag = 1.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
     static const Ogre::Vector3 upVec = Ogre::Vector3(0.f, mag, 0.f);
@@ -278,9 +222,11 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Ogre::Vector3 forVec = Ogre::Vector3(0.f, 0.f, -mag);
 
     if (evt.type == OgreBites::MOUSEMOTION) {
-        mEventManager->event<Util::TransformEntityEvent>(
-            new Util::RotateEntityEvent(mCamNode,
-                                        (upVec * evt.x) + (rightVec * evt.y)));
+        // auto camera = mScnMgr->getSceneNode("camera");
+        mEventManager->event<Util::RotateCameraEvent>(
+            new Util::RotateCameraEvent(mCamNode, (leftVec * evt.xrel) +
+                                                      (downVec * evt.yrel),
+                                        Ogre::Vector3::ZERO));
 
         return true;
     }
