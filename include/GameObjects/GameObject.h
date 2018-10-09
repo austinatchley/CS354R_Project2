@@ -18,10 +18,12 @@ class GameState;
 class GameObject : public Util::GenericObject {
   public:
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+               btDiscreteDynamicsWorld *world,
                Ogre::SceneManager::PrefabType prefab,
                const Ogre::String &material, float scale);
 
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+               btDiscreteDynamicsWorld *world,
                const Ogre::String &meshName, const Ogre::String &material,
                float scale);
 
@@ -37,6 +39,7 @@ class GameObject : public Util::GenericObject {
 
   protected:
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+               btDiscreteDynamicsWorld *world,
                Ogre::Entity *entity, const Ogre::String &material, float scale);
 
     std::size_t mGameID;

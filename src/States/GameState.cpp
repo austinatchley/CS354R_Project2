@@ -1,6 +1,9 @@
 #include <States/GameState.h>
 
 #include <GameObjects/Ball.h>
+#include <GameObjects/Paddle.h>
+
+#include <functional>
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -153,6 +156,12 @@ void GameState::setup() {
 
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
     */
+
+    Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld, "Examples/SphereMappedRustySteel", BALL_RADIUS, btTransform::getIdentity());
+    ball->addToGame(this);
+
+    Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld, "Examples/SphereMappedRustySteel", BALL_RADIUS, btTransform::getIdentity());
+    paddle->addToGame(this);
 }
 
 GameState::~GameState() {
@@ -161,6 +170,10 @@ GameState::~GameState() {
     delete mOverlappingPairCache;
     delete mDispatcher;
     delete mCollisionConfig;
+
+    for (auto it = mObjects.begin(); it != mObjects.end(); ++it) {
+        delete *it;
+    }
 }
 
 void GameState::update(const Ogre::FrameEvent &evt) {
@@ -170,6 +183,7 @@ void GameState::update(const Ogre::FrameEvent &evt) {
 
     for (int i = 0; i < mObjects.size(); ++i) {
         GameObject *obj = mObjects[i];
+
         if (obj->shouldUpdate()) {
             obj->update(dt);
         }

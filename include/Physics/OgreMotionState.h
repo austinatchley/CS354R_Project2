@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <Ogre.h>
 
 #include <btBulletCollisionCommon.h>
@@ -30,7 +32,8 @@ class OgreMotionState : public btMotionState {
         mNode->setPosition(
             Ogre::Vector3(position.x(), position.y(), position.z()));
 
-        mNode->setOrientation(Ogre::Quaternion(orientation.w(), orientation.x(),
+        mNode->setOrientation(Ogre::Quaternion(orientation.w(),
+                                               orientation.x(),
                                                orientation.y(),
                                                orientation.z()));
     }

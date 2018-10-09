@@ -5,21 +5,15 @@ GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
                              ECS::EventManager *eventManager,
                              Ogre::SceneManager::PrefabType prefab,
                              const Ogre::String &material,
-                             float scale = 100.f) {
-    Ogre::Entity *entity = scnMgr->createEntity(prefab);
-
-    GenericObject(scnMgr, eventManager, entity, material, scale);
-}
+                             float scale = 100.f) 
+    :  GenericObject(scnMgr, eventManager, scnMgr->createEntity(prefab), material, scale) {}
 
 GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
                              ECS::EventManager *eventManager,
                              const Ogre::String &meshName,
                              const Ogre::String &material,
-                             float scale = 100.f) {
-    Ogre::Entity *entity = scnMgr->createEntity(meshName);
-
-    GenericObject(scnMgr, eventManager, entity, material, scale);
-}
+                             float scale = 100.f)
+    : GenericObject(scnMgr, eventManager, scnMgr->createEntity(meshName), material, scale) {}
 
 GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
                              ECS::EventManager *eventManager,

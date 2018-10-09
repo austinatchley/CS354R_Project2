@@ -14,13 +14,11 @@ namespace Game {
 class Ball : public GameObject {
   public:
     Ball(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-         const Ogre::String &material, float scale, const Ogre::Vector3 &pos);
+               btDiscreteDynamicsWorld *world,
+         const Ogre::String &material, float scale, const btTransform& trans);
 
     ~Ball();
 
     void handleCollision() override;
-
-  private:
-    // member vars
 };
 }
