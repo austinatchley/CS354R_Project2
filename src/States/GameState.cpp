@@ -157,10 +157,14 @@ void GameState::setup() {
     CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
     */
 
-    Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld, "Examples/SphereMappedRustySteel", BALL_RADIUS, btTransform::getIdentity());
+    Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
+                          "Examples/SphereMappedRustySteel", BALL_RADIUS,
+                          btTransform::getIdentity());
     ball->addToGame(this);
 
-    Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld, "Examples/SphereMappedRustySteel", BALL_RADIUS, btTransform::getIdentity());
+    Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
+                                "Examples/SphereMappedRustySteel", BALL_RADIUS,
+                                btTransform::getIdentity());
     paddle->addToGame(this);
 }
 

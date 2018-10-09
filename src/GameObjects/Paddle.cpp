@@ -2,15 +2,13 @@
 
 namespace Game {
 Paddle::Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-               btDiscreteDynamicsWorld* world,
+               btDiscreteDynamicsWorld *world,
                const Ogre::String &material = "Examples/SphereMappedRustySteel",
                float scale = 1.f,
-               const btTransform& trans = btTransform::getIdentity())
-    : GameObject(scnMgr, eventManager, world, Ogre::SceneManager::PT_PLANE, material,
-                 scale) {
+               const btTransform &trans = btTransform::getIdentity())
+    : GameObject(scnMgr, eventManager, world, Ogre::SceneManager::PT_PLANE,
+                 material, scale, trans) {
     mShape = new btBoxShape(btVector3(1, 3, 1));
-
-    mTransform = trans;
 
     mMass = 0.f;
     mInertia.setZero();

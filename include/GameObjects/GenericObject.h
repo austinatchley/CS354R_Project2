@@ -14,11 +14,12 @@ class GenericObject {
   public:
     GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                   Ogre::SceneManager::PrefabType prefab,
-                  const Ogre::String &material, float scale);
+                  const Ogre::String &material, float scale,
+                  const btTransform &transform);
 
     GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                   const Ogre::String &meshName, const Ogre::String &material,
-                  float scale);
+                  float scale, const btTransform &transform);
 
     ~GenericObject();
 
@@ -31,7 +32,7 @@ class GenericObject {
   protected:
     GenericObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                   Ogre::Entity *entity, const Ogre::String &material,
-                  float scale);
+                  float scale, const btTransform &transform);
 
     Ogre::SceneNode *mNode;
     Ogre::Entity *mEntity;

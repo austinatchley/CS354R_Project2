@@ -20,12 +20,13 @@ class GameObject : public Util::GenericObject {
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                btDiscreteDynamicsWorld *world,
                Ogre::SceneManager::PrefabType prefab,
-               const Ogre::String &material, float scale);
+               const Ogre::String &material, float scale,
+               const btTransform &transform);
 
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-               btDiscreteDynamicsWorld *world,
-               const Ogre::String &meshName, const Ogre::String &material,
-               float scale);
+               btDiscreteDynamicsWorld *world, const Ogre::String &meshName,
+               const Ogre::String &material, float scale,
+               const btTransform &transform);
 
     // From GenericObject
     virtual void update(float dt) override;
@@ -39,8 +40,9 @@ class GameObject : public Util::GenericObject {
 
   protected:
     GameObject(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-               btDiscreteDynamicsWorld *world,
-               Ogre::Entity *entity, const Ogre::String &material, float scale);
+               btDiscreteDynamicsWorld *world, Ogre::Entity *entity,
+               const Ogre::String &material, float scale,
+               const btTransform &transform);
 
     std::size_t mGameID;
     btDiscreteDynamicsWorld *mWorld;

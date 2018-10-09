@@ -2,11 +2,11 @@
 
 namespace Game {
 Ground::Ground(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-               btDiscreteDynamicsWorld* world,
+               btDiscreteDynamicsWorld *world,
                const Ogre::String &material = "Examples/SphereMappedRustySteel",
                float scale = 1.f)
-    : GameObject(scnMgr, eventManager, world, Ogre::SceneManager::PT_PLANE, material,
-                 scale) {
+    : GameObject(scnMgr, eventManager, world, Ogre::SceneManager::PT_PLANE,
+                 material, scale, btTransform::getIdentity()) {
     // set to static
     mMass = 0;
     mStatic = true;

@@ -57,11 +57,11 @@ struct BulletContactCallback : public btCollisionWorld::ContactResultCallback {
             static_cast<btCollisionObject *>(proxy->m_clientObject));
     }
 
-    virtual btScalar addSingleResult(btManifoldPoint &cp,
-                                     const btCollisionObjectWrapper *colObjWrap0,
-                                     int partId0, int index0,
-                                     const btCollisionObjectWrapper *colObjWrap1,
-                                     int partId1, int index1) {
+    virtual btScalar
+    addSingleResult(btManifoldPoint &cp,
+                    const btCollisionObjectWrapper *colObjWrap0, int partId0,
+                    int index0, const btCollisionObjectWrapper *colObjWrap1,
+                    int partId1, int index1) {
         auto *colObj0 = colObjWrap0->getCollisionObject();
         auto *colObj1 = colObjWrap1->getCollisionObject();
 

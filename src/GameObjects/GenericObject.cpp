@@ -1,26 +1,28 @@
 #include <GameObjects/GenericObject.h>
 
 namespace Util {
-GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
-                             ECS::EventManager *eventManager,
-                             Ogre::SceneManager::PrefabType prefab,
-                             const Ogre::String &material,
-                             float scale = 100.f) 
-    :  GenericObject(scnMgr, eventManager, scnMgr->createEntity(prefab), material, scale) {}
+GenericObject::GenericObject(
+    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+    Ogre::SceneManager::PrefabType prefab, const Ogre::String &material,
+    float scale = 100.f,
+    const btTransform &transform = btTransform::getIdentity())
+    : GenericObject(scnMgr, eventManager, scnMgr->createEntity(prefab),
+                    material, scale, transform) {}
 
-GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
-                             ECS::EventManager *eventManager,
-                             const Ogre::String &meshName,
-                             const Ogre::String &material,
-                             float scale = 100.f)
-    : GenericObject(scnMgr, eventManager, scnMgr->createEntity(meshName), material, scale) {}
+GenericObject::GenericObject(
+    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+    const Ogre::String &meshName, const Ogre::String &material,
+    float scale = 100.f,
+    const btTransform &transform = btTransform::getIdentity())
+    : GenericObject(scnMgr, eventManager, scnMgr->createEntity(meshName),
+                    material, scale, transform) {}
 
-GenericObject::GenericObject(Ogre::SceneManager *scnMgr,
-                             ECS::EventManager *eventManager,
-                             Ogre::Entity *entity, const Ogre::String &material,
-                             float scale = 100.f)
+GenericObject::GenericObject(
+    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+    Ogre::Entity *entity, const Ogre::String &material, float scale = 100.f,
+    const btTransform &transform = btTransform::getIdentity())
     : mMaterial(material), mEventManager(eventManager), mKinematic(false),
-      mStatic(false) {
+      mStatic(false), mTransform(transform) {
     entity->setCastShadows(true);
 
     entity->setMaterialName(material);
