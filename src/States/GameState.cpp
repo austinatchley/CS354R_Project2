@@ -10,13 +10,11 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-constexpr float gravity = -9.8f;
-
 namespace Game {
 GameState::GameState(ECS::EventManager *eventManager, Root *root,
-                     Ogre::RenderWindow *renderWindow)
-    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root),
-      mRenderWindow(renderWindow) {}
+                     Ogre::RenderWindow *renderWindow, OgreBites::TrayManager* trayMgr)
+    : State(ScreenShare::Full), mEventManager(eventManager), mRoot(root), 
+      mRenderWindow(renderWindow), mTrayMgr(trayMgr) {}
 
 void GameState::setup() {
     // Create an EventSubscriber for camera rotation
@@ -31,6 +29,12 @@ void GameState::setup() {
     mShadergen = RTShader::ShaderGenerator::getSingletonPtr();
     mShadergen->addSceneManager(mScnMgr);
 
+    /* *** UNDER GUI CONSTRUCTION *** */ 
+
+	//Exit Button
+
+    /* *** END CONSTRUCTION *** */
+
     //////////////////////////////////////////////////////////////////
     // Lighting
     mScnMgr->setShadowTechnique(ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
@@ -43,7 +47,6 @@ void GameState::setup() {
     light->setType(Light::LT_SPOTLIGHT);
     light->setSpotlightRange(Degree(0), Degree(90));
 
-    // this should be pulled out into a util function for calculating correct
     // attenuation constants
     light->setAttenuation(WALL_SIZE * 24.f, 1.f, 4.5f / (WALL_SIZE * 24.f),
                           75.f / (WALL_SIZE * WALL_SIZE * 576.f));
@@ -53,7 +56,6 @@ void GameState::setup() {
     mainLightNode->attachObject(light);
     mainLightNode->setPosition(0, WALL_SIZE - 1.f, 0);
     mainLightNode->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Y);
-
     Light *pointLight = mScnMgr->createLight("PointLight");
     pointLight->setType(Light::LT_POINT);
     pointLight->setDiffuseColour(0.85, 0.1, 0.1);
@@ -85,6 +87,60 @@ void GameState::setup() {
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
                         Real(mViewport->getActualHeight()));
 
+    Button* b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
+
+    score = 0;
+    mTrayMgr->createTextBox (TL_BOTTOMRIGHT, "Score", ""+score, 0.1f, 0.1f);
+
+
+    //////////////////////////////////////////////////////////////////
+    // Balls
+    /*
+    for (int i = 0; i < NUM_BALLS; ++i) {
+        const Vector3 vel(Math::RangeRandom(-20.0, 20.0),
+                          Math::RangeRandom(-20.0, 20.0),
+                          Math::RangeRandom(-20.0, 20.0));
+
+        Ball ball(mScnMgr, "Examples/SphereMappedRustySteel", BALL_RADIUS);
+
+        mObjects.push_back(ball);
+
+        const Vector3 pos(Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
+                          Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
+                          Math::RangeRandom(-WALL_SIZE, WALL_SIZE));
+    }
+    */
+
+    //////////////////////////////////////////////////////////////////
+    // Planes
+    /*
+    static const std::unordered_map<String, Vector3> planeNameToAxis = {
+        {"left", Vector3::UNIT_X},   {"right", Vector3::NEGATIVE_UNIT_X},
+        {"ground", Vector3::UNIT_Y}, {"ceil", Vector3::NEGATIVE_UNIT_Y},
+        {"back", Vector3::UNIT_Z},   {"front", Vector3::NEGATIVE_UNIT_Z}};
+
+    for (const auto entry : planeNameToAxis) {
+        auto name = entry.first;
+        auto norm = entry.second;
+
+        Plane plane(norm, -WALL_SIZE);
+        MeshManager::getSingleton().createPlane(
+            name, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane,
+            WALL_SIZE * 2.f, WALL_SIZE * 2.f, 20, 20, true, 1, 5, 5,
+            norm.perpendicular());
+
+        Entity *planeEntity = mScnMgr->createEntityGameState(name);
+        planeEntity->setCastShadows(false);
+        planeEntity->setMaterialName("Examples/BeachStones");
+
+        SceneNode *planeNode =
+            mScnMgr->getRootSceneNode()->createChildSceneNode(name);
+        planeNode->attachObject(planeEntity);
+
+        mWalls.push_back(plane);
+    }
+    */
+
     // Bullet init
     mCollisionConfig = new btDefaultCollisionConfiguration();
     mDispatcher = new btCollisionDispatcher(mCollisionConfig);
@@ -94,7 +150,27 @@ void GameState::setup() {
     mDynamicsWorld = new btDiscreteDynamicsWorld(
         mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
-    mDynamicsWorld->setGravity(btVector3(0, gravity, 0));
+    mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+
+    /*GameState
+    // CEGUI init
+    mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
+
+    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
+        CEGUI::Font::setDefaultResourceGroup("Fonts");
+        CEGUI::Scheme::setDefaultResourceGroup("Schemes");
+        CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
+        CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
+
+    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
+    CEGUI::System::getSingleton().getDefaultGUIContext().setDefaultFont("DejaVuSans-10");
+    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
+
+    mGUIRoot = CEGUI::WindowManager::getSingleton().createWindow(
+    "DefaultWindow", "_MasterRoot" );
+
+    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
+    */
 
     // create ground
     // Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
@@ -128,8 +204,6 @@ GameState::~GameState() {
 void GameState::update(const Ogre::FrameEvent &evt) {
     const Real dt = evt.timeSinceLastFrame;
 
-    std::cout << "update begin" << std::endl;
-
     mDynamicsWorld->stepSimulation(dt);
 
     for (int i = 0; i < mObjects.size(); ++i) {
@@ -139,8 +213,6 @@ void GameState::update(const Ogre::FrameEvent &evt) {
             obj->update(dt);
         }
     }
-
-    std::cout << "update end" << std::endl;
 }
 
 bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
@@ -208,9 +280,18 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
     return false;
 }
 
-bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
-    return false;
-}
+bool GameState::mousePressed(const OgreBites::MouseButtonEvent& evt)
+    {
+        if (mTrayMgr->mousePressed(evt)) return true;
+        /* normal mouse processing here... */
+        return true;
+    }
+bool GameState::mouseReleased(const OgreBites::MouseButtonEvent& evt)
+    {
+        if (mTrayMgr->mouseReleased(evt)) return true;
+        /* normal mouse processing here... */
+        return true;
+    }
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Real mag = 1.f;
@@ -231,8 +312,15 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
         return true;
     }
 
+    if (mTrayMgr->mouseMoved(evt)) return true;
+
     return false;
 }
+void GameState::buttonHit(OgreBites::Button *button)
+    {
+        if(button->getName() == "DemoButton")
+            mRoot->queueEndRendering();
+    }
 
 std::size_t GameState::addObject(GameObject *obj) {
     mObjects.push_back(obj);

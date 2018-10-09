@@ -20,6 +20,7 @@
 #include <OgreInput.h>
 #include <OgreMath.h>
 #include <OgreRTShaderSystem.h>
+#include <OgreTrays.h>
 
 #include "btBulletDynamicsCommon.h"
 
@@ -44,7 +45,7 @@ namespace Game {
 class GameState : public State {
   public:
     GameState(ECS::EventManager *eventManager, Root *root,
-              Ogre::RenderWindow *renderWindow);
+              Ogre::RenderWindow *renderWindow, OgreBites::TrayManager* trayMgr);
     virtual ~GameState();
 
     void setup() override;
@@ -54,6 +55,8 @@ class GameState : public State {
     bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
     bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
     bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
+    bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
+    void buttonHit(OgreBites::Button *button) override;
 
     std::size_t addObject(GameObject *obj);
 
@@ -78,8 +81,8 @@ class GameState : public State {
     // ECS
     ECS::EventManager *mEventManager;
 
-    // CEGUI
-    // CEGUI::OgreRenderer *mRenderer;
-    // CEGUI::Window* mGUIRoot;
+    //GUI
+    OgreBites::TrayManager* mTrayMgr;
+    int score;
 };
 }

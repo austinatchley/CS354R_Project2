@@ -3,6 +3,7 @@
 #include <States/GameState.h>
 #include <States/MenuState.h>
 #include <States/State.h>
+#include <OgreTrays.h>
 
 #include <GameObjects/GameObject.h>
 
@@ -12,7 +13,7 @@ using namespace OgreBites;
 namespace Game {
 using StateStack = std::vector<State *>;
 
-class Game : public ApplicationContext, public InputListener {
+class Game : public ApplicationContext, public InputListener, public TrayListener {
   public:
     Game();
     virtual ~Game();
@@ -26,6 +27,8 @@ class Game : public ApplicationContext, public InputListener {
     bool keyPressed(const KeyboardEvent &evt) override;
     bool mousePressed(const MouseButtonEvent &evt) override;
     bool mouseMoved(const MouseMotionEvent &evt) override;
+    bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
+    void buttonHit(OgreBites::Button *button) override;
 
     bool frameRenderingQueued(const Ogre::FrameEvent &evt) override;
 
@@ -35,5 +38,7 @@ class Game : public ApplicationContext, public InputListener {
     SoundManager *mSoundManager;
 
     StateStack mStates;
+
+    OgreBites::TrayManager* mTrayMgr;
 };
 } // namespace Game

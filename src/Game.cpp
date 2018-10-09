@@ -23,6 +23,14 @@ void Game::setup() {
     addInputListener(this);
 
     //////////////////////////////////////////////////////////////////
+    // Trays 
+    mTrayMgr = new OgreBites::TrayManager("GameInterface", getRenderWindow(), this);
+
+    mTrayMgr->showCursor();   
+
+    
+
+    //////////////////////////////////////////////////////////////////
     // Event Manager
     mEventManager.reset(new ECS::EventManager(std::allocator<void>()));
 
@@ -31,7 +39,7 @@ void Game::setup() {
     mSoundManager = new SoundManager();
     mEventManager->connect<Util::PlaySoundEvent>(mSoundManager);
 
-    pushState(new GameState(mEventManager.get(), mRoot, getRenderWindow()));
+    pushState(new GameState(mEventManager.get(), mRoot, getRenderWindow(), mTrayMgr));
 }
 
 bool Game::keyPressed(const KeyboardEvent &evt) {
@@ -57,6 +65,23 @@ bool Game::mouseMoved(const MouseMotionEvent &evt) {
 
     return mStates.back()->mouseMoved(evt);
 }
+
+bool Game::mouseReleased(const MouseButtonEvent& evt){
+    if (mStates.empty()) {
+        return false;
+    }
+
+    return mStates.back()->mouseReleased(evt);
+}
+
+void Game::buttonHit(OgreBites::Button *button){
+    if (mStates.empty()) {
+        return;
+    }
+
+    mStates.back()->buttonHit(button);
+}
+
 
 bool Game::frameRenderingQueued(const Ogre::FrameEvent &evt) {
     if (mStates.empty()) {
