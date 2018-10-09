@@ -135,7 +135,11 @@ void GameState::setup() {
     mDynamicsWorld = new btDiscreteDynamicsWorld(
         mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
-    mDynamicsWorld->setGravity(btVector3(0, -10, 0));
+    mDynamicsWorld->setGravity(btVector3(0, gravity, 0));
+
+    // create ground
+    GameObject* ground = new Ground(mScnMgr, mEventManager);
+    ground->addObject(this);
 
     /*
     // CEGUI init
