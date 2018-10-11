@@ -30,6 +30,8 @@
 //#include <CEGUI/RendererModules/Ogre/Renderer.h>
 
 #define NUM_BALLS 10
+#define BALL_TIMER 2.f
+#define BALL_RING_RADIUS 40.f
 
 #define BALL_RADIUS 5.f
 #define PADDLE_SCALE 5.f
@@ -71,10 +73,13 @@ class GameState : public State {
 
     Ogre::SceneNode *mCamNode;
     Ogre::SceneNode *mCamRootNode;
-
     Game::Camera *mCamera;
-
     Ogre::Viewport *mViewport;
+
+    float ballTimer;
+
+    btTransform mPaddleTrans;
+    btTransform mGroundTrans;
 
     std::vector<GameObject *> mObjects;
 

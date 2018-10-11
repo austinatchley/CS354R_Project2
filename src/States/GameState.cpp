@@ -28,7 +28,7 @@ void GameState::setup() {
     //////////////////////////////////////////////////////////////////
     // Lighting
     mScnMgr->setShadowTechnique(ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
-    //mScnMgr->setSkyBox(true, "Examples/TrippySkyBox");
+    mScnMgr->setSkyBox(true, "Examples/TrippySkyBox");
     mScnMgr->setAmbientLight(AMBIENT_LIGHT);
 
     Ogre::Light *light = mScnMgr->createLight("MainLight");
@@ -80,59 +80,16 @@ void GameState::setup() {
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
                         Real(mViewport->getActualHeight()));
 
+    //////////////////////////////////////////////////////////////////
+    // GUI
     Button *b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
 
     score = 0;
     mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", "" + score, 0.1f, 0.1f);
 
-    //////////////////////////////////////////////////////////////////
-    // Balls
-    /*
-    for (int i = 0; i < NUM_BALLS; ++i) {
-        const Vector3 vel(Math::RangeRandom(-20.0, 20.0),
-                          Math::RangeRandom(-20.0, 20.0),
-                          Math::RangeRandom(-20.0, 20.0));
-
-        Ball ball(mScnMgr, "Examples/SphereMappedRustySteel", BALL_RADIUS);
-
-        mObjects.push_back(ball);
-
-        const Vector3 pos(Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
-                          Math::RangeRandom(-WALL_SIZE, WALL_SIZE),
-                          Math::RangeRandom(-WALL_SIZE, WALL_SIZE));
-    }
-    */
+    //mTrayMgr->hideCursor(); 
 
     //////////////////////////////////////////////////////////////////
-    // Planes
-    /*
-    static const std::unordered_map<String, Vector3> planeNameToAxis = {
-        {"left", Vector3::UNIT_X},   {"right", Vector3::NEGATIVE_UNIT_X},
-        {"ground", Vector3::UNIT_Y}, {"ceil", Vector3::NEGATIVE_UNIT_Y},
-        {"back", Vector3::UNIT_Z},   {"front", Vector3::NEGATIVE_UNIT_Z}};
-
-    for (const auto entry : planeNameToAxis) {
-        auto name = entry.first;
-        auto norm = entry.second;
-
-        Plane plane(norm, -WALL_SIZE);
-        MeshManager::getSingleton().createPlane(
-            name, ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, plane,
-            WALL_SIZE * 2.f, WALL_SIZE * 2.f, 20, 20, true, 1, 5, 5,
-            norm.perpendicular());
-
-        Entity *planeEntity = mScnMgr->createEntityGameState(name);
-        planeEntity->setCastShadows(false);
-        planeEntity->setMaterialName("Examples/BeachStones");
-
-        SceneNode *planeNode =
-            mScnMgr->getRootSceneNode()->createChildSceneNode(name);
-        planeNode->attachObject(planeEntity);
-
-        mWalls.push_back(plane);
-    }
-    */
-
     // Bullet init
     mCollisionConfig = new btDefaultCollisionConfiguration();
     mDispatcher = new btCollisionDispatcher(mCollisionConfig);
@@ -144,33 +101,17 @@ void GameState::setup() {
 
     mDynamicsWorld->setGravity(btVector3(0, 0, -10));
 
-    // create ground
+    //////////////////////////////////////////////////////////////////
+    // create initial game objects
     Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld, "Examples/BeachStones");
     ground->addToGame(this); 
     
-    btTransform paddleTrans;
-    paddleTrans.setIdentity();
-    paddleTrans.setOrigin(btVector3(0, 10, 20));
+    mPaddleTrans.setIdentity();
+    mPaddleTrans.setOrigin(btVector3(0, 10, 20));
     Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
                                 "Examples/SphereMappedRustySteel", PADDLE_SCALE,
-                                paddleTrans);
+                                mPaddleTrans);
     paddle->addToGame(this);
-
-    const int radius = 80;
-    for (int i = 0; i < NUM_BALLS; ++i) {
-        btTransform ballTrans;
-        ballTrans.setOrigin(btVector3(
-                    Ogre::Math::Sin(i * Ogre::Math::TWO_PI / NUM_BALLS) * radius,
-                    Ogre::Math::Cos(i * Ogre::Math::TWO_PI / NUM_BALLS) * radius
-                    , 60));
-
-        Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
-                              "Examples/SphereMappedRustySteel", BALL_RADIUS,
-                              ballTrans);
-        ball->addToGame(this);
-
-        ball->applyImpulse(1000.f * (paddleTrans.getOrigin() - ballTrans.getOrigin()));
-    }
 }
 
 GameState::~GameState() {
@@ -192,6 +133,30 @@ void GameState::update(const Ogre::FrameEvent &evt) {
         obj->update(dt);
 
         std::cout << obj->getNode()->getPosition() << std::endl;
+    }
+
+    ballTimer += dt;
+
+    (void)ballTimer;
+    if (ballTimer > BALL_TIMER) {
+        std::cout << " SPAWNED BALL " << std::endl;
+        btTransform ballTrans;
+        ballTrans.setIdentity();
+
+        static const auto rand = std::bind(Ogre::Math::RangeRandom, 0, NUM_BALLS);
+        ballTrans.setOrigin(btVector3(
+                    Ogre::Math::Sin(rand() * Ogre::Math::TWO_PI / NUM_BALLS) * BALL_RING_RADIUS,
+                    Ogre::Math::Cos(rand() * Ogre::Math::TWO_PI / NUM_BALLS) * BALL_RING_RADIUS,
+                    40));
+
+        Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
+                              "Examples/Chrome", BALL_RADIUS,
+                              ballTrans);
+        ball->addToGame(this);
+
+        ball->applyImpulse(1000.f * (mPaddleTrans.getOrigin() - ballTrans.getOrigin()));
+
+        ballTimer = 0.f;
     }
 }
 
