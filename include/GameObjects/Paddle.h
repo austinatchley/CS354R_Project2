@@ -13,7 +13,7 @@
 namespace Game {
 class Paddle : public GameObject {
   public:
-    Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+    Paddle(Ogre::SceneManager *scnMgr, Ogre::SceneNode *parent, ECS::EventManager *eventManager,
            btDiscreteDynamicsWorld *world, const Ogre::String &material,
            float scale, const btTransform &pos);
 

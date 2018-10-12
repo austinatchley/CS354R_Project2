@@ -5,10 +5,11 @@
 namespace Game {
 Rotatable::Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager)
     : mNode(camNode), mRadius(radius) {
+
     eventManager->connect<Util::RotateEvent>(this);
 
     mNode->setPosition(0.f, 0.f, -mRadius);
-    mNode->lookAt(Ogre::Vector3(0.f, 0.f, 0.f), Ogre::SceneNode::TransformSpace::TS_LOCAL);
+    mNode->lookAt(Ogre::Vector3(0.f, 0.f, 0.f), Ogre::SceneNode::TransformSpace::TS_PARENT);
 }
 
 void Rotatable::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll) {

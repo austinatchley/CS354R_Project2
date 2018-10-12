@@ -67,8 +67,6 @@ class RotateSubscriber : public ECS::EventSubscriber<RotateEvent> {
         node->setPosition(lookAt);
         node->setOrientation(Ogre::Quaternion::IDENTITY);
 
-        std::cout << "yaw " << yaw << ", pitch " << pitch << std::endl;
-        std::cout << "prevyaw " << prevYaw << ", prevpitch " << prevPitch << std::endl;
         node->yaw(-1 * yaw + prevYaw);
         node->pitch(-1 * pitch + prevPitch);
 

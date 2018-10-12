@@ -76,24 +76,15 @@ void GameState::setup() {
 
     mDynamicsWorld->setGravity(btVector3(0, 0, -10));
 
-    //////////////////////////////////////////////////////////////////
-    // create initial game objects
-    mGround = new Ground(mScnMgr, mEventManager, mDynamicsWorld, "Examples/BeachStones");
-    mGround->addToGame(this); 
-    
-    mPaddleTrans.setIdentity();
-    mPaddleTrans.setOrigin(btVector3(0, 10, 20));
-    mPaddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
-                                "Examples/SphereMappedRustySteel", PADDLE_SCALE,
-                                mPaddleTrans);
-    mPaddle->addToGame(this);
+    Ogre::SceneNode *root = mScnMgr->getRootSceneNode()->createChildSceneNode("root");
+    root->setPosition(0, 40, 0);
 
     //////////////////////////////////////////////////////////////////
     // Camera
-    mCamRootNode = mScnMgr->getRootSceneNode()->createChildSceneNode("cameraRoot");
-    mCamRootNode->setPosition(0.f, 30.f, 10.f);
+    mCamRootNode = root->createChildSceneNode("cameraRoot");
 
     mCamNode = mCamRootNode->createChildSceneNode("camera");
+    mCamNode->setInheritScale(false);
 
     // create the camera
     Ogre::Camera *cam = mScnMgr->createCamera("camera");
@@ -104,7 +95,7 @@ void GameState::setup() {
 
     mCamNode->attachObject(cam);
 
-    mCamera = new Rotatable(mCamNode, 60.f, mEventManager);
+    mCamera = new Rotatable(mCamRootNode, 60.f, mEventManager);
 
     // and tell it to render into the main window
     mViewport = mRenderWindow->addViewport(cam);
@@ -112,6 +103,21 @@ void GameState::setup() {
 
     cam->setAspectRatio(Real(mViewport->getActualWidth()) /
                         Real(mViewport->getActualHeight()));
+
+    //////////////////////////////////////////////////////////////////
+    // create initial game objects
+    mGround = new Ground(mScnMgr, mEventManager, mDynamicsWorld, "Examples/BeachStones");
+    mGround->addToGame(this); 
+    
+    mPaddleTrans.setIdentity();
+    mPaddleTrans.setOrigin(btVector3(0, -20, -7.5));
+    mPaddleTrans.setRotation(btQuaternion(Ogre::Math::HALF_PI, 0, 0));
+    mPaddle = new Paddle(mScnMgr, mCamNode, mEventManager, mDynamicsWorld,
+                                "Examples/SphereMappedRustySteel", PADDLE_SCALE,
+                                mPaddleTrans);
+
+    mPaddle->addToGame(this);
+
 }
 
 GameState::~GameState() {
@@ -131,15 +137,12 @@ void GameState::update(const Ogre::FrameEvent &evt) {
         GameObject *obj = mObjects[i];
       
         obj->update(dt);
-
-        std::cout << obj->getNode()->getPosition() << std::endl;
     }
 
     ballTimer += dt;
 
     (void)ballTimer;
     if (ballTimer > BALL_TIMER) {
-        std::cout << " SPAWNED BALL " << std::endl;
         btTransform ballTrans;
         ballTrans.setIdentity();
 
@@ -149,12 +152,12 @@ void GameState::update(const Ogre::FrameEvent &evt) {
                     Ogre::Math::Cos(rand() * Ogre::Math::TWO_PI / NUM_BALLS) * BALL_RING_RADIUS,
                     40));
 
-        Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
+        Ball *ball = new Ball(mScnMgr, nullptr, mEventManager, mDynamicsWorld,
                               "Examples/Chrome", BALL_RADIUS,
                               ballTrans);
         ball->addToGame(this);
 
-        ball->applyImpulse(1000.f * (mPaddleTrans.getOrigin() - ballTrans.getOrigin()));
+        ball->applyImpulse(1000.f * (Util::makeBulletVector3(mPaddle->getNode()->_getDerivedPosition()) - ballTrans.getOrigin()));
 
         ballTimer = 0.f;
     }
@@ -251,7 +254,7 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
 
     if (evt.type == OgreBites::MOUSEMOTION) {
         mEventManager->event<Util::RotateEvent>(
-            new Util::RotateEvent(mCamNode, (leftVec * evt.xrel) +
+            new Util::RotateEvent(mCamRootNode, (leftVec * evt.xrel) +
                                                       (downVec * evt.yrel),
                                         Ogre::Vector3::ZERO));
 

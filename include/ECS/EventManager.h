@@ -111,15 +111,12 @@ class EventManager {
     }
 
     void update() {
-        std::cout << "update events with size " << mEvents.size() << std::endl;
-
         if (mEvents.empty()) {
             return;
         }
 
         for (auto event : mEvents) {
             event();
-            std::cout << "event received" << std::endl;
         }
 
         mEvents.clear();
@@ -129,8 +126,6 @@ class EventManager {
     // ID
     // so that we can subscribe to multiple channels for the same event
     template <typename Event> void event(const Event *event) {
-        std::cout << "event sent" << std::endl;
-
         auto it = mSubscribers.find(getTypeIndex<Event>());
 
         if (it != mSubscribers.end()) {

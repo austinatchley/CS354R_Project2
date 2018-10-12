@@ -26,8 +26,6 @@ class OgreMotionState : public btMotionState {
             return;
         }
 
-        std::cout << "setWorldTransform" << std::endl;
-
         mTrans = trans;
 
         btQuaternion orientation = mTrans.getRotation();

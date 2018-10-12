@@ -4,27 +4,11 @@
 
 namespace Game {
 GameObject::GameObject(
-    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-    btDiscreteDynamicsWorld *world, Ogre::SceneManager::PrefabType prefab,
-    const Ogre::String &material, float scale = 100.f,
-    const btTransform &transform = btTransform::getIdentity())
-    : GenericObject(scnMgr, eventManager, prefab, material, scale, transform),
-      mWorld(world) {}
-
-GameObject::GameObject(
-    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-    btDiscreteDynamicsWorld *world, const Ogre::String &meshName,
-    const Ogre::String &material, float scale = 100.f,
-    const btTransform &transform = btTransform::getIdentity())
-    : GenericObject(scnMgr, eventManager, meshName, material, scale, transform),
-      mWorld(world) {}
-
-GameObject::GameObject(
-    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+    Ogre::SceneNode *parent, ECS::EventManager *eventManager,
     btDiscreteDynamicsWorld *world, Ogre::Entity *entity,
     const Ogre::String &material, float scale = 100.f,
     const btTransform &transform = btTransform::getIdentity())
-    : GenericObject(scnMgr, eventManager, entity, material, scale, transform),
+    : GenericObject(parent, eventManager, entity, material, scale, transform),
       mWorld(world) {}
 
 void GameObject::addToGame(GameState *gameState) {
@@ -69,8 +53,6 @@ void GameObject::update(float dt) {
     if (!mWorld) {
         return;
     }
-
-    std::cout << "update" << std::endl;
 
     mLastTime += dt;
 

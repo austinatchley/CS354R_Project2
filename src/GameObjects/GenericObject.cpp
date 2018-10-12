@@ -2,23 +2,7 @@
 
 namespace Util {
 GenericObject::GenericObject(
-    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-    Ogre::SceneManager::PrefabType prefab, const Ogre::String &material,
-    float scale = 100.f,
-    const btTransform &transform = btTransform::getIdentity())
-    : GenericObject(scnMgr, eventManager, scnMgr->createEntity(prefab),
-                    material, scale, transform) {}
-
-GenericObject::GenericObject(
-    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
-    const Ogre::String &meshName, const Ogre::String &material,
-    float scale = 100.f,
-    const btTransform &transform = btTransform::getIdentity())
-    : GenericObject(scnMgr, eventManager, scnMgr->createEntity(meshName),
-                    material, scale, transform) {}
-
-GenericObject::GenericObject(
-    Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
+    Ogre::SceneNode *parent, ECS::EventManager *eventManager,
     Ogre::Entity *entity, const Ogre::String &material, float scale = 100.f,
     const btTransform &transform = btTransform::getIdentity())
     : mMaterial(material), mEventManager(eventManager), mKinematic(false),
@@ -27,13 +11,13 @@ GenericObject::GenericObject(
 
     entity->setMaterialName(material);
 
-    if (!scnMgr) {
+    if (!parent) {
         throw Ogre::Exception(
             Ogre::Exception::ExceptionCodes::ERR_INVALID_STATE,
-            "Scene Manager is nullptr", "");
+            "Parent is nullptr", "");
     }
 
-    mNode = scnMgr->getRootSceneNode()->createChildSceneNode();
+    mNode = parent->createChildSceneNode();
 
     if (!mNode) {
         throw Ogre::Exception(

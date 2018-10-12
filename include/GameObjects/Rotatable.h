@@ -25,6 +25,6 @@ private:
     Ogre::SceneNode* mNode;
     Ogre::Real mRadius;
 
-    //const Ogre::Real maxPitch = Ogre::Math::HALF_PI / 4.f;
+    const Ogre::Real maxPitch = Ogre::Math::HALF_PI / 4.f;
 };
 }
