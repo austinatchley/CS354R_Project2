@@ -1,5 +1,7 @@
 #include <GameObjects/Paddle.h>
 
+#define THICKNESS 1.f/6.f
+
 namespace Game {
 Paddle::Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                btDiscreteDynamicsWorld *world,
@@ -8,7 +10,8 @@ Paddle::Paddle(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
                const btTransform &trans = btTransform::getIdentity())
     : GameObject(scnMgr, eventManager, world, Ogre::SceneManager::PT_CUBE,
                  material, scale, trans) {
-    mShape = new btBoxShape(btVector3(scale, scale, scale));
+    mNode->setScale(scale * THICKNESS / 100.f, scale / 100.f, scale / 100.f);
+    mShape = new btBoxShape(btVector3(scale * THICKNESS, scale, scale));
 
     mMass = 0.f;
     mInertia.setZero();

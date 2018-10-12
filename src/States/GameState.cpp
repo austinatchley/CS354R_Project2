@@ -103,15 +103,15 @@ void GameState::setup() {
 
     //////////////////////////////////////////////////////////////////
     // create initial game objects
-    Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld, "Examples/BeachStones");
-    ground->addToGame(this); 
+    mGround = new Ground(mScnMgr, mEventManager, mDynamicsWorld, "Examples/BeachStones");
+    mGround->addToGame(this); 
     
     mPaddleTrans.setIdentity();
     mPaddleTrans.setOrigin(btVector3(0, 10, 20));
-    Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
+    mPaddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
                                 "Examples/SphereMappedRustySteel", PADDLE_SCALE,
                                 mPaddleTrans);
-    paddle->addToGame(this);
+    mPaddle->addToGame(this);
 }
 
 GameState::~GameState() {

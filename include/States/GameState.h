@@ -16,6 +16,9 @@
 #include <SoundManager.h>
 
 #include <GameObjects/Camera.h>
+#include <GameObjects/Ball.h>
+#include <GameObjects/Ground.h>
+#include <GameObjects/Paddle.h>
 
 #include <Ogre.h>
 #include <OgreApplicationContext.h>
@@ -77,6 +80,9 @@ class GameState : public State {
     Ogre::Viewport *mViewport;
 
     float ballTimer;
+
+    Paddle *mPaddle;
+    Ground *mGround;
 
     btTransform mPaddleTrans;
     btTransform mGroundTrans;
