@@ -10,37 +10,37 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-namespace Game {
-using StateStack = std::vector<State *>;
+namespace Game
+{
+using StateStack = std::vector<State*>;
 
-class Game : public ApplicationContext,
-             public InputListener,
-             public TrayListener {
-  public:
-    Game();
-    virtual ~Game();
+class Game : public ApplicationContext, public InputListener, public TrayListener
+{
+    public:
+    Game ();
+    virtual ~Game ();
 
-    void pushState(State *state);
-    void popState();
+    void pushState (State* state);
+    void popState ();
 
-  private:
-    void setup();
+    private:
+    void setup ();
 
-    bool keyPressed(const KeyboardEvent &evt) override;
-    bool mousePressed(const MouseButtonEvent &evt) override;
-    bool mouseMoved(const MouseMotionEvent &evt) override;
-    bool mouseReleased(const OgreBites::MouseButtonEvent &evt) override;
-    void buttonHit(OgreBites::Button *button) override;
+    bool keyPressed (const KeyboardEvent& evt) override;
+    bool mousePressed (const MouseButtonEvent& evt) override;
+    bool mouseMoved (const MouseMotionEvent& evt) override;
+    bool mouseReleased (const OgreBites::MouseButtonEvent& evt) override;
+    void buttonHit (OgreBites::Button* button) override;
 
-    bool frameRenderingQueued(const Ogre::FrameEvent &evt) override;
+    bool frameRenderingQueued (const Ogre::FrameEvent& evt) override;
 
     ///////////////////////////////////////////////////////
     // System member vars
     std::unique_ptr<ECS::EventManager> mEventManager;
-    SoundManager *mSoundManager;
+    SoundManager* mSoundManager;
 
     StateStack mStates;
 
-    OgreBites::TrayManager *mTrayMgr;
+    OgreBites::TrayManager* mTrayMgr;
 };
 } // namespace Game

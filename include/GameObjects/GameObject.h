@@ -12,29 +12,34 @@
 
 #include "BulletCollision/CollisionDispatch/btCollisionObject.h"
 
-namespace Game {
+namespace Game
+{
 class GameState;
 
-class GameObject : public Util::GenericObject {
-  public:
-    GameObject(Ogre::SceneNode *parent, ECS::EventManager *eventManager,
-               btDiscreteDynamicsWorld *world, Ogre::Entity *entity,
-               const Ogre::String &material, float scale,
-               const btTransform &transform);
+class GameObject : public Util::GenericObject
+{
+    public:
+    GameObject (Ogre::SceneNode* parent,
+                ECS::EventManager* eventManager,
+                btDiscreteDynamicsWorld* world,
+                Ogre::Entity* entity,
+                const Ogre::String& material,
+                float scale,
+                const btTransform& transform);
 
-   // From GenericObject
-    virtual void update(float dt) override;
-    virtual void setTransform(const btTransform &newTransform) override;
+    // From GenericObject
+    virtual void update (float dt) override;
+    virtual void setTransform (const btTransform& newTransform) override;
 
-    virtual void updateTransform();
-    virtual void applyImpulse(const btVector3& impulse);
+    virtual void updateTransform ();
+    virtual void applyImpulse (const btVector3& impulse);
 
-    virtual void handleCollision();
+    virtual void handleCollision ();
 
-    void addToGame(GameState *gameState);
+    void addToGame (GameState* gameState);
 
-  protected:
+    protected:
     std::size_t mGameID;
-    btDiscreteDynamicsWorld *mWorld;
+    btDiscreteDynamicsWorld* mWorld;
 };
-}
+} // namespace Game

@@ -8,19 +8,22 @@
 
 #include "Util/Events/EventSubscribers.h"
 
-namespace Game {
-class SoundManager : public Util::PlaySoundSubscriber {
-  public:
-    SoundManager();
-    ~SoundManager() {}
+namespace Game
+{
+class SoundManager : public Util::PlaySoundSubscriber
+{
+    public:
+    SoundManager ();
+    ~SoundManager ()
+    {
+    }
 
-    virtual void receive(ECS::EventManager *eventManager,
-                         const Util::PlaySoundEvent &event) override;
+    virtual void receive (ECS::EventManager* eventManager, const Util::PlaySoundEvent& event) override;
 
-    void playBallHit();
+    void playBallHit ();
 
-  protected:
-    Mix_Chunk *wallHit;
+    protected:
+    Mix_Chunk* wallHit;
     unsigned flags;
 };
-}
+} // namespace Game

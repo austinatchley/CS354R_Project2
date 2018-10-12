@@ -5,26 +5,28 @@
 #include <ECS/EventManager.h>
 #include <Util/Events/EventSubscribers.h>
 
-namespace Game {
+namespace Game
+{
 
 // This class is a wrapper for the SceneNode with an attached Rotatable (the
 // one provided by Ogre). If you wish to move the camera, attach it to another
 // SceneNode and move the parent. This class operates in the local space.
-class Rotatable
-    : public ECS::EventSubscriber<Util::RotateEvent>
+class Rotatable : public ECS::EventSubscriber<Util::RotateEvent>
 {
-public:
-    Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager);
-    ~Rotatable() {}
+    public:
+    Rotatable (Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager);
+    ~Rotatable ()
+    {
+    }
 
-    void rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll);
+    void rotateThis (Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll);
 
-    void receive(ECS::EventManager *em, const Util::RotateEvent& evt) override;
+    void receive (ECS::EventManager* em, const Util::RotateEvent& evt) override;
 
-private:
+    private:
     Ogre::SceneNode* mNode;
     Ogre::Real mRadius;
 
     const Ogre::Real maxPitch = Ogre::Math::HALF_PI / 4.f;
 };
-}
+} // namespace Game

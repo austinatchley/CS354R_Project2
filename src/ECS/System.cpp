@@ -3,18 +3,24 @@
 
 #include <cstdint>
 
-namespace ECS {
+namespace ECS
+{
 
-System::System(ECSManager &manager) : mManager(manager) {}
+System::System (ECSManager& manager) : mManager (manager)
+{
+}
 
-System::~System() {}
+System::~System ()
+{
+}
 
-size_t System::updateEntities(float dt) {
+size_t System::updateEntities (float dt)
+{
     std::size_t updatedEntities = 0;
 
-    for (auto entity = mMatchingEntities.begin();
-         entity != mMatchingEntities.end(); ++entity) {
-        updateEntity(dt, *entity);
+    for (auto entity = mMatchingEntities.begin (); entity != mMatchingEntities.end (); ++entity)
+    {
+        updateEntity (dt, *entity);
         ++updatedEntities;
     }
 
@@ -26,4 +32,4 @@ void System::updateEntity(float aElapsedTime, Entity aEntity) {
 }
 */
 
-} // namespace ecs
+} // namespace ECS

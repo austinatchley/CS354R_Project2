@@ -15,10 +15,10 @@
 
 #include <SoundManager.h>
 
-#include <GameObjects/Rotatable.h>
 #include <GameObjects/Ball.h>
 #include <GameObjects/Ground.h>
 #include <GameObjects/Paddle.h>
+#include <GameObjects/Rotatable.h>
 
 #include <Ogre.h>
 #include <OgreApplicationContext.h>
@@ -40,67 +40,66 @@
 #define PADDLE_SCALE 5.f
 
 #define LIGHT_INTENSITY 1.0
-#define AMBIENT_LIGHT                                                          \
-    Ogre::ColourValue(LIGHT_INTENSITY, LIGHT_INTENSITY, LIGHT_INTENSITY)
+#define AMBIENT_LIGHT Ogre::ColourValue (LIGHT_INTENSITY, LIGHT_INTENSITY, LIGHT_INTENSITY)
 
 using namespace Ogre;
 using namespace OgreBites;
 
-namespace Game {
+namespace Game
+{
 // The game state where you actually play the game
 // This should handle all game-specific logic
-class GameState : public State {
-  public:
-    GameState(ECS::EventManager *eventManager, Root *root,
-              Ogre::RenderWindow *renderWindow,
-              OgreBites::TrayManager *trayMgr);
-    virtual ~GameState();
+class GameState : public State
+{
+    public:
+    GameState (ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow, OgreBites::TrayManager* trayMgr);
+    virtual ~GameState ();
 
-    void setup() override;
+    void setup () override;
 
-    void update(const Ogre::FrameEvent &evt) override;
+    void update (const Ogre::FrameEvent& evt) override;
 
-    bool keyPressed(const OgreBites::KeyboardEvent &evt) override;
-    bool mousePressed(const OgreBites::MouseButtonEvent &evt) override;
-    bool mouseMoved(const OgreBites::MouseMotionEvent &evt) override;
-    bool mouseReleased(const OgreBites::MouseButtonEvent &evt) override;
-    void buttonHit(OgreBites::Button *button) override;
+    bool keyPressed (const OgreBites::KeyboardEvent& evt) override;
+    bool mousePressed (const OgreBites::MouseButtonEvent& evt) override;
+    bool mouseMoved (const OgreBites::MouseMotionEvent& evt) override;
+    bool mouseReleased (const OgreBites::MouseButtonEvent& evt) override;
+    void buttonHit (OgreBites::Button* button) override;
 
-    std::size_t addObject(GameObject *obj);
+    std::size_t addObject (GameObject* obj);
 
-  private:
-    Root *mRoot;
-    SceneManager *mScnMgr;
-    RTShader::ShaderGenerator *mShadergen;
-    Ogre::RenderWindow *mRenderWindow;
+    private:
+    Root* mRoot;
+    SceneManager* mScnMgr;
+    RTShader::ShaderGenerator* mShadergen;
+    Ogre::RenderWindow* mRenderWindow;
 
-    Ogre::SceneNode *mCamNode;
-    Ogre::SceneNode *mCamRootNode;
-    Game::Rotatable *mCamera;
-    Ogre::Viewport *mViewport;
+    Ogre::SceneNode* mCamNode;
+    Ogre::SceneNode* mCamRootNode;
+    Game::Rotatable* mCamera;
+    Ogre::Viewport* mViewport;
 
     float ballTimer;
 
-    Paddle *mPaddle;
-    Ground *mGround;
+    Paddle* mPaddle;
+    Ground* mGround;
 
     btTransform mPaddleTrans;
     btTransform mGroundTrans;
 
-    std::vector<GameObject *> mObjects;
+    std::vector<GameObject*> mObjects;
 
     // Bullet
-    btDefaultCollisionConfiguration *mCollisionConfig;
-    btCollisionDispatcher *mDispatcher;
-    btBroadphaseInterface *mOverlappingPairCache;
-    btSequentialImpulseConstraintSolver *mSolver;
-    btDiscreteDynamicsWorld *mDynamicsWorld;
+    btDefaultCollisionConfiguration* mCollisionConfig;
+    btCollisionDispatcher* mDispatcher;
+    btBroadphaseInterface* mOverlappingPairCache;
+    btSequentialImpulseConstraintSolver* mSolver;
+    btDiscreteDynamicsWorld* mDynamicsWorld;
 
     // ECS
-    ECS::EventManager *mEventManager;
+    ECS::EventManager* mEventManager;
 
     // GUI
-    OgreBites::TrayManager *mTrayMgr;
+    OgreBites::TrayManager* mTrayMgr;
     int score;
 };
-}
+} // namespace Game

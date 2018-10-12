@@ -2,7 +2,8 @@
 
 #include <unordered_map>
 
-namespace ECS {
+namespace ECS
+{
 using Entity = std::size_t;
 
 static const Entity InvalidEntity = 0;
@@ -100,4 +101,4 @@ private:
     std::unordered_map<EntityId, Entity*> mEntityTable;
 };
 */
-}
+} // namespace ECS
