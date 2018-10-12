@@ -250,8 +250,8 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
     static const Ogre::Vector3 forVec = Ogre::Vector3(0.f, 0.f, -mag);
 
     if (evt.type == OgreBites::MOUSEMOTION) {
-        mEventManager->event<Util::RotateCameraEvent>(
-            new Util::RotateCameraEvent(mCamNode, (leftVec * evt.xrel) +
+        mEventManager->event<Util::RotateEvent>(
+            new Util::RotateEvent(mCamNode, (leftVec * evt.xrel) +
                                                       (downVec * evt.yrel),
                                         Ogre::Vector3::ZERO));
 

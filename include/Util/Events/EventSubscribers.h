@@ -46,12 +46,12 @@ class PlaySoundSubscriber : public ECS::EventSubscriber<PlaySoundEvent> {
     }
 };
 
-class RotateCameraSubscriber : public ECS::EventSubscriber<RotateCameraEvent> {
+class RotateSubscriber : public ECS::EventSubscriber<RotateEvent> {
   public:
-    virtual ~RotateCameraSubscriber() {}
+    virtual ~RotateSubscriber() {}
 
     virtual void receive(ECS::EventManager *eventManager,
-                         const RotateCameraEvent &event) override {
+                         const RotateEvent &event) override {
         auto rotate = event.rotate;
         auto node = event.node;
         auto lookAt = event.lookAt;

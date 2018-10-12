@@ -5,7 +5,7 @@
 namespace Game {
 Rotatable::Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager)
     : mNode(camNode), mRadius(radius) {
-    eventManager->connect<Util::RotateRotatableEvent>(this);
+    eventManager->connect<Util::RotateEvent>(this);
 
     mNode->setPosition(0.f, 0.f, -mRadius);
     mNode->lookAt(Ogre::Vector3(0.f, 0.f, 0.f), Ogre::SceneNode::TransformSpace::TS_LOCAL);
@@ -33,7 +33,7 @@ void Rotatable::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian ro
     mNode->translate(mNode->getLocalAxes(), Ogre::Vector3(0.f, 0.f, mRadius), Ogre::SceneNode::TransformSpace::TS_PARENT);
 }
 
-void Rotatable::receive(ECS::EventManager *em, const Util::RotateRotatableEvent& event) {
+void Rotatable::receive(ECS::EventManager *em, const Util::RotateEvent& event) {
     if (mNode != event.node) {
         return;
     }

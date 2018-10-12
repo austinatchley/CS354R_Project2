@@ -15,7 +15,7 @@
 
 #include <SoundManager.h>
 
-#include <GameObjects/Camera.h>
+#include <GameObjects/Rotatable.h>
 #include <GameObjects/Ball.h>
 #include <GameObjects/Ground.h>
 #include <GameObjects/Paddle.h>
@@ -76,7 +76,7 @@ class GameState : public State {
 
     Ogre::SceneNode *mCamNode;
     Ogre::SceneNode *mCamRootNode;
-    Game::Camera *mCamera;
+    Game::Rotatable *mCamera;
     Ogre::Viewport *mViewport;
 
     float ballTimer;

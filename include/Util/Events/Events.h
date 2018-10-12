@@ -38,12 +38,12 @@ class TranslateEntityEvent : public TransformEntityEvent {
         : TransformEntityEvent(n, t, Ogre::Vector3::ZERO) {}
 };
 
-class RotateCameraEvent : public ECS::BaseEvent {
+class RotateEvent : public ECS::BaseEvent {
   public:
-    RotateCameraEvent(Ogre::SceneNode *n, const Ogre::Vector3 &r,
+    RotateEvent(Ogre::SceneNode *n, const Ogre::Vector3 &r,
                       const Ogre::Vector3 &l)
         : node(n), rotate(r), lookAt(l) {}
-    ~RotateCameraEvent() {}
+    ~RotateEvent() {}
 
     Ogre::SceneNode *node;
     Ogre::Vector3 rotate;
