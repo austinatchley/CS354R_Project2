@@ -56,31 +56,6 @@ void GameState::setup() {
     pointLightNode->setPosition(Vector3(0, 45.f, -25.f));
 
     //////////////////////////////////////////////////////////////////
-    // Camera
-    mCamRootNode = mScnMgr->getRootSceneNode()->createChildSceneNode("cameraRoot");
-    mCamRootNode->setPosition(0.f, 30.f, 10.f);
-
-    mCamNode = mCamRootNode->createChildSceneNode("camera");
-
-    // create the camera
-    Ogre::Camera *cam = mScnMgr->createCamera("camera");
-    cam->setNearClipDistance(0.1);
-    cam->setAutoAspectRatio(true);
-
-    cam->lookAt(Ogre::Vector3::ZERO);
-
-    mCamNode->attachObject(cam);
-
-    mCamera = new Camera(mCamNode, 60.f, mEventManager);
-
-    // and tell it to render into the main window
-    mViewport = mRenderWindow->addViewport(cam);
-    mViewport->setBackgroundColour(Ogre::ColourValue(0.1f, 0.1f, 0.15f));
-
-    cam->setAspectRatio(Real(mViewport->getActualWidth()) /
-                        Real(mViewport->getActualHeight()));
-
-    //////////////////////////////////////////////////////////////////
     // GUI
     Button *b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
 
@@ -112,6 +87,31 @@ void GameState::setup() {
                                 "Examples/SphereMappedRustySteel", PADDLE_SCALE,
                                 mPaddleTrans);
     mPaddle->addToGame(this);
+
+    //////////////////////////////////////////////////////////////////
+    // Camera
+    mCamRootNode = mScnMgr->getRootSceneNode()->createChildSceneNode("cameraRoot");
+    mCamRootNode->setPosition(0.f, 30.f, 10.f);
+
+    mCamNode = mCamRootNode->createChildSceneNode("camera");
+
+    // create the camera
+    Ogre::Camera *cam = mScnMgr->createCamera("camera");
+    cam->setNearClipDistance(0.1);
+    cam->setAutoAspectRatio(true);
+
+    cam->lookAt(Ogre::Vector3::ZERO);
+
+    mCamNode->attachObject(cam);
+
+    mCamera = new Rotatable(mCamNode, 60.f, mEventManager);
+
+    // and tell it to render into the main window
+    mViewport = mRenderWindow->addViewport(cam);
+    mViewport->setBackgroundColour(Ogre::ColourValue(0.1f, 0.1f, 0.15f));
+
+    cam->setAspectRatio(Real(mViewport->getActualWidth()) /
+                        Real(mViewport->getActualHeight()));
 }
 
 GameState::~GameState() {

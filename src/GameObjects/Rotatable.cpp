@@ -1,17 +1,17 @@
-#include "GameObjects/Camera.h"
+#include "GameObjects/Rotatable.h"
 
 #include <cmath>
 
 namespace Game {
-Camera::Camera(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager)
+Rotatable::Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager)
     : mNode(camNode), mRadius(radius) {
-    eventManager->connect<Util::RotateCameraEvent>(this);
+    eventManager->connect<Util::RotateRotatableEvent>(this);
 
     mNode->setPosition(0.f, 0.f, -mRadius);
     mNode->lookAt(Ogre::Vector3(0.f, 0.f, 0.f), Ogre::SceneNode::TransformSpace::TS_LOCAL);
 }
 
-void Camera::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll) {
+void Rotatable::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll) {
     const Ogre::Vector3& prevPos = mNode->getPosition();
 
     mNode->setPosition(Ogre::Vector3::ZERO);
@@ -33,7 +33,7 @@ void Camera::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll)
     mNode->translate(mNode->getLocalAxes(), Ogre::Vector3(0.f, 0.f, mRadius), Ogre::SceneNode::TransformSpace::TS_PARENT);
 }
 
-void Camera::receive(ECS::EventManager *em, const Util::RotateCameraEvent& event) {
+void Rotatable::receive(ECS::EventManager *em, const Util::RotateRotatableEvent& event) {
     if (mNode != event.node) {
         return;
     }
