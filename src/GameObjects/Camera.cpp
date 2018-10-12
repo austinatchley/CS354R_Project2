@@ -1,27 +1,36 @@
 #include "GameObjects/Camera.h"
 
+#include <cmath>
+
 namespace Game {
 Camera::Camera(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager)
     : mNode(camNode), mRadius(radius) {
     eventManager->connect<Util::RotateCameraEvent>(this);
 
     mNode->setPosition(0.f, 0.f, -mRadius);
+    mNode->lookAt(Ogre::Vector3(0.f, 0.f, 0.f), Ogre::SceneNode::TransformSpace::TS_LOCAL);
 }
 
-void Camera::rotateThis(Ogre::Radian pitch, Ogre::Radian yaw, Ogre::Radian roll) {
-    Ogre::Vector3 prevPos = mNode->getPosition();
+void Camera::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll) {
+    const Ogre::Vector3& prevPos = mNode->getPosition();
 
     mNode->setPosition(Ogre::Vector3::ZERO);
-    
-    mNode->yaw(yaw);
-    mNode->pitch(pitch);
-    mNode->roll(roll);
 
-    mNode->translate(0.f, 0.f, -mRadius, Ogre::SceneNode::TransformSpace::TS_LOCAL);
+    mNode->rotate(Ogre::Quaternion(yaw, Ogre::Vector3::UNIT_Y));
 
-    Ogre::Vector3 postPos = mNode->getPosition();
+    /*
+    const auto curPitch = mNode->getOrientation().getPitch();
+    if (abs((curPitch + pitch).valueRadians()) > maxPitch) {
+        mNode->rotate(Ogre::Quaternion((curPitch.valueRadians() > 0 ? 1 : -1) * Ogre::Radian(maxPitch) - curPitch, Ogre::Vector3::UNIT_X));
+    }
+    else {
+        mNode->rotate(Ogre::Quaternion(pitch, Ogre::Vector3::UNIT_X));
+    }
 
-    std::cout << "Prev Position: " << prevPos << "\nPost Position: " << postPos << std::endl;
+    //mNode->rotate(Ogre::Quaternion(roll, Ogre::Vector3::UNIT_Z));
+    */
+
+    mNode->translate(mNode->getLocalAxes(), Ogre::Vector3(0.f, 0.f, mRadius), Ogre::SceneNode::TransformSpace::TS_PARENT);
 }
 
 void Camera::receive(ECS::EventManager *em, const Util::RotateCameraEvent& event) {
@@ -34,7 +43,8 @@ void Camera::receive(ECS::EventManager *em, const Util::RotateCameraEvent& event
 
     const auto yaw = Ogre::Radian(rotate.x);
     const auto pitch = Ogre::Radian(rotate.y);
+    const auto roll = Ogre::Radian(rotate.z);
 
-    rotateThis(pitch, yaw, Ogre::Radian());
+    rotateThis(yaw, pitch, roll);
 }
 }

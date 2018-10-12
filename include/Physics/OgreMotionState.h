@@ -17,14 +17,16 @@ class OgreMotionState : public btMotionState {
 
     virtual ~OgreMotionState() {}
 
-    inline virtual void getWorldTransform(btTransform &trans) const {
+    virtual void getWorldTransform(btTransform &trans) const {
         trans = mTrans;
     }
 
-    inline virtual void setWorldTransform(const btTransform &trans) {
+    virtual void setWorldTransform(const btTransform &trans) {
         if (!mNode) {
             return;
         }
+
+        std::cout << "setWorldTransform" << std::endl;
 
         mTrans = trans;
 

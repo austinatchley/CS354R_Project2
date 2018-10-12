@@ -36,6 +36,10 @@ void GameObject::addToGame(GameState *gameState) {
         mMotionState = new Physics::OgreKinematicMotionState(mTransform, mNode);
     } else {
         mMotionState = new Physics::OgreMotionState(mTransform, mNode);
+
+        if (mStatic) {
+            updateTransform();
+        }
     }
 
     btRigidBody::btRigidBodyConstructionInfo rbInfo(mMass, mMotionState, mShape,
@@ -59,7 +63,6 @@ void GameObject::addToGame(GameState *gameState) {
     mWorld->addRigidBody(mBody);
 
     mGameID = gameState->addObject(this);
-    mUpdate = true;
 }
 
 void GameObject::update(float dt) {
@@ -77,28 +80,36 @@ void GameObject::update(float dt) {
         (mContext->velNormal > 2.f || mContext->velNormal < -2.f) &&
         (mLastTime > -0.5 ||
          (mContext->lastBody != mContext->body && mLastTime > 0.1))) {
+
         // The derived GameObject class should implement its own in
-        // handleCollision
-        handleCollision();
+        // overridden handleCollision()
+
+        this->handleCollision();
         mLastTime = 0.f;
     }
 
-    mMotionState->setWorldTransform(mTransform);
-
+    //updateTransform(); 
     mContext->hit = false;
-    mUpdate = false;
 }
-
-bool GameObject::shouldUpdate() { return mUpdate; }
 
 void GameObject::handleCollision() {}
 
 void GameObject::setTransform(const btTransform &newTransform) {
     mTransform = newTransform;
-    mUpdate = true;
 
+    updateTransform(); 
+}
+
+void GameObject::updateTransform() {
     if (mKinematic) {
         mMotionState->setKinematicTransform(mTransform);
     }
+    else {
+        mMotionState->setWorldTransform(mTransform);
+    }
+}
+
+void GameObject::applyImpulse(const btVector3& impulse) {
+    mBody->applyCentralImpulse(impulse);
 }
 }

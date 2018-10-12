@@ -16,7 +16,7 @@ Ball::Ball(Ogre::SceneManager *scnMgr, ECS::EventManager *eventManager,
 
     mMass = 2 * Ogre::Math::PI / 3 * Ogre::Math::Pow(scale, 3);
 
-    mInertia = btVector3(1,1,1);
+    mInertia = btVector3(0,0,0);
 }
 
 Ball::~Ball() {}
@@ -26,6 +26,6 @@ void Ball::handleCollision() {
     mEventManager->event<Util::PlaySoundEvent>(
         new Util::PlaySoundEvent(Util::Sound::Ball));
 
-    //mBody.applyCentralImpulse(btVector3(Ogre));
+    std::cout << " COLLISION " << std::endl;
 }
 } // namespace Game

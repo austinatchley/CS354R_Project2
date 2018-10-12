@@ -18,11 +18,6 @@ GameState::GameState(ECS::EventManager *eventManager, Root *root,
       mRenderWindow(renderWindow), mTrayMgr(trayMgr) {}
 
 void GameState::setup() {
-    // Create an EventSubscriber for camera rotation
-    Util::RotateCameraSubscriber *rotateCameraSub =
-        new Util::RotateCameraSubscriber();
-    mEventManager->connect<Util::RotateCameraEvent>(rotateCameraSub);
-
     // get a pointer to the already created root
     mScnMgr = mRoot->createSceneManager();
 
@@ -30,16 +25,10 @@ void GameState::setup() {
     mShadergen = RTShader::ShaderGenerator::getSingletonPtr();
     mShadergen->addSceneManager(mScnMgr);
 
-    /* *** UNDER GUI CONSTRUCTION *** */
-
-    // Exit Button
-
-    /* *** END CONSTRUCTION *** */
-
     //////////////////////////////////////////////////////////////////
     // Lighting
     mScnMgr->setShadowTechnique(ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
-    mScnMgr->setSkyBox(true, "Examples/TrippySkyBox");
+    //mScnMgr->setSkyBox(true, "Examples/TrippySkyBox");
     mScnMgr->setAmbientLight(AMBIENT_LIGHT);
 
     Ogre::Light *light = mScnMgr->createLight("MainLight");
@@ -47,16 +36,14 @@ void GameState::setup() {
     light->setSpecularColour(Ogre::ColourValue::White);
     light->setType(Light::LT_SPOTLIGHT);
     light->setSpotlightRange(Degree(0), Degree(90));
-
-    // attenuation constants
-    light->setAttenuation(25.f * 24.f, 1.f, 4.5f / (25.f * 24.f),
-                          75.f / (25.f * 25.f * 576.f));
+    Util::setNaturalAttenuation(light, 50.f);
 
     Ogre::SceneNode *mainLightNode =
         mScnMgr->getRootSceneNode()->createChildSceneNode("MainLight");
     mainLightNode->attachObject(light);
-    mainLightNode->setPosition(0, 25.f - 1.f, 0);
+    mainLightNode->setPosition(0, 45.f, 0);
     mainLightNode->setDirection(Ogre::Vector3::NEGATIVE_UNIT_Y);
+
     Light *pointLight = mScnMgr->createLight("PointLight");
     pointLight->setType(Light::LT_POINT);
     pointLight->setDiffuseColour(0.85, 0.1, 0.1);
@@ -66,21 +53,26 @@ void GameState::setup() {
     SceneNode *pointLightNode =
         mScnMgr->getRootSceneNode()->createChildSceneNode();
     pointLightNode->attachObject(pointLight);
-    pointLightNode->setPosition(Vector3(0, 25.f - 1.f, -25.f + 1.f));
+    pointLightNode->setPosition(Vector3(0, 45.f, -25.f));
 
     //////////////////////////////////////////////////////////////////
     // Camera
-    mCamNode = mScnMgr->getRootSceneNode()->createChildSceneNode("camera");
+    mCamRootNode = mScnMgr->getRootSceneNode()->createChildSceneNode("cameraRoot");
+    mCamRootNode->setPosition(0.f, 30.f, 10.f);
+
+    mCamNode = mCamRootNode->createChildSceneNode("camera");
 
     // create the camera
-    Camera *cam = mScnMgr->createCamera("camera");
+    Ogre::Camera *cam = mScnMgr->createCamera("camera");
     cam->setNearClipDistance(0.1);
     cam->setAutoAspectRatio(true);
 
     cam->lookAt(Ogre::Vector3::ZERO);
 
     mCamNode->attachObject(cam);
-    mCamNode->setPosition(0, 0, 60);
+
+    mCamera = new Camera(mCamNode, 60.f, mEventManager);
+
     // and tell it to render into the main window
     mViewport = mRenderWindow->addViewport(cam);
     mViewport->setBackgroundColour(Ogre::ColourValue(0.1f, 0.1f, 0.15f));
@@ -150,45 +142,35 @@ void GameState::setup() {
     mDynamicsWorld = new btDiscreteDynamicsWorld(
         mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
-    mDynamicsWorld->setGravity(btVector3(0, -10, 0));
-
-    /*GameState
-    // CEGUI init
-    mRenderer == &CEGUI::OgreRenderer::bootstrapSystem();
-
-    CEGUI::ImageManager::setImagesetDefaultResourceGroup("Imagesets");
-        CEGUI::Font::setDefaultResourceGroup("Fonts");
-        CEGUI::Scheme::setDefaultResourceGroup("Schemes");
-        CEGUI::WidgetLookManager::setDefaultResourceGroup("LookNFeel");
-        CEGUI::WindowManager::setDefaultResourceGroup("Layouts");
-
-    CEGUI::SchemeManager::getSingleton().createFromFile("TaharezLook.scheme");
-    CEGUI::System::getSingleton().getDefaultGUIContext().setDefaultFont("DejaVuSans-10");
-    CEGUI::System::getSingleton().getDefaultGUIContext().getMouseCursor().setDefaultImage("TaharezLook/MouseArrow");
-
-    mGUIRoot = CEGUI::WindowManager::getSingleton().createWindow(
-    "DefaultWindow", "_MasterRoot" );
-
-    CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(mGUIRoot);
-    */
+    mDynamicsWorld->setGravity(btVector3(0, 0, -10));
 
     // create ground
-    Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld);
-    ground->addToGame(this);
-
-    btTransform ballTrans;
-    ballTrans.setOrigin(btVector3(0, 0, 20));
-    Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
-                          "Examples/SphereMappedRustySteel", BALL_RADIUS,
-                          ballTrans);
-    ball->addToGame(this);
-
+    Ground *ground = new Ground(mScnMgr, mEventManager, mDynamicsWorld, "Examples/BeachStones");
+    ground->addToGame(this); 
+    
     btTransform paddleTrans;
+    paddleTrans.setIdentity();
     paddleTrans.setOrigin(btVector3(0, 10, 20));
     Paddle *paddle = new Paddle(mScnMgr, mEventManager, mDynamicsWorld,
                                 "Examples/SphereMappedRustySteel", PADDLE_SCALE,
                                 paddleTrans);
     paddle->addToGame(this);
+
+    const int radius = 80;
+    for (int i = 0; i < NUM_BALLS; ++i) {
+        btTransform ballTrans;
+        ballTrans.setOrigin(btVector3(
+                    Ogre::Math::Sin(i * Ogre::Math::TWO_PI / NUM_BALLS) * radius,
+                    Ogre::Math::Cos(i * Ogre::Math::TWO_PI / NUM_BALLS) * radius
+                    , 60));
+
+        Ball *ball = new Ball(mScnMgr, mEventManager, mDynamicsWorld,
+                              "Examples/SphereMappedRustySteel", BALL_RADIUS,
+                              ballTrans);
+        ball->addToGame(this);
+
+        ball->applyImpulse(1000.f * (paddleTrans.getOrigin() - ballTrans.getOrigin()));
+    }
 }
 
 GameState::~GameState() {
@@ -197,10 +179,6 @@ GameState::~GameState() {
     delete mOverlappingPairCache;
     delete mDispatcher;
     delete mCollisionConfig;
-
-    for (auto it = mObjects.begin(); it != mObjects.end(); ++it) {
-        delete *it;
-    }
 }
 
 void GameState::update(const Ogre::FrameEvent &evt) {
@@ -211,14 +189,14 @@ void GameState::update(const Ogre::FrameEvent &evt) {
     for (int i = 0; i < mObjects.size(); ++i) {
         GameObject *obj = mObjects[i];
       
-        if (obj->shouldUpdate()) {
-            obj->update(dt);
-        }
+        obj->update(dt);
+
+        std::cout << obj->getNode()->getPosition() << std::endl;
     }
 }
 
 bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
-    static const Real mag = Math::HALF_PI / 200.f;
+    static const Real mag = Math::HALF_PI / 2000.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
     static const Ogre::Vector3 upVec = Ogre::Vector3(0.f, mag, 0.f);
@@ -283,20 +261,22 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent &evt) {
 }
 
 bool GameState::mousePressed(const OgreBites::MouseButtonEvent &evt) {
-    if (mTrayMgr->mousePressed(evt))
+    if (mTrayMgr->mousePressed(evt)) {
         return true;
-    /* normal mouse processing here... */
+    }
+
     return true;
 }
 bool GameState::mouseReleased(const OgreBites::MouseButtonEvent &evt) {
-    if (mTrayMgr->mouseReleased(evt))
+    if (mTrayMgr->mouseReleased(evt)) {
         return true;
-    /* normal mouse processing here... */
+    }
+
     return true;
 }
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent &evt) {
-    static const Real mag = Ogre::Math::PI / 20.f;
+    static const Real mag = Ogre::Math::PI / 200.f;
     static const Ogre::Vector3 rightVec = Ogre::Vector3(mag, 0.f, 0.f);
     static const Ogre::Vector3 leftVec = Ogre::Vector3(-mag, 0.f, 0.f);
     static const Ogre::Vector3 upVec = Ogre::Vector3(0.f, mag, 0.f);

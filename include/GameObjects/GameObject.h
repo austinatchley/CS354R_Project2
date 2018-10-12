@@ -32,7 +32,8 @@ class GameObject : public Util::GenericObject {
     virtual void update(float dt) override;
     virtual void setTransform(const btTransform &newTransform) override;
 
-    bool shouldUpdate();
+    virtual void updateTransform();
+    virtual void applyImpulse(const btVector3& impulse);
 
     virtual void handleCollision();
 
@@ -46,7 +47,5 @@ class GameObject : public Util::GenericObject {
 
     std::size_t mGameID;
     btDiscreteDynamicsWorld *mWorld;
-
-    bool mUpdate;
 };
 }

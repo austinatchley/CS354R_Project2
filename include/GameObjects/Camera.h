@@ -17,12 +17,14 @@ public:
     Camera(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager);
     ~Camera() {}
 
-    void rotateThis(Ogre::Radian pitch, Ogre::Radian yaw, Ogre::Radian roll);
+    void rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll);
 
     void receive(ECS::EventManager *em, const Util::RotateCameraEvent& evt) override;
 
 private:
     Ogre::SceneNode* mNode;
     Ogre::Real mRadius;
+
+    //const Ogre::Real maxPitch = Ogre::Math::HALF_PI / 4.f;
 };
 }

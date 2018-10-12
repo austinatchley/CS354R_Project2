@@ -15,6 +15,8 @@
 
 #include <SoundManager.h>
 
+#include <GameObjects/Camera.h>
+
 #include <Ogre.h>
 #include <OgreApplicationContext.h>
 #include <OgreInput.h>
@@ -28,8 +30,8 @@
 //#include <CEGUI/RendererModules/Ogre/Renderer.h>
 
 #define NUM_BALLS 10
-#define BALL_RADIUS 5.f
 
+#define BALL_RADIUS 5.f
 #define PADDLE_SCALE 5.f
 
 #define LIGHT_INTENSITY 1.0
@@ -68,6 +70,10 @@ class GameState : public State {
     Ogre::RenderWindow *mRenderWindow;
 
     Ogre::SceneNode *mCamNode;
+    Ogre::SceneNode *mCamRootNode;
+
+    Game::Camera *mCamera;
+
     Ogre::Viewport *mViewport;
 
     std::vector<GameObject *> mObjects;
