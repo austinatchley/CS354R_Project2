@@ -15,10 +15,10 @@ namespace Game
 GameState::GameState (ECS::EventManager* eventManager,
                       Root* root,
                       Ogre::RenderWindow* renderWindow,
-                      OgreBites::TrayManager* trayMgr
-                      Ogre::OverlaySystem* mOverlaySystem)
+                      OgreBites::TrayManager* trayMgr,
+                      Ogre::OverlaySystem* OverlaySystem)
 : State (ScreenShare::Full), mEventManager (eventManager), mRoot (root),
-  mRenderWindow (renderWindow), mTrayMgr (trayMgr)
+  mRenderWindow (renderWindow), mTrayMgr (trayMgr), mOverlaySystem(OverlaySystem)
 {
 }
 
@@ -26,9 +26,8 @@ void GameState::setup ()
 {
     // get a pointer to the already created root
     mScnMgr = mRoot->createSceneManager ();
-    
-    mOverlaySystem = new Ogre::OverlaySystem();
-    scnMgr->addRenderQueueListener(mOverlaySystem);
+
+    mScnMgr->addRenderQueueListener(mOverlaySystem);
 
     // register our scene with the RTSS
     mShadergen = RTShader::ShaderGenerator::getSingletonPtr ();

@@ -30,13 +30,10 @@ void Game::setup ()
 
     //////////////////////////////////////////////////////////////////
     // Trays
-    
 
     mTrayMgr = new OgreBites::TrayManager ("InterfaceName", getRenderWindow (), this);
 
     mTrayMgr->showCursor ();
-
-    overlay->show();
 
     //////////////////////////////////////////////////////////////////
     // Event Manager
@@ -47,7 +44,7 @@ void Game::setup ()
     mSoundManager = new SoundManager ();
     mEventManager->connect<Util::PlaySoundEvent> (mSoundManager);
 
-    pushState (new GameState (mEventManager.get (), mRoot, getRenderWindow (), mTrayMgr));
+    pushState (new GameState (mEventManager.get (), mRoot, getRenderWindow (), mTrayMgr, mOverlaySystem));
 }
 
 bool Game::keyPressed (const KeyboardEvent& evt)

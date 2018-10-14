@@ -53,7 +53,7 @@ namespace Game
 class GameState : public State
 {
     public:
-    GameState (ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow, OgreBites::TrayManager* trayMgr);
+    GameState (ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow, OgreBites::TrayManager* trayMgr, Ogre::OverlaySystem* OverlaySystem);
     virtual ~GameState ();
 
     void setup () override;
@@ -100,6 +100,7 @@ class GameState : public State
     ECS::EventManager* mEventManager;
 
     // GUI
+    Ogre::OverlaySystem* mOverlaySystem;
     OgreBites::TrayManager* mTrayMgr;
     int score;
 };
