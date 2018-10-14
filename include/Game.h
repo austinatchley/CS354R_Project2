@@ -1,6 +1,7 @@
 #pragma once
 
 #include <OgreTrays.h>
+#include <OgreOverlaySystem.h>
 #include <States/GameState.h>
 #include <States/MenuState.h>
 #include <States/State.h>

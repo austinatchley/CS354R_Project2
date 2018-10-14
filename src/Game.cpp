@@ -30,9 +30,13 @@ void Game::setup ()
 
     //////////////////////////////////////////////////////////////////
     // Trays
-    mTrayMgr = new OgreBites::TrayManager ("GameInterface", getRenderWindow (), this);
+    
+
+    mTrayMgr = new OgreBites::TrayManager ("InterfaceName", getRenderWindow (), this);
 
     mTrayMgr->showCursor ();
+
+    overlay->show();
 
     //////////////////////////////////////////////////////////////////
     // Event Manager

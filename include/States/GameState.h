@@ -26,6 +26,7 @@
 #include <OgreMath.h>
 #include <OgreRTShaderSystem.h>
 #include <OgreTrays.h>
+#include <OgreOverlay.h>
 
 #include "btBulletDynamicsCommon.h"
 
