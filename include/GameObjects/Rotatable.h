@@ -14,14 +14,14 @@ namespace Game
 class Rotatable : public ECS::EventSubscriber<Util::RotateEvent>
 {
     public:
-    Rotatable (Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager);
-    ~Rotatable ()
+    Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager);
+    ~Rotatable()
     {
     }
 
-    void rotateThis (Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll);
+    void rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian roll);
 
-    void receive (ECS::EventManager* em, const Util::RotateEvent& evt) override;
+    void receive(ECS::EventManager* em, const Util::RotateEvent& evt) override;
 
     private:
     Ogre::SceneNode* mNode;

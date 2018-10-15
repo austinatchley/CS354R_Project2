@@ -15,16 +15,16 @@ namespace Game
 class Ball : public GameObject
 {
     public:
-    Ball (Ogre::SceneManager* scnMgr,
-          Ogre::SceneNode* parent,
-          ECS::EventManager* eventManager,
-          btDiscreteDynamicsWorld* world,
-          const Ogre::String& material,
-          float scale,
-          const btTransform& trans);
+    Ball(Ogre::SceneManager* scnMgr,
+         Ogre::SceneNode* parent,
+         ECS::EventManager* eventManager,
+         btDiscreteDynamicsWorld* world,
+         const Ogre::String& material,
+         float scale,
+         const btTransform& trans);
 
-    ~Ball ();
+    ~Ball();
 
-    void handleCollision () override;
+    void handleCollision() override;
 };
 } // namespace Game

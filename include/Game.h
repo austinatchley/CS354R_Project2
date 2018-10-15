@@ -1,7 +1,7 @@
 #pragma once
 
-#include <OgreTrays.h>
 #include <OgreOverlaySystem.h>
+#include <OgreTrays.h>
 #include <States/GameState.h>
 #include <States/MenuState.h>
 #include <States/State.h>
@@ -18,22 +18,22 @@ using StateStack = std::vector<State*>;
 class Game : public ApplicationContext, public InputListener, public TrayListener
 {
     public:
-    Game ();
-    virtual ~Game ();
+    Game();
+    virtual ~Game();
 
-    void pushState (State* state);
-    void popState ();
+    void pushState(State* state);
+    void popState();
 
     private:
-    void setup ();
+    void setup();
 
-    bool keyPressed (const KeyboardEvent& evt) override;
-    bool mousePressed (const MouseButtonEvent& evt) override;
-    bool mouseMoved (const MouseMotionEvent& evt) override;
-    bool mouseReleased (const OgreBites::MouseButtonEvent& evt) override;
-    void buttonHit (OgreBites::Button* button) override;
+    bool keyPressed(const KeyboardEvent& evt) override;
+    bool mousePressed(const MouseButtonEvent& evt) override;
+    bool mouseMoved(const MouseMotionEvent& evt) override;
+    bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
+    void buttonHit(OgreBites::Button* button) override;
 
-    bool frameRenderingQueued (const Ogre::FrameEvent& evt) override;
+    bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
 
     ///////////////////////////////////////////////////////
     // System member vars

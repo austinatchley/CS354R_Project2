@@ -13,14 +13,14 @@ namespace Game
 class SoundManager : public Util::PlaySoundSubscriber
 {
     public:
-    SoundManager ();
-    ~SoundManager ()
+    SoundManager();
+    ~SoundManager()
     {
     }
 
-    virtual void receive (ECS::EventManager* eventManager, const Util::PlaySoundEvent& event) override;
+    virtual void receive(ECS::EventManager* eventManager, const Util::PlaySoundEvent& event) override;
 
-    void playBallHit ();
+    void playBallHit();
 
     protected:
     Mix_Chunk* wallHit;

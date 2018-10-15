@@ -7,13 +7,13 @@ namespace Physics
 class OgreKinematicMotionState : public OgreMotionState
 {
     public:
-    OgreKinematicMotionState (const btTransform& trans, Ogre::SceneNode* node)
-    : OgreMotionState (trans, node)
+    OgreKinematicMotionState(const btTransform& trans, Ogre::SceneNode* node)
+    : OgreMotionState(trans, node)
     {
-        setWorldTransform (trans);
+        setWorldTransform(trans);
     }
 
-    void setKinematicTransform (btTransform& trans) override
+    void setKinematicTransform(btTransform& trans) override
     {
         mTrans = trans;
     }

@@ -13,10 +13,10 @@ namespace ECS
 class ECSManager
 {
     public:
-    ECSManager ();
-    virtual ~ECSManager ();
+    ECSManager();
+    virtual ~ECSManager();
 
-    template <typename C> bool createComponentStore ()
+    template <typename C> bool createComponentStore()
     {
         // clang-format off
         static_assert(std::is_base_of<Component, C>::value,
@@ -26,11 +26,11 @@ class ECSManager
         // clang-format on
 
         return mComponentStores
-        .insert (std::make_pair (C::mType, AbstractComponentStore::Ptr (new ComponentStore<C> ())))
+        .insert(std::make_pair(C::mType, AbstractComponentStore::Ptr(new ComponentStore<C>())))
         .second;
     }
 
-    template <typename C> ComponentStore<C>& getComponentStore ()
+    template <typename C> ComponentStore<C>& getComponentStore()
     {
         // clang-format off
         static_assert(std::is_base_of<Component, C>::value,
@@ -39,41 +39,41 @@ class ECSManager
                       "C's types must not be invalidcomponent");
         // clang-format on
 
-        auto componentStoreIt = mComponentStores.find (C::mType);
-        if (componentStoreIt == mComponentStores.end ())
+        auto componentStoreIt = mComponentStores.find(C::mType);
+        if(componentStoreIt == mComponentStores.end())
         {
-            throw std::runtime_error ("The ComponentStore does not exist");
+            throw std::runtime_error("The ComponentStore does not exist");
         }
 
-        return reinterpret_cast<ComponentStore<C>&> (*componentStoreIt->second);
+        return reinterpret_cast<ComponentStore<C>&>(*componentStoreIt->second);
     }
 
-    void addSystem (const System::Ptr& systemPtr);
+    void addSystem(const System::Ptr& systemPtr);
 
-    Entity createEntity ()
+    Entity createEntity()
     {
-        mEntities.insert (std::make_pair (mLastEntity + 1, ComponentTypeSet ()));
+        mEntities.insert(std::make_pair(mLastEntity + 1, ComponentTypeSet()));
         return ++mLastEntity;
     }
 
-    template <typename C> bool addComponent (const Entity entity, C&& component)
+    template <typename C> bool addComponent(const Entity entity, C&& component)
     {
-        static_assert (std::is_base_of<Component, C>::value, "C must inherit from Component");
-        static_assert (C::mType != InvalidComponentType, "C's types must not be InvalidComponent");
+        static_assert(std::is_base_of<Component, C>::value, "C must inherit from Component");
+        static_assert(C::mType != InvalidComponentType, "C's types must not be InvalidComponent");
 
-        auto entityIt = mEntities.find (entity);
-        if (entityIt == mEntities.end ())
+        auto entityIt = mEntities.find(entity);
+        if(entityIt == mEntities.end())
         {
-            throw std::runtime_error ("The entity does not exist");
+            throw std::runtime_error("The entity does not exist");
         }
 
-        entityIt->second.insert (C::mType);
-        return getComponentStore<C> ().add (entity, std::move (component));
+        entityIt->second.insert(C::mType);
+        return getComponentStore<C>().add(entity, std::move(component));
     }
 
-    std::size_t registerEntity (const Entity entity);
-    std::size_t unregisterEntity (const Entity entity);
-    std::size_t updateEntities (float dt);
+    std::size_t registerEntity(const Entity entity);
+    std::size_t unregisterEntity(const Entity entity);
+    std::size_t updateEntities(float dt);
 
     private:
     Entity mLastEntity;
