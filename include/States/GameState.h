@@ -12,6 +12,7 @@
 
 #include <Util/Events/EventSubscribers.h>
 #include <Util/Events/Events.h>
+#include <Util/DebugDrawer.h>
 
 #include <SoundManager.h>
 
@@ -95,6 +96,8 @@ class GameState : public State
     btBroadphaseInterface* mOverlappingPairCache;
     btSequentialImpulseConstraintSolver* mSolver;
     btDiscreteDynamicsWorld* mDynamicsWorld;
+
+    bool isDebugging;
 
     // ECS
     ECS::EventManager* mEventManager;

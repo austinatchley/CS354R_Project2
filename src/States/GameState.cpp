@@ -82,11 +82,6 @@ void GameState::setup ()
     mDynamicsWorld =
     new btDiscreteDynamicsWorld (mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
-    //DEBUG draw
-    DebugDrawer* mDebugDrawer = new DebugDrawer(mScnMgr);
-    //mDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
-    mDynamicsWorld->setDebugDrawer(mDebugDrawer);
-
     mDynamicsWorld->setGravity (btVector3 (0, 0, -10));
 
     Ogre::SceneNode* root = mScnMgr->getRootSceneNode ()->createChildSceneNode ("root");
@@ -129,8 +124,18 @@ void GameState::setup ()
 
     mPaddle->addToGame (this);
 
-    //Display a line
+    //DEBUG draw
+    isDebugging = false;
+    if(isDebugging){
+        DebugDrawer* mDebugDrawer = new DebugDrawer(mScnMgr);
+        //mDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+        mDynamicsWorld->setDebugDrawer(mDebugDrawer);
+    }
+
     /*
+    //Display a line
+    bool isDebugging = true;
+    //if(isDebugging){
     Ogre::ManualObject* myManualObject =  mScnMgr->createManualObject("manual1"); 
 	Ogre::SceneNode* myManualObjectNode = mScnMgr->getRootSceneNode()->createChildSceneNode("manual1_node"); 
  
@@ -178,7 +183,9 @@ void GameState::update (const Ogre::FrameEvent& evt)
     mDynamicsWorld->stepSimulation (dt);
 
     //DEBUG drawer
-    mDynamicsWorld->debugDrawWorld();
+    if(isDebugging){
+        mDynamicsWorld->debugDrawWorld();
+    }
 
     for (int i = 0; i < mObjects.size (); ++i)
     {

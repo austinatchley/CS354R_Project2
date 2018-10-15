@@ -31,6 +31,5 @@ Paddle::Paddle (Ogre::SceneManager* scnMgr,
 
 void Paddle::handleCollision ()
 {
-    // if collide with ball, bounce it
 }
 } // namespace Game
