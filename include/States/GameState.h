@@ -10,9 +10,9 @@
 #include <ECS/EventManager.h>
 #include <ECS/System.h>
 
+#include <Util/DebugDrawer.h>
 #include <Util/Events/EventSubscribers.h>
 #include <Util/Events/Events.h>
-#include <Util/DebugDrawer.h>
 
 #include <SoundManager.h>
 
@@ -25,9 +25,9 @@
 #include <OgreApplicationContext.h>
 #include <OgreInput.h>
 #include <OgreMath.h>
+#include <OgreOverlaySystem.h>
 #include <OgreRTShaderSystem.h>
 #include <OgreTrays.h>
-#include <OgreOverlaySystem.h>
 
 #include "btBulletDynamicsCommon.h"
 
@@ -36,13 +36,14 @@
 
 #define NUM_BALLS 10
 #define BALL_TIMER 2.f
-#define BALL_RING_RADIUS 40.f
+#define BALL_RING_RADIUS 50.f
+#define BALL_SPEED 750.f
 
 #define BALL_RADIUS 5.f
 #define PADDLE_SCALE 5.f
 
 #define LIGHT_INTENSITY 1.0
-#define AMBIENT_LIGHT Ogre::ColourValue (LIGHT_INTENSITY, LIGHT_INTENSITY, LIGHT_INTENSITY)
+#define AMBIENT_LIGHT Ogre::ColourValue(LIGHT_INTENSITY, LIGHT_INTENSITY, LIGHT_INTENSITY)
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -54,20 +55,24 @@ namespace Game
 class GameState : public State
 {
     public:
-    GameState (ECS::EventManager* eventManager, Root* root, Ogre::RenderWindow* renderWindow, OgreBites::TrayManager* trayMgr, Ogre::OverlaySystem* OverlaySystem);
-    virtual ~GameState ();
+    GameState(ECS::EventManager* eventManager,
+              Root* root,
+              Ogre::RenderWindow* renderWindow,
+              OgreBites::TrayManager* trayMgr,
+              Ogre::OverlaySystem* OverlaySystem);
+    virtual ~GameState();
 
-    void setup () override;
+    void setup() override;
 
-    void update (const Ogre::FrameEvent& evt) override;
+    void update(const Ogre::FrameEvent& evt) override;
 
-    bool keyPressed (const OgreBites::KeyboardEvent& evt) override;
-    bool mousePressed (const OgreBites::MouseButtonEvent& evt) override;
-    bool mouseMoved (const OgreBites::MouseMotionEvent& evt) override;
-    bool mouseReleased (const OgreBites::MouseButtonEvent& evt) override;
-    void buttonHit (OgreBites::Button* button) override;
+    bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
+    bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;
+    bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
+    bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
+    void buttonHit(OgreBites::Button* button) override;
 
-    std::size_t addObject (GameObject* obj);
+    std::size_t addObject(GameObject* obj);
 
     private:
     Root* mRoot;

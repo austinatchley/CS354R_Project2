@@ -14,20 +14,20 @@ namespace Util
 class GenericObject
 {
     public:
-    GenericObject (Ogre::SceneNode* parent,
-                   ECS::EventManager* eventManager,
-                   Ogre::Entity* entity,
-                   const Ogre::String& material,
-                   float scale,
-                   const btTransform& transform);
+    GenericObject(Ogre::SceneNode* parent,
+                  ECS::EventManager* eventManager,
+                  Ogre::Entity* entity,
+                  const Ogre::String& material,
+                  float scale,
+                  const btTransform& transform);
 
-    ~GenericObject ();
+    ~GenericObject();
 
-    virtual void update (float dt);
+    virtual void update(float dt);
 
-    virtual void setTransform (const btTransform& newTransform);
+    virtual void setTransform(const btTransform& newTransform);
 
-    Ogre::SceneNode* getNode ();
+    Ogre::SceneNode* getNode();
 
     protected:
     Ogre::SceneNode* mNode;

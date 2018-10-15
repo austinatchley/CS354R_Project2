@@ -15,18 +15,18 @@ namespace Game
 class Paddle : public GameObject
 {
     public:
-    Paddle (Ogre::SceneManager* scnMgr,
-            Ogre::SceneNode* parent,
-            ECS::EventManager* eventManager,
-            btDiscreteDynamicsWorld* world,
-            const Ogre::String& material,
-            float scale,
-            const btTransform& pos);
+    Paddle(Ogre::SceneManager* scnMgr,
+           Ogre::SceneNode* parent,
+           ECS::EventManager* eventManager,
+           btDiscreteDynamicsWorld* world,
+           const Ogre::String& material,
+           float scale,
+           const btTransform& pos);
 
-    ~Paddle ()
+    ~Paddle()
     {
     }
 
-    void handleCollision () override;
+    void handleCollision() override;
 };
 } // namespace Game

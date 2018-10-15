@@ -16,37 +16,37 @@ class System
     public:
     using Ptr = std::shared_ptr<System>;
 
-    explicit System (ECSManager& manager);
-    virtual ~System ();
+    explicit System(ECSManager& manager);
+    virtual ~System();
 
-    const ComponentTypeSet& getRequiredComponents () const
+    const ComponentTypeSet& getRequiredComponents() const
     {
         return mRequiredComponents;
     }
 
-    bool registerEntity (Entity entity)
+    bool registerEntity(Entity entity)
     {
-        return mMatchingEntities.insert (entity).second;
+        return mMatchingEntities.insert(entity).second;
     }
 
-    std::size_t unregisterEntity (Entity entity)
+    std::size_t unregisterEntity(Entity entity)
     {
-        return mMatchingEntities.erase (entity);
+        return mMatchingEntities.erase(entity);
     }
 
-    bool hasEntity (Entity entity) const
+    bool hasEntity(Entity entity) const
     {
-        return mMatchingEntities.find (entity) != mMatchingEntities.end ();
+        return mMatchingEntities.find(entity) != mMatchingEntities.end();
     }
 
-    std::size_t updateEntities (float dt);
+    std::size_t updateEntities(float dt);
 
-    virtual void updateEntity (float dt, Entity entity) = 0;
+    virtual void updateEntity(float dt, Entity entity) = 0;
 
     protected:
-    void setRequiredComponents (ComponentTypeSet&& requiredComponents)
+    void setRequiredComponents(ComponentTypeSet&& requiredComponents)
     {
-        mRequiredComponents = std::move (requiredComponents);
+        mRequiredComponents = std::move(requiredComponents);
     }
 
     ECSManager& mManager;

@@ -10,10 +10,10 @@ namespace Util
 class TestEvent : public ECS::BaseEvent
 {
     public:
-    TestEvent (int pi, char pc) : i (pi), c (pc)
+    TestEvent(int pi, char pc) : i(pi), c(pc)
     {
     }
-    ~TestEvent ()
+    ~TestEvent()
     {
     }
 
@@ -24,11 +24,11 @@ class TestEvent : public ECS::BaseEvent
 class TransformEntityEvent : public ECS::BaseEvent
 {
     public:
-    TransformEntityEvent (Ogre::SceneNode* e, Ogre::Vector3 t, Ogre::Vector3 r)
-    : entityNode (e), translation (t), rotation (r)
+    TransformEntityEvent(Ogre::SceneNode* e, Ogre::Vector3 t, Ogre::Vector3 r)
+    : entityNode(e), translation(t), rotation(r)
     {
     }
-    ~TransformEntityEvent ()
+    ~TransformEntityEvent()
     {
     }
 
@@ -40,8 +40,8 @@ class TransformEntityEvent : public ECS::BaseEvent
 class RotateEntityEvent : public TransformEntityEvent
 {
     public:
-    RotateEntityEvent (Ogre::SceneNode* n, Ogre::Vector3 r)
-    : TransformEntityEvent (n, Ogre::Vector3::ZERO, r)
+    RotateEntityEvent(Ogre::SceneNode* n, Ogre::Vector3 r)
+    : TransformEntityEvent(n, Ogre::Vector3::ZERO, r)
     {
     }
 };
@@ -49,8 +49,8 @@ class RotateEntityEvent : public TransformEntityEvent
 class TranslateEntityEvent : public TransformEntityEvent
 {
     public:
-    TranslateEntityEvent (Ogre::SceneNode* n, Ogre::Vector3 t)
-    : TransformEntityEvent (n, t, Ogre::Vector3::ZERO)
+    TranslateEntityEvent(Ogre::SceneNode* n, Ogre::Vector3 t)
+    : TransformEntityEvent(n, t, Ogre::Vector3::ZERO)
     {
     }
 };
@@ -58,11 +58,11 @@ class TranslateEntityEvent : public TransformEntityEvent
 class RotateEvent : public ECS::BaseEvent
 {
     public:
-    RotateEvent (Ogre::SceneNode* n, const Ogre::Vector3& r, const Ogre::Vector3& l)
-    : node (n), rotate (r), lookAt (l)
+    RotateEvent(Ogre::SceneNode* n, const Ogre::Vector3& r, const Ogre::Vector3& l)
+    : node(n), rotate(r), lookAt(l)
     {
     }
-    ~RotateEvent ()
+    ~RotateEvent()
     {
     }
 
@@ -74,7 +74,7 @@ class RotateEvent : public ECS::BaseEvent
 class PlaySoundEvent : public ECS::BaseEvent
 {
     public:
-    PlaySoundEvent (Util::Sound s) : sound (s)
+    PlaySoundEvent(Util::Sound s) : sound(s)
     {
     }
 
