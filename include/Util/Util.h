@@ -14,7 +14,8 @@ namespace Util
 {
 enum class Sound : std::size_t
 {
-    Ball = 0
+    Ball = 0,
+    Launch
 };
 
 static int Mix_Playing_Sound(Sound s)

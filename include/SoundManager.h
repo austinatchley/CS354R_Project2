@@ -21,9 +21,11 @@ class SoundManager : public Util::PlaySoundSubscriber
     virtual void receive(ECS::EventManager* eventManager, const Util::PlaySoundEvent& event) override;
 
     void playBallHit();
+    void playBallLaunch();
 
     protected:
     Mix_Chunk* wallHit;
+    Mix_Chunk* launchBall;
     unsigned flags;
 };
 } // namespace Game

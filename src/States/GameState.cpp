@@ -212,10 +212,12 @@ void GameState::update(const Ogre::FrameEvent& evt)
                               BALL_RADIUS, ballTrans);
         ball->addToGame(this);
 
-        ball->applyImpulse(1000.f * (Util::makeBulletVector3(mPaddle->getNode()->_getDerivedPosition()) -
+        ball->applyImpulse(BALL_SPEED * (Util::makeBulletVector3(mPaddle->getNode()->_getDerivedPosition()) -
                                      ballTrans.getOrigin()));
 
         ballTimer = 0.f;
+
+        mEventManager->event<Util::PlaySoundEvent>(new Util::PlaySoundEvent(Util::Sound::Launch));
     }
 }
 

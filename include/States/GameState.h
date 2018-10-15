@@ -36,7 +36,8 @@
 
 #define NUM_BALLS 10
 #define BALL_TIMER 2.f
-#define BALL_RING_RADIUS 40.f
+#define BALL_RING_RADIUS 50.f
+#define BALL_SPEED 750.f
 
 #define BALL_RADIUS 5.f
 #define PADDLE_SCALE 5.f
