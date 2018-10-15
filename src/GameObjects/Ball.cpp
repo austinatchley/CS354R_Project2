@@ -37,5 +37,5 @@ void Ball::handleCollision()
 {
     // Implement the ball specific collision handler here
     mEventManager->event<Util::PlaySoundEvent>(new Util::PlaySoundEvent(Util::Sound::Ball));
-} // namespace Game
+} 
 } // namespace Game

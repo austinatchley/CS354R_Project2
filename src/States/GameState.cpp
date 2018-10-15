@@ -221,6 +221,10 @@ void GameState::update(const Ogre::FrameEvent& evt)
     }
 }
 
+void GameState::frameEnded(const Ogre::FrameEvent& evt) {
+
+}
+
 bool GameState::keyPressed(const OgreBites::KeyboardEvent& evt)
 {
     static const Real mag = Math::HALF_PI / 2000.f;

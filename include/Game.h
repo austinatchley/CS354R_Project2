@@ -34,6 +34,7 @@ class Game : public ApplicationContext, public InputListener, public TrayListene
     void buttonHit(OgreBites::Button* button) override;
 
     bool frameRenderingQueued(const Ogre::FrameEvent& evt) override;
+    bool frameEnded(const Ogre::FrameEvent& evt) override;
 
     ///////////////////////////////////////////////////////
     // System member vars
