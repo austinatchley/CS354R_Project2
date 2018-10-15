@@ -16,10 +16,10 @@ Ground::Ground (Ogre::SceneManager* scnMgr,
 {
     // set to static
     mInertia.setZero ();
-    mMass = 0;
+    mMass = 0.f;
     mStatic = true;
 
-    mShape = new btBoxShape (btVector3 (1000, 1000, 0));
+    mShape = new btBoxShape (btVector3 (1000, 1000, 10));
 
     mTransform.setIdentity ();
     mTransform.setRotation (btQuaternion (btVector3 (1, 0, 0), -Ogre::Math::HALF_PI));

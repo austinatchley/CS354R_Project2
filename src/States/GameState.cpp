@@ -6,6 +6,7 @@
 
 #include <Util/Events/EventSubscribers.h>
 #include <Util/Events/Events.h>
+#include <Util/DebugDrawer.h>
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -81,6 +82,11 @@ void GameState::setup ()
     mDynamicsWorld =
     new btDiscreteDynamicsWorld (mDispatcher, mOverlappingPairCache, mSolver, mCollisionConfig);
 
+    //DEBUG draw
+    DebugDrawer* mDebugDrawer = new DebugDrawer(mScnMgr);
+    //mDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
+    mDynamicsWorld->setDebugDrawer(mDebugDrawer);
+
     mDynamicsWorld->setGravity (btVector3 (0, 0, -10));
 
     Ogre::SceneNode* root = mScnMgr->getRootSceneNode ()->createChildSceneNode ("root");
@@ -122,6 +128,38 @@ void GameState::setup ()
                           "Examples/SphereMappedRustySteel", PADDLE_SCALE, mPaddleTrans);
 
     mPaddle->addToGame (this);
+
+    //Display a line
+    /*
+    Ogre::ManualObject* myManualObject =  mScnMgr->createManualObject("manual1"); 
+	Ogre::SceneNode* myManualObjectNode = mScnMgr->getRootSceneNode()->createChildSceneNode("manual1_node"); 
+ 
+	Ogre::MaterialPtr myManualObjectMaterial = Ogre::MaterialManager::getSingleton().create("manual1Material","General"); 
+	myManualObjectMaterial->setReceiveShadows(false); 
+	myManualObjectMaterial->getTechnique(0)->setLightingEnabled(true); 
+	myManualObjectMaterial->getTechnique(0)->getPass(0)->setDiffuse(0,0,1,0); 
+	myManualObjectMaterial->getTechnique(0)->getPass(0)->setAmbient(0,0,1); 
+	myManualObjectMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(0,0,1); 
+
+
+	myManualObjectNode->attachObject(myManualObject);
+ 
+	myManualObject->begin("manual1Material", Ogre::RenderOperation::OT_LINE_LIST); 
+	myManualObject->position(0, 0, 0); 
+	myManualObject->position(200, 200, 200);
+
+	myManualObject->end();
+
+	/*
+	myManualObject->begin("manual1Material", Ogre::RenderOperation::OT_LINE_LIST);
+
+	myManualObject->position(5, 5, 5);
+	myManualObject->position(0, 200, 0);
+	myManualObject->position(-10, -10, 0);
+	myManualObject->position(20, 50, 90);
+
+	myManualObject->end(); 
+	*/ 
 }
 
 GameState::~GameState ()
@@ -138,6 +176,9 @@ void GameState::update (const Ogre::FrameEvent& evt)
     const Real dt = evt.timeSinceLastFrame;
 
     mDynamicsWorld->stepSimulation (dt);
+
+    //DEBUG drawer
+    mDynamicsWorld->debugDrawWorld();
 
     for (int i = 0; i < mObjects.size (); ++i)
     {
