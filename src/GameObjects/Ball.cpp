@@ -22,11 +22,13 @@ Ball::Ball(Ogre::SceneManager* scnMgr,
 
     // set mass, motionstate, shape, and inertia before GameObject::addToGame
     // initializes our rigidbody
-    mShape = new btSphereShape(btScalar(scale));
+    mShape = new btSphereShape(scale / 2);
 
     mMass = 2 * Ogre::Math::PI / 3 * Ogre::Math::Pow(scale, 3);
 
     mInertia = btVector3(0, 0, 0);
+
+    mRestitution = 0.9f;
 }
 
 Ball::~Ball()
