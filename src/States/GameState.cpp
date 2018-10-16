@@ -124,7 +124,7 @@ void GameState::setup()
     mPaddle->addToGame(this);
 
     //DEBUG draw
-    isDebugging = true;
+    isDebugging = false;
     if(isDebugging){
         DebugDrawer* mDebugDrawer = new DebugDrawer(mScnMgr);
         // mDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);

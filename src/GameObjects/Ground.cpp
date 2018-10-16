@@ -23,6 +23,8 @@ Ground::Ground(Ogre::SceneManager* scnMgr,
 
     mTransform.setIdentity();
     mTransform.setRotation(btQuaternion(btVector3(1, 0, 0), -Ogre::Math::HALF_PI));
+
+    mRestitution = 1.f;
 }
 
 // void Ground::handleCollision() {}
