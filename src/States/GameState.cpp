@@ -249,21 +249,23 @@ bool GameState::keyPressed(const OgreBites::KeyboardEvent& evt)
 
 bool GameState::mousePressed(const OgreBites::MouseButtonEvent& evt)
 {
+    bool res = false;
     if(mTrayMgr->mousePressed(evt))
     {
-        return true;
+        res = true;
     }
 
-    return true;
+    return res;
 }
 bool GameState::mouseReleased(const OgreBites::MouseButtonEvent& evt)
 {
+    bool res = true;
     if(mTrayMgr->mouseReleased(evt))
     {
-        return true;
+        res = true;
     }
 
-    return true;
+    return res;
 }
 
 bool GameState::mouseMoved(const OgreBites::MouseMotionEvent& evt)
