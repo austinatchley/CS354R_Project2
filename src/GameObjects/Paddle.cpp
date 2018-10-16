@@ -22,10 +22,12 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr,
              trans)
 {
     mNode->setScale(scale * THICKNESS / 100.f, scale / 100.f, scale / 100.f);
-    mShape = new btBoxShape(btVector3(scale * THICKNESS, scale, scale));
+    mShape = new btBoxShape(btVector3(scale * THICKNESS + 40, scale + 22, scale + 22));
 
     mMass = 0.f;
     mInertia.setZero();
+
+    mRestitution = 1.f;
 
     mKinematic = true;
 }
