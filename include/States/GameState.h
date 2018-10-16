@@ -65,6 +65,7 @@ class GameState : public State
     void setup() override;
 
     void update(const Ogre::FrameEvent& evt) override;
+    void frameEnded(const Ogre::FrameEvent& evt) override;
 
     bool keyPressed(const OgreBites::KeyboardEvent& evt) override;
     bool mousePressed(const OgreBites::MouseButtonEvent& evt) override;

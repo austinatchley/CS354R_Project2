@@ -14,7 +14,7 @@ namespace Game
 class Rotatable : public ECS::EventSubscriber<Util::RotateEvent>
 {
     public:
-    Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager);
+    Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, Ogre::Radian limit, ECS::EventManager* eventManager);
     ~Rotatable()
     {
     }
@@ -26,6 +26,8 @@ class Rotatable : public ECS::EventSubscriber<Util::RotateEvent>
     private:
     Ogre::SceneNode* mNode;
     Ogre::Real mRadius;
+    Ogre::Radian mLimit;
+    Ogre::Radian mRotation;
 
     const Ogre::Real maxPitch = Ogre::Math::HALF_PI / 4.f;
 };

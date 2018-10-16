@@ -102,7 +102,7 @@ void GameState::setup()
 
     mCamNode->attachObject(cam);
 
-    mCamera = new Rotatable(mCamRootNode, 60.f, mEventManager);
+    mCamera = new Rotatable(mCamRootNode, 60.f, Ogre::Radian(Ogre::Math::HALF_PI), mEventManager);
 
     // and tell it to render into the main window
     mViewport = mRenderWindow->addViewport(cam);
@@ -218,6 +218,10 @@ void GameState::update(const Ogre::FrameEvent& evt)
 
         mEventManager->event<Util::PlaySoundEvent>(new Util::PlaySoundEvent(Util::Sound::Launch));
     }
+}
+
+void GameState::frameEnded(const Ogre::FrameEvent& evt) {
+
 }
 
 bool GameState::keyPressed(const OgreBites::KeyboardEvent& evt)

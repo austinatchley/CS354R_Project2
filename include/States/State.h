@@ -24,6 +24,7 @@ class State
     virtual void setup();
 
     virtual void update(const Ogre::FrameEvent& evt);
+    virtual void frameEnded(const Ogre::FrameEvent& evt) {}
 
     virtual bool keyPressed(const OgreBites::KeyboardEvent& evt);
     virtual bool mousePressed(const OgreBites::MouseButtonEvent& evt);

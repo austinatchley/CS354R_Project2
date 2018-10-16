@@ -4,8 +4,8 @@
 
 namespace Game
 {
-Rotatable::Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, ECS::EventManager* eventManager)
-: mNode(camNode), mRadius(radius)
+Rotatable::Rotatable(Ogre::SceneNode* camNode, Ogre::Real radius, Ogre::Radian limit, ECS::EventManager* eventManager)
+: mNode(camNode), mRadius(radius), mLimit(limit), mRotation(0.f)
 {
 
     eventManager->connect<Util::RotateEvent>(this);
@@ -19,8 +19,11 @@ void Rotatable::rotateThis(Ogre::Radian yaw, Ogre::Radian pitch, Ogre::Radian ro
     const Ogre::Vector3& prevPos = mNode->getPosition();
 
     mNode->setPosition(Ogre::Vector3::ZERO);
-
-    mNode->rotate(Ogre::Quaternion(yaw, Ogre::Vector3::UNIT_Y));
+    
+    if (mRotation + yaw < mLimit && mRotation + yaw > -mLimit) {
+        mRotation += yaw;
+        mNode->rotate(Ogre::Quaternion(yaw, Ogre::Vector3::UNIT_Y));
+    }
 
     /*
     const auto curPitch = mNode->getOrientation().getPitch();

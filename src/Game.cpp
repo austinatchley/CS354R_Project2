@@ -113,6 +113,19 @@ bool Game::frameRenderingQueued(const Ogre::FrameEvent& evt)
     return true;
 }
 
+bool Game::frameEnded(const Ogre::FrameEvent& evt)
+{
+    if(mStates.empty())
+    {
+        return false;
+    }
+
+    // Update the current event
+    mStates.back()->frameEnded(evt);
+
+    return true;
+}
+
 void Game::pushState(State* state)
 {
     mStates.push_back(state);
