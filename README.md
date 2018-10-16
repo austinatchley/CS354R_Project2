@@ -68,3 +68,17 @@ Gameplay: Nonexistant until physics is working.
 Cameral Control: Working as intended. (Done)
 
 Notes: The rendering loop is now contained in each individual state with the game class calling the update method on the active state. Workload is the same.
+
+### Week 3 Update:
+
+## Build Instructions:
+
+Make a build directory, cd into it and run `cmake ..` then run `make` and then `./Project2`
+
+## User Manual
+
+Move paddle to deflect balls and increase score.
+
+## Final Project Report
+
+We ran out of time, we had many unexpected issues with linking bullet and our GUI frameworks had to change from CEGUI to Trays halfway through. We had a translating bullet absolute positions to Ogre relative ones.
