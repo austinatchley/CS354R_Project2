@@ -55,7 +55,8 @@ void GameObject::addToGame(GameState* gameState)
 
     mWorld->addRigidBody(mBody);
 
-    mGameID = gameState->addObject(this);
+    mGameState = gameState;
+    mGameID = mGameState->addObject(this);
 }
 
 void GameObject::update(float dt)

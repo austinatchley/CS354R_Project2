@@ -40,6 +40,7 @@ class GameObject : public Util::GenericObject
 
     protected:
     std::size_t mGameID;
+    GameState* mGameState;
     btDiscreteDynamicsWorld* mWorld;
 };
 } // namespace Game
