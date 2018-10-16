@@ -29,4 +29,4 @@ class Paddle : public GameObject
 
     void handleCollision() override;
 };
-} // namespace Game
+} // namespace 

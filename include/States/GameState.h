@@ -73,6 +73,7 @@ class GameState : public State
     bool mouseMoved(const OgreBites::MouseMotionEvent& evt) override;
     bool mouseReleased(const OgreBites::MouseButtonEvent& evt) override;
     void buttonHit(OgreBites::Button* button) override;
+    void scoreinc();
 
     std::size_t addObject(GameObject* obj);
 
@@ -113,5 +114,6 @@ class GameState : public State
     Ogre::OverlaySystem* mOverlaySystem;
     OgreBites::TrayManager* mTrayMgr;
     int score;
+    String scorestr;
 };
 } // namespace Game

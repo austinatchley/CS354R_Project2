@@ -1,4 +1,5 @@
 #include <GameObjects/Paddle.h>
+#include <States/GameState.h>
 
 #define THICKNESS 1.f / 6.f
 
@@ -31,5 +32,6 @@ Paddle::Paddle(Ogre::SceneManager* scnMgr,
 
 void Paddle::handleCollision()
 {
+  mGameState->scoreinc();
 }
 } // namespace Game

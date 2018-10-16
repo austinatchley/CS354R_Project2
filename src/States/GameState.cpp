@@ -67,8 +67,9 @@ void GameState::setup()
     // GUI
     Button* b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
 
+    scorestr = "Score: 0";
     score = 0;
-    mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", "Score: 00", 120.f, 35.f);
+    mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", scorestr, 120.f, 35.f);
 
     // mTrayMgr->hideCursor();
 
@@ -141,6 +142,11 @@ GameState::~GameState()
     delete mCollisionConfig;
 }
 
+void GameState::scoreinc()
+{
+    score += 1;
+}
+
 void GameState::update(const Ogre::FrameEvent& evt)
 {
     const Real dt = evt.timeSinceLastFrame;
@@ -184,6 +190,8 @@ void GameState::update(const Ogre::FrameEvent& evt)
 
         mEventManager->event<Util::PlaySoundEvent>(new Util::PlaySoundEvent(Util::Sound::Launch));
     }
+
+    scorestr = "Score: " + score;
 }
 
 void GameState::frameEnded(const Ogre::FrameEvent& evt) {
