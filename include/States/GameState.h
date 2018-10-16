@@ -115,5 +115,6 @@ class GameState : public State
     OgreBites::TrayManager* mTrayMgr;
     int score;
     String scorestr;
+    OgreBites::TextBox* scr;
 };
 } // namespace Game
