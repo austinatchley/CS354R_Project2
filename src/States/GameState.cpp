@@ -276,18 +276,21 @@ bool GameState::mouseMoved(const OgreBites::MouseMotionEvent& evt)
     static const Ogre::Vector3 backVec = Ogre::Vector3(0.f, 0.f, mag);
     static const Ogre::Vector3 forVec = Ogre::Vector3(0.f, 0.f, -mag);
 
+    bool res = false;
+
     if(evt.type == OgreBites::MOUSEMOTION)
     {
         mEventManager->event<Util::RotateEvent>(
         new Util::RotateEvent(mCamRootNode, (leftVec * evt.xrel) + (downVec * evt.yrel), Ogre::Vector3::ZERO));
 
-        return true;
+        res = true;
     }
 
-    if(mTrayMgr->mouseMoved(evt))
-        return true;
+    if(mTrayMgr->mouseMoved(evt)) {
+        res = true;
+    }
 
-    return false;
+    return res;
 }
 void GameState::buttonHit(OgreBites::Button* button)
 {

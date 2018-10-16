@@ -89,6 +89,7 @@ bool Game::mouseReleased(const MouseButtonEvent& evt)
 
 void Game::buttonHit(OgreBites::Button* button)
 {
+    std::cout << " BUTTON HIT " << std::endl;
     if(mStates.empty())
     {
         return;
