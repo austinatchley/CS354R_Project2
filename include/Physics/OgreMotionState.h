@@ -14,8 +14,12 @@ namespace Physics
 class OgreMotionState : public btMotionState
 {
     public:
-    OgreMotionState(const btTransform& trans, Ogre::SceneNode* node) : mNode(node), mTrans(trans)
+    OgreMotionState(const btTransform& trans, Ogre::SceneNode* node) : mNode(node)
     {
+		Ogre::Vector3 position = mNode->_getDerivedPosition( );
+		Ogre::Quaternion quaternion = mNode->_getDerivedOrientation( );
+		mTrans.setOrigin(btVector3( position.x, position.y, position.z ) );
+		mTrans.setRotation(btQuaternion(quaternion.x, quaternion.y, quaternion.z, quaternion.w )); 
     }
 
     virtual ~OgreMotionState()
