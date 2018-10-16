@@ -176,8 +176,8 @@ void GameState::update(const Ogre::FrameEvent& evt)
 
         static const auto rand = std::bind(Ogre::Math::RangeRandom, 0, NUM_BALLS);
         ballTrans.setOrigin(
-        btVector3(Ogre::Math::Sin(rand() * Ogre::Math::TWO_PI / NUM_BALLS) * BALL_RING_RADIUS,
-                  Ogre::Math::Cos(rand() * Ogre::Math::TWO_PI / NUM_BALLS) * BALL_RING_RADIUS, 40));
+        btVector3(Ogre::Math::Sin(rand() * Ogre::Math::HALF_PI / NUM_BALLS) * BALL_RING_RADIUS,
+                  Ogre::Math::Cos(rand() * Ogre::Math::HALF_PI / NUM_BALLS) * BALL_RING_RADIUS, 40));
 
         Ball* ball = new Ball(mScnMgr, nullptr, mEventManager, mDynamicsWorld, "Examples/Chrome",
                               BALL_RADIUS, ballTrans);
