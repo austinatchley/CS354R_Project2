@@ -68,7 +68,7 @@ void GameState::setup()
     Button* b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
 
     score = 0;
-    mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", "" + score, 0.1f, 0.1f);
+    mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", "Score: 00", 120.f, 35.f);
 
     // mTrayMgr->hideCursor();
 
@@ -130,40 +130,6 @@ void GameState::setup()
         // mDebugDrawer->setDebugMode(btIDebugDraw::DBG_DrawWireframe);
         mDynamicsWorld->setDebugDrawer(mDebugDrawer);
     }
-
-    /*
-    //Display a line
-    bool isDebugging = true;
-    //if(isDebugging){
-    Ogre::ManualObject* myManualObject =  mScnMgr->createManualObject("manual1");
-    Ogre::SceneNode* myManualObjectNode = mScnMgr->getRootSceneNode()->createChildSceneNode("manual1_node");
-
-    Ogre::MaterialPtr myManualObjectMaterial = Ogre::MaterialManager::getSingleton().create("manual1Material","General");
-    myManualObjectMaterial->setReceiveShadows(false);
-    myManualObjectMaterial->getTechnique(0)->setLightingEnabled(true);
-    myManualObjectMaterial->getTechnique(0)->getPass(0)->setDiffuse(0,0,1,0);
-    myManualObjectMaterial->getTechnique(0)->getPass(0)->setAmbient(0,0,1);
-    myManualObjectMaterial->getTechnique(0)->getPass(0)->setSelfIllumination(0,0,1);
-
-
-    myManualObjectNode->attachObject(myManualObject);
-
-    myManualObject->begin("manual1Material", Ogre::RenderOperation::OT_LINE_LIST);
-    myManualObject->position(0, 0, 0);
-    myManualObject->position(200, 200, 200);
-
-    myManualObject->end();
-
-    /*
-    myManualObject->begin("manual1Material", Ogre::RenderOperation::OT_LINE_LIST);
-
-    myManualObject->position(5, 5, 5);
-    myManualObject->position(0, 200, 0);
-    myManualObject->position(-10, -10, 0);
-    myManualObject->position(20, 50, 90);
-
-    myManualObject->end();
-    */
 }
 
 GameState::~GameState()
