@@ -66,10 +66,11 @@ void GameState::setup()
     //////////////////////////////////////////////////////////////////
     // GUI
     Button* b = mTrayMgr->createButton(TL_TOPLEFT, "DemoButton", "Exit Game");
+    Button* c = mTrayMgr->createButton(TL_TOPLEFT, "SoundButton", "Toggle Sound");
 
     scorestr = "Score: 0";
     score = 0;
-    mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", scorestr, 120.f, 35.f);
+    scr = mTrayMgr->createTextBox(TL_BOTTOMRIGHT, "Score", scorestr, 120.f, 35.f);
 
     // mTrayMgr->hideCursor();
 
@@ -192,6 +193,9 @@ void GameState::update(const Ogre::FrameEvent& evt)
     }
 
     scorestr = "Score: " + score;
+    scr->setText(scorestr);
+
+
 }
 
 void GameState::frameEnded(const Ogre::FrameEvent& evt) {
@@ -306,6 +310,9 @@ void GameState::buttonHit(OgreBites::Button* button)
 {
     if(button->getName() == "DemoButton")
         mRoot->queueEndRendering();
+    if(button->getName() == "SoundButton")
+        mEventManager->event<Util::ToggleSoundEvent>(new Util::ToggleSoundEvent());
+
 }
 
 std::size_t GameState::addObject(GameObject* obj)
