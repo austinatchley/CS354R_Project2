@@ -80,4 +80,12 @@ class PlaySoundEvent : public ECS::BaseEvent
 
     Util::Sound sound;
 };
+
+class ToggleSoundEvent : public ECS::BaseEvent
+{
+    public:
+    ToggleSoundEvent()
+    {
+    }
+};
 } // namespace Util

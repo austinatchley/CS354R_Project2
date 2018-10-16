@@ -4,7 +4,7 @@
 
 namespace Game
 {
-SoundManager::SoundManager()
+SoundManager::SoundManager() : mEnabled(true)
 {
     SDL_Init(SDL_INIT_AUDIO);
     Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -15,8 +15,17 @@ SoundManager::SoundManager()
     launchBall = Mix_LoadWAV("../media/sound/launchBall.wav");
 }
 
+void SoundManager::receive(ECS::EventManager* eventManager, const Util::ToggleSoundEvent& event)
+{
+    mEnabled = !mEnabled;
+}
+
 void SoundManager::receive(ECS::EventManager* eventManager, const Util::PlaySoundEvent& event)
 {
+    if (!mEnabled) {
+        return;
+    }
+
     switch(event.sound)
     {
     case Util::Sound::Ball:
