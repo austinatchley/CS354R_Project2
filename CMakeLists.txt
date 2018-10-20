@@ -36,6 +36,8 @@ set(SRCS
 
 project(Project2)
 
+set(OGRE_DIR "/lusr/opt/ogre-1.11/lib/OGRE/cmake")
+
 find_package(OGRE 1.11 REQUIRED COMPONENTS Bites RTShaderSystem)
 
 # copy resource.cfg next to our binaries where OGRE looks for it
